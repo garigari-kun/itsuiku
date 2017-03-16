@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Event
+from .models import Event, Schedule
 
 @admin.register(Event)
 class EventModelAdmin(admin.ModelAdmin):
@@ -10,4 +10,16 @@ class EventModelAdmin(admin.ModelAdmin):
         'title',
         'created',
         'update'
+    )
+
+
+
+@admin.register(Schedule)
+class ScheduleModelAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'date',
+        'start_time',
+        'end_time',
+        'created',
     )
