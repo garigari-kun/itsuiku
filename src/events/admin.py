@@ -1,3 +1,13 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Event
+
+@admin.register(Event)
+class EventModelAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'user',
+        'title',
+        'created',
+        'update'
+    )
