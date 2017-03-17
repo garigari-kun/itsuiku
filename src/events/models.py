@@ -10,7 +10,7 @@ class Schedule(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __str__(self):
-        return str(self.date)
+        return '{}: {} {}'.format(self.pk, self.date, self.start_time)
 
 
 class Event(models.Model):
@@ -22,4 +22,4 @@ class Event(models.Model):
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     def __str__(self):
-        return str(self.title)
+        return　'{}: {}'.format(self.pk, self.title)
