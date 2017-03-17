@@ -27,6 +27,8 @@ class Invitee(models.Model):
     name = models.CharField(max_length=32)
     comment = models.CharField(max_length=120)
     attendance = models.ManyToManyField(Attendance)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return ''.format(self.name)
