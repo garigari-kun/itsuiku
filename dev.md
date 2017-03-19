@@ -19,3 +19,16 @@ Event
 - schedule: ManyToManyField(Schedule)
 - created: DateTimeField
 - update: DateTimeField
+
+
+
+
+
+### URL design
+
+/admin:
+/: top page
+/dashboard: dashboard for registered account
+/event/create
+/event/update
+/event/delete
