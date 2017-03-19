@@ -10,6 +10,14 @@ class EventTopView(TemplateView):
     template_name = 'events/home.html'
 
 
+class DashboardView(View):
+
+    def get(self, request, *args, **kwargs):
+        template_name = 'events/dashboard.html'
+        context = {}
+        return render(request, template_name, context)
+
+
 
 class CreateEventView(View):
     def get(self, request, *args, **kwargs):
