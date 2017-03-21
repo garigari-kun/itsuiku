@@ -1,5 +1,11 @@
+{% extends 'base/home-base.html' %}
+
+{% block home-title %}itsuiku | トップページ{% endblock home-title %}
+
+{% block content %}
 <h1>Home</h1>
 
 <a href="">ログイン</a>
 <a href="">サインイン</a>
 <a href="{% url 'event:create-event' %}">イベントを作成する</a>
+{% endblock content %}
