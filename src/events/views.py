@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView
+from django.views.generic.detail import DetailView
 from django.forms import formset_factory
 
 from .forms import EventModelForm, ScheduleModelForm
@@ -9,8 +10,19 @@ from .models import Event, Schedule
 
 
 
-class EventTopView(TemplateView):
-    template_name = 'events/home.html'
+class EventTopView(View):
+    # test event code : dcmqrez5b591
+    def get(self, request, event_code=None, *args, **kwargs):
+        template_name = 'events/event-top.html'
+        event = get_object_or_404(Event, event_code=event_code)
+        context = {
+            'event': event,
+
+        }
+        print(event_code)
+        return render(request, template_name, context)
+
+
 
 
 class DashboardView(View):
@@ -43,10 +55,16 @@ class CreateEventView(View):
         ScheduleFormSet = formset_factory(ScheduleModelForm, extra=9)
         schedule_formset = ScheduleFormSet(request.POST or None)
         if event_form.is_valid() and schedule_formset.is_valid():
+            """
             print('Eventform')
             print(repr(event_form))
             print('ScheduleFormSet')
             print(repr(ScheduleFormSet))
+            """
+            user = request.user
+            instance_of_event = event_form.save(commit=False)
+            instance_of_event.user = user
+            instance_of_event.save()
         else:
             print('Problem occured')
         return HttpResponse('OK')
