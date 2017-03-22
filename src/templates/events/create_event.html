@@ -2,7 +2,8 @@
 
 
 <form method="POST" action="">
+  {% csrf_token %}
   {{ event_form.as_p }}
-  {{ schedule_form.as_p }}
+  {{ schedule_formset.as_p }}
   <input type='submit' value='イベント作成'>
 </form>
