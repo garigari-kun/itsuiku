@@ -23,6 +23,7 @@ class EventModelForm(forms.ModelForm):
 class ScheduleModelForm(forms.ModelForm):
 
     date = forms.CharField(
+        label='',
         widget=forms.TextInput(attrs={
             'placeholder': '日付'
         })
@@ -30,6 +31,7 @@ class ScheduleModelForm(forms.ModelForm):
 
     comment = forms.CharField(
         max_length=120,
+        label='',
         widget=forms.TextInput(attrs={
             'placeholder': '時間、一言メモ'
         })

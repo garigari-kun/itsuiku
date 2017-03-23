@@ -13,7 +13,7 @@ class Schedule(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __str__(self):
-        return '{}: {} {}'.format(self.pk, self.date, self.start_time)
+        return '{}: {} {}'.format(self.pk, self.date, self.comment)
 
 
 class Event(models.Model):
@@ -23,7 +23,7 @@ class Event(models.Model):
     event_code = models.CharField(max_length=12, unique=True)
     active = models.BooleanField(default=True)
     # schedule = models.ManyToManyField(Schedule, null=True, blank=True)
-    schedule = models.ManyToManyField(Schedule, blank=True)
+    schedule_range = models.ManyToManyField(Schedule, blank=True, verbose_name='schedule_range')
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
 

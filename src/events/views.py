@@ -40,7 +40,7 @@ class CreateEventView(View):
         # form
         event_form = EventModelForm()
 
-        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=9)
+        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=1)
         schedule_formset = ScheduleFormSet()
 
         context = {
@@ -52,25 +52,20 @@ class CreateEventView(View):
 
     def post(self, request, *args, **kwargs):
         event_form = EventModelForm(request.POST or None)
-        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=9)
+        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=1)
         schedule_formset = ScheduleFormSet(request.POST or None)
         if event_form.is_valid() and schedule_formset.is_valid():
-            """
-            print('Eventform')
-            print(repr(event_form))
-            print('ScheduleFormSet')
-            print(repr(ScheduleFormSet))
-            """
-            # Saving Schedule Model
-            # Saving Event Model
             user = request.user
             instance_of_event = event_form.save(commit=False)
             instance_of_event.user = user
-            # instance_of_event.save()
+            instance_of_event.save()
+            print(instance_of_event.pk)
+            print(instance_of_event.schedule_range)
             for schedule in schedule_formset:
-                print(schedule)
+                instance_of_schedule = schedule.save()
+                instance_of_event.schedule_range.add(instance_of_schedule)
         else:
-            print('Problem occured')
+            self.get(request, *args, **kwargs)
         return HttpResponse('OK')
 
 
