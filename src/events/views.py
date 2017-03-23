@@ -61,10 +61,14 @@ class CreateEventView(View):
             print('ScheduleFormSet')
             print(repr(ScheduleFormSet))
             """
+            # Saving Schedule Model
+            # Saving Event Model
             user = request.user
             instance_of_event = event_form.save(commit=False)
             instance_of_event.user = user
-            instance_of_event.save()
+            # instance_of_event.save()
+            for schedule in schedule_formset:
+                print(schedule)
         else:
             print('Problem occured')
         return HttpResponse('OK')

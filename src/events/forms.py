@@ -23,9 +23,18 @@ class EventModelForm(forms.ModelForm):
 class ScheduleModelForm(forms.ModelForm):
 
     date = forms.CharField(
-        label='日付'
+        widget=forms.TextInput(attrs={
+            'placeholder': '日付'
+        })
     )
 
+    comment = forms.CharField(
+        max_length=120,
+        widget=forms.TextInput(attrs={
+            'placeholder': '時間、一言メモ'
+        })
+    )
+    """
     start_time = forms.CharField(
         label='開始時間',
 
@@ -34,13 +43,16 @@ class ScheduleModelForm(forms.ModelForm):
     end_time = forms.CharField(
         label='終了時間'
     )
+    """
+    comment
 
     class Meta:
         model = Schedule
         fields = [
             'date',
-            'start_time',
-            'end_time'
+            # 'start_time',
+            # 'end_time'
+            'comment',
         ]
 
 # birth_date = forms.DateField(
