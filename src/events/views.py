@@ -59,13 +59,18 @@ class CreateEventView(View):
             instance_of_event = event_form.save(commit=False)
             instance_of_event.user = user
             instance_of_event.save()
-            print(instance_of_event.pk)
-            print(instance_of_event.schedule_range)
+
             for schedule in schedule_formset:
                 instance_of_schedule = schedule.save()
                 instance_of_event.schedule_range.add(instance_of_schedule)
         else:
-            self.get(request, *args, **kwargs)
+            # self.get(request, *args, **kwargs)
+            template_name = 'events/create_event.html'
+            context = {
+                'event_form': event_form,
+                'schedule_formset': schedule_formset
+            }
+            return render(request, template_name, context)
         return HttpResponse('OK')
 
 
