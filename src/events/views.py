@@ -69,6 +69,7 @@ class CreateEventView(View):
                 'schedule_formset': schedule_formset
             }
             return render(request, template_name, context)
+
         template_name = 'events/success.html'
         context = {
             'event': instance_of_event

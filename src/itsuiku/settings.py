@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+URL_BASE = 'http://itsuiku.co:8000'
+
 
 # Application definition
 
