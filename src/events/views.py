@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.forms import formset_factory
 
 from .forms import EventModelForm, ScheduleModelForm
@@ -25,13 +26,23 @@ class EventTopView(View):
 
 
 
-class DashboardView(View):
+class DashboardViewOLD(View):
 
     def get(self, request, *args, **kwargs):
         template_name = 'events/dashboard.html'
         context = {}
         return render(request, template_name, context)
 
+
+
+class DashboardView(ListView):
+    template_name = 'events/dashboard.html'
+
+
+    def get_queryset(self, *args, **kwargs):
+        # events_queryset = Event.objects.filter(user=self.request.user)
+        # return events_queryset
+        return Event.objects.filter(user=self.request.user)
 
 
 class CreateEventView(View):
