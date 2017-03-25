@@ -1,9 +1,6 @@
 from django.conf.urls import url
 
 from .views import (
-    # EventTopView,
-    EventTopView,
-    DashboardView,
     CreateEventView
 )
 
