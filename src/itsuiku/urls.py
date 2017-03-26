@@ -19,9 +19,9 @@ from django.contrib import admin
 from events.views import DashboardView
 
 urlpatterns = [
+    url(r'^', include('home.urls', namespace='home')),
     url(r'^admin/', admin.site.urls),
     url(r'^dashboard/$', DashboardView.as_view(), name='user-dashboard'),
     url(r'^event/', include('events.urls', namespace='event')),
-    url(r'^', include('home.urls', namespace='home')),
     url(r'^(?P<event_code>[\w-]+)/', include('attendances.urls', namespace='attendance')),
 ]
