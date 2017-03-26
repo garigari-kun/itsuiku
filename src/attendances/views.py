@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from django.views.generic.base import View
 
 from events.models import Event
 
@@ -9,7 +10,5 @@ class EventTopView(View):
         event = get_object_or_404(Event, event_code=event_code)
         context = {
             'event': event,
-
         }
-        print(event_code)
         return render(request, template_name, context)

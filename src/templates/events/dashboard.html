@@ -3,5 +3,5 @@
 <h1>ようこそ！{{ request.user }}さん</h1>
 
 {% for event_object in object_list %}
-  <p>{{ event_object.title }}</p>
+  <a href="/{{ event_object.event_code }}">{{ event_object.title }}</a>
 {% endfor %}

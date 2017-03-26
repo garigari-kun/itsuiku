@@ -40,8 +40,6 @@ class DashboardView(ListView):
 
 
     def get_queryset(self, *args, **kwargs):
-        # events_queryset = Event.objects.filter(user=self.request.user)
-        # return events_queryset
         return Event.objects.filter(user=self.request.user)
 
 
