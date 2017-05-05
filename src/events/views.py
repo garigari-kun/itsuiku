@@ -59,6 +59,7 @@ class CreateEventView(View):
 
         return render(request, template_name, context)
 
+
     def post(self, request, *args, **kwargs):
         event_form = EventModelForm(request.POST or None)
         ScheduleFormSet = formset_factory(ScheduleModelForm, extra=1)
@@ -84,17 +85,3 @@ class CreateEventView(View):
             'event': instance_of_event
         }
         return render(request, template_name, context)
-
-
-
-
-class CreateEventViewWIP(CreateView):
-    pass
-    """
-    Research
-    1. Can I use two differenct ModelForm for this view?
-    2. If so, can I name these differently and implement these separately???
-    3. 1 can't be done, are there any good way of solving these? Just View is good choice?
-
-
-    """

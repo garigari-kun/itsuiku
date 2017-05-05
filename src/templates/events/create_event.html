@@ -1,10 +1,30 @@
-<h1>Create event</h1>
-<h1>{{ request.user }}</h1>
+{% extends 'base/app-base.html' %}
+
+{% block home-title %}itsuiku | イベント登録{% endblock home-title %}
 
 
-<form method="POST" action="">
-  {% csrf_token %}
-  {{ event_form.as_p }}
-  {{ schedule_formset.as_p }}
-  <input type='submit' value='イベント作成'>
-</form>
+{% block content %}
+<div class="container">
+  <h1>Create event</h1>
+  <h1>{{ request.user }}</h1>
+
+
+  <form method="POST" action="">
+    {% csrf_token %}
+    {{ event_form.as_p }}
+    {{ schedule_formset.as_p }}
+    <input type='submit' value='イベント作成' class="btn btn-primary">
+  </form>
+</div>
+{% endblock content %}
+
+
+{% block app-js %}
+<script>
+ $( function() {
+   $( "#datepicker" ).datepicker({
+       dateFormat: 'yy-mm-dd'
+   });
+ } );
+ </script>
+{% endblock app-js %}

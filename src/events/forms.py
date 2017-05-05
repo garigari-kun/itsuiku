@@ -8,10 +8,16 @@ class EventModelForm(forms.ModelForm):
     title = forms.CharField(
         label="タイトル",
         required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
     )
 
     description = forms.CharField(
-        label="メモ"
+        label="メモ",
+        widget=forms.Textarea(attrs={
+            'class': 'form-control'
+        })
     )
 
     class Meta:
@@ -22,10 +28,12 @@ class EventModelForm(forms.ModelForm):
 
 class ScheduleModelForm(forms.ModelForm):
 
-    date = forms.CharField(
+    date = forms.DateField(
         label='',
-        widget=forms.TextInput(attrs={
-            'placeholder': '日付'
+        widget=forms.DateInput(attrs={
+            'placeholder': '日付',
+            'id': 'datepicker',
+            'class': 'form-control'
         })
     )
 
