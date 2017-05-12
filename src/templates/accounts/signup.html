@@ -1,0 +1,17 @@
+{% extends 'base/home-base.html' %}
+
+{% block home-title %}itsuiku | サインアップ{% endblock home-title %}
+
+
+{% block content %}
+
+<div class="container">
+  <h1>SignupView</h1>
+
+  <form method="POST" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="登録する">
+  </form>
+</div>
+{% endblock content %}
