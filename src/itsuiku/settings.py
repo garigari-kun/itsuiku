@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #external
+    'custom_user',
     # internal
     'events',
     'invitees'
@@ -127,3 +129,6 @@ STATIC_URL = '/static/'
 
 # events app global
 EVENT_CODE_LEN = 12
+
+# User Registration
+AUTH_USER_MODEL = 'custom_user.EmailUser'
