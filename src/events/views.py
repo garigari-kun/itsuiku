@@ -5,6 +5,8 @@ from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.forms import formset_factory
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from .forms import EventModelForm, ScheduleModelForm
 from .models import Event, Schedule
@@ -43,7 +45,11 @@ class DashboardView(ListView):
         return Event.objects.filter(user=self.request.user)
 
 
-class CreateEventView(View):
+class CreateEventView(LoginRequiredMixin, View):
+
+    login_url = '/account/login/'
+
+
     def get(self, request, *args, **kwargs):
         template_name = 'events/create_event.html'
         # form
