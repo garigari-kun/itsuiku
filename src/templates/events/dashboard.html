@@ -1,7 +1,6 @@
 <h1>Dashboard</h1>
 
-<h1>ようこそ！{{ request.user }}さん</h1>
-
-{% for event_object in object_list %}
-  <a href="/{{ event_object.event_code }}">{{ event_object.title }}</a>
-{% endfor %}
+{% if request.user.is_authenticated %}
+  <h1>ようこそ！{{ request.user }}さん</h1>
+  <a href="{% url 'account:logout' %}">ログアウト</a>
+{% endif %}

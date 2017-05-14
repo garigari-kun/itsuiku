@@ -28,21 +28,17 @@ class EventTopView(View):
 
 
 
-class DashboardViewOLD(View):
+class DashboardView(LoginRequiredMixin, View):
+
+    template_name = 'events/dashboard.html'
+    login_url = '/account/login/'
+
+
 
     def get(self, request, *args, **kwargs):
-        template_name = 'events/dashboard.html'
         context = {}
-        return render(request, template_name, context)
+        return render(request, self.template_name, context)
 
-
-
-class DashboardView(ListView):
-    template_name = 'events/dashboard.html'
-
-
-    def get_queryset(self, *args, **kwargs):
-        return Event.objects.filter(user=self.request.user)
 
 
 class CreateEventView(LoginRequiredMixin, View):
