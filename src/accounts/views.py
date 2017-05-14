@@ -24,12 +24,29 @@ class LoginView(View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        pass
+        form = self.get_form(request)
+        context = {}
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(
+                email=email,
+                password=password
+            )
+            if user is not None:
+                login(request, user)
+                return redirect('user-dashboard')
+
+        context['login_failed'] = '''ログインに失敗しました。\n
+        ログインID、もしくはパスワードが間違っている可能性があります。
+        '''
+        context['form'] = form
+        return render(request, self.template_name, context)
+
 
     def get_form(self, request):
         form = EmailUserLoginForm(request.POST or None)
         return form
-
 
 
 class SignUpView(View):

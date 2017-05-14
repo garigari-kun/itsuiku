@@ -1,0 +1,21 @@
+{% extends 'base/home-base.html' %}
+
+{% block home-title %}itsuiku | ログイン{% endblock home-title %}
+
+
+{% block content %}
+
+<div class="container">
+  <h1>LoginView</h1>
+
+  {% if login_failed %}
+    <p>{{ login_failed }}</p>
+  {% endif %}
+
+  <form method="POST" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="ログイン">
+  </form>
+</div>
+{% endblock content %}
