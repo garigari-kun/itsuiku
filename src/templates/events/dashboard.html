@@ -3,4 +3,6 @@
 {% if request.user.is_authenticated %}
   <h1>ようこそ！{{ request.user }}さん</h1>
   <a href="{% url 'account:logout' %}">ログアウト</a>
+  <a href="{% url 'event:create-event' %}">イベントを作成する</a>
+
 {% endif %}

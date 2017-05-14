@@ -43,44 +43,45 @@ class DashboardView(LoginRequiredMixin, View):
 
 class CreateEventView(LoginRequiredMixin, View):
 
+
     login_url = '/account/login/'
+    template_name = 'events/create_event.html'
 
 
     def get(self, request, *args, **kwargs):
-        template_name = 'events/create_event.html'
         # form
         event_form = EventModelForm()
 
-        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=1)
-        schedule_formset = ScheduleFormSet()
+        # ScheduleFormSet = formset_factory(ScheduleModelForm, extra=1)
+        # schedule_formset = ScheduleFormSet()
 
         context = {
             'event_form': event_form,
-            'schedule_formset': schedule_formset
+            # 'schedule_formset': schedule_formset
         }
 
-        return render(request, template_name, context)
+        return render(request, self.template_name, context)
 
 
     def post(self, request, *args, **kwargs):
         event_form = EventModelForm(request.POST or None)
-        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=1)
-        schedule_formset = ScheduleFormSet(request.POST or None)
-        if event_form.is_valid() and schedule_formset.is_valid():
+        # ScheduleFormSet = formset_factory(ScheduleModelForm, extra=1)
+        # schedule_formset = ScheduleFormSet(request.POST or None)
+        # if event_form.is_valid() and schedule_formset.is_valid():
+        if event_form.is_valid():
             user = request.user
             instance_of_event = event_form.save(commit=False)
             instance_of_event.user = user
             instance_of_event.save()
-            for schedule in schedule_formset:
-                instance_of_schedule = schedule.save()
-                instance_of_event.schedule_range.add(instance_of_schedule)
+            # for schedule in schedule_formset:
+            #     instance_of_schedule = schedule.save()
+            #     instance_of_event.schedule_range.add(instance_of_schedule)
         else:
-            template_name = 'events/create_event.html'
             context = {
                 'event_form': event_form,
-                'schedule_formset': schedule_formset
+                # 'schedule_formset': schedule_formset
             }
-            return render(request, template_name, context)
+            return render(request, self.template_name, context)
 
         template_name = 'events/success.html'
         context = {

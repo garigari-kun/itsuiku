@@ -22,7 +22,6 @@ class Event(models.Model):
     description = models.TextField(null=True, blank=True)
     event_code = models.CharField(max_length=12, unique=True)
     active = models.BooleanField(default=True)
-    # schedule = models.ManyToManyField(Schedule, null=True, blank=True)
     schedule_range = models.ManyToManyField(Schedule, blank=True, verbose_name='schedule_range')
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
