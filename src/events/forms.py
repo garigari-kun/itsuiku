@@ -41,7 +41,8 @@ class ScheduleModelForm(forms.ModelForm):
         max_length=120,
         label='',
         widget=forms.TextInput(attrs={
-            'placeholder': '時間、一言メモ'
+            'placeholder': '時間、一言メモ',
+            'class': 'form-control'
         })
     )
 
