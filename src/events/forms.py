@@ -32,7 +32,7 @@ class ScheduleModelForm(forms.ModelForm):
         label='',
         widget=forms.DateInput(attrs={
             'placeholder': '日付',
-            'id': 'datepicker',
+            # 'id': 'datepicker',
             'class': 'form-control'
         })
     )
@@ -44,33 +44,10 @@ class ScheduleModelForm(forms.ModelForm):
             'placeholder': '時間、一言メモ'
         })
     )
-    """
-    start_time = forms.CharField(
-        label='開始時間',
-
-    )
-
-    end_time = forms.CharField(
-        label='終了時間'
-    )
-    """
-    comment
 
     class Meta:
         model = Schedule
         fields = [
             'date',
-            # 'start_time',
-            # 'end_time'
             'comment',
         ]
-
-# birth_date = forms.DateField(
-#     label='生年月日',
-#     required=False,
-#     widget=SelectDateWidget(
-#         attrs={'class': 'form-control'},
-#         years=range(1900, now.year + 1),
-#         months=MONTHS,
-#     ),
-# )
