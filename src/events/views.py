@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from django.forms import formset_factory
+from django.forms import formset_factory, modelformset_factory
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -52,7 +52,7 @@ class CreateEventView(LoginRequiredMixin, View):
         # form
         event_form = EventModelForm()
 
-        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=0)
+        ScheduleFormSet = modelformset_factory(Schedule, form=ScheduleModelForm)
         schedule_formset = ScheduleFormSet()
 
         context = {
@@ -65,18 +65,21 @@ class CreateEventView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         event_form = EventModelForm(request.POST or None)
-        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=0)
+        ScheduleFormSet = formset_factory(ScheduleModelForm)
         schedule_formset = ScheduleFormSet(request.POST or None)
         if event_form.is_valid() and schedule_formset.is_valid():
         # if event_form.is_valid():
+            print('valid')
             user = request.user
             instance_of_event = event_form.save(commit=False)
             instance_of_event.user = user
-            instance_of_event.save()
+            #instance_of_event.save()
             for schedule in schedule_formset:
-                instance_of_schedule = schedule.save()
-                instance_of_event.schedule_range.add(instance_of_schedule)
+                print(schedule)
+                #instance_of_schedule = schedule.save()
+                #instance_of_event.schedule_range.add(instance_of_schedule)
         else:
+            print('Not valid')
             context = {
                 'event_form': event_form,
                 'schedule_formset': schedule_formset

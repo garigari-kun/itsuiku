@@ -32,7 +32,6 @@ class ScheduleModelForm(forms.ModelForm):
         label='',
         widget=forms.DateInput(attrs={
             'placeholder': '日付',
-            # 'id': 'datepicker',
             'class': 'form-control'
         })
     )
