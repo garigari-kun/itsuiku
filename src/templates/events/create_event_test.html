@@ -19,15 +19,13 @@
 
   <form method="POST" action="">
     {% csrf_token %}
+    {{ schedule_formset.management_form }}
+
     <div class="row">
       <div class="col-sm-6">
-    {{ event_form.as_p }}
   </div>
   <div class="col-sm-6">
     <div id="datepicker"></div>
-
-    {{ schedule_formset.management_form }}
-
   <div class="form-row" id="empty-form">
     {{ schedule_formset.empty_form.as_p }}
   </div>
