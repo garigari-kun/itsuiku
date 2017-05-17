@@ -2,6 +2,14 @@
 
 {% block home-title %}itsuiku | イベント登録{% endblock home-title %}
 
+{% block style %}
+<style>
+#empty-form {
+  visibility: hidden;
+}
+</style>
+{% endblock style %}
+
 
 {% block content %}
 <div class="container">
@@ -14,12 +22,15 @@
     <div class="row">
       <div class="col-sm-6">
     {{ event_form.as_p }}
-    {{ schedule_formset.management_form }}
   </div>
   <div class="col-sm-6">
     <div id="datepicker"></div>
 
   <div class="form-row" id="empty-form">
+    {{ schedule_formset.management_form }}
+    <!-- {% for formset in schedule_formset %}
+      {{ formset.as_p }}
+    {% endfor %} -->
     {{ schedule_formset.empty_form.as_p }}
   </div>
 </div>

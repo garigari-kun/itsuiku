@@ -65,7 +65,7 @@ class CreateEventView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         event_form = EventModelForm(request.POST or None)
-        ScheduleFormSet = formset_factory(ScheduleModelForm)
+        ScheduleFormSet = modelformset_factory(Schedule, form=ScheduleModelForm)
         schedule_formset = ScheduleFormSet(request.POST or None)
         if event_form.is_valid() and schedule_formset.is_valid():
         # if event_form.is_valid():
