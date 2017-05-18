@@ -52,8 +52,8 @@ class CreateEventView(LoginRequiredMixin, View):
         # form
         event_form = EventModelForm()
 
-        ScheduleFormSet = modelformset_factory(Schedule, form=ScheduleModelForm)
-        # ScheduleFormSet = formset_factory(Schedule, extra=1)
+        # ScheduleFormSet = modelformset_factory(Schedule, form=ScheduleModelForm)
+        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=0)
         schedule_formset = ScheduleFormSet()
 
         context = {
@@ -66,7 +66,7 @@ class CreateEventView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         event_form = EventModelForm(request.POST or None)
-        ScheduleFormSet = modelformset_factory(Schedule, form=ScheduleModelForm)
+        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=0)
         schedule_formset = ScheduleFormSet(request.POST or None)
         if event_form.is_valid() and schedule_formset.is_valid():
             print('valid')
@@ -80,6 +80,7 @@ class CreateEventView(LoginRequiredMixin, View):
                 #instance_of_event.schedule_range.add(instance_of_schedule)
         else:
             print('Not valid')
+            print(schedule_formset)
             context = {
                 'event_form': event_form,
                 'schedule_formset': schedule_formset
