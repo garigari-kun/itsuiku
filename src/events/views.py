@@ -36,7 +36,13 @@ class DashboardView(LoginRequiredMixin, View):
 
 
     def get(self, request, *args, **kwargs):
-        context = {}
+        events = Event.objects.filter(user=request.user, active=True)
+
+        print(events)
+        context = {
+            'events': events,
+
+        }
         return render(request, self.template_name, context)
 
 
