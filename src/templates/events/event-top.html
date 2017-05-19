@@ -1,2 +1,33 @@
-<h1>{{ event.title }}</h1>
-<p>{{ event.description }}</p>
+{% extends 'base/app-base.html' %}
+
+{% block home-title %}itsuiku | {{ event.title }}{% endblock home-title %}
+
+{% block style %}
+<style>
+</style>
+{% endblock style %}
+
+
+{% block content %}
+<div class="container">
+
+  <h1>{{ event.title }}</h1>
+  <p>{{ event.description }}</p>
+
+  {% for schedule in event.schedule_range.all %}
+    <p>{{ schedule.date }}: {{ schedule.comment }}</p>
+  {% endfor %}
+
+
+
+
+</div>
+{% endblock content %}
+
+
+{% block app-js %}
+<script>
+
+
+</script>
+{% endblock app-js %}
