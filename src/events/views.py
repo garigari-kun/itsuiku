@@ -73,11 +73,11 @@ class CreateEventView(LoginRequiredMixin, View):
             user = request.user
             instance_of_event = event_form.save(commit=False)
             instance_of_event.user = user
-            #instance_of_event.save()
+            instance_of_event.save()
             for schedule in schedule_formset:
-                print(schedule)
-                #instance_of_schedule = schedule.save()
-                #instance_of_event.schedule_range.add(instance_of_schedule)
+                # print(schedule)
+                instance_of_schedule = schedule.save()
+                instance_of_event.schedule_range.add(instance_of_schedule)
         else:
             print('Not valid')
             print(schedule_formset)
