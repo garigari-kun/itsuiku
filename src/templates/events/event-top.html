@@ -14,9 +14,26 @@
   <h1>{{ event.title }}</h1>
   <p>{{ event.description }}</p>
 
-  {% for schedule in event.schedule_range.all %}
+  <!-- {% for schedule in event.schedule_range.all %}
     <p>{{ schedule.date }}: {{ schedule.comment }}</p>
   {% endfor %}
+
+  <h1>AttendanceForm</h1>
+  {{ attendance_form.as_p }} -->
+
+
+  <div class="row">
+    <div class="col-sm-6">
+      {% for schedule in event.schedule_range.all %}
+        <p>{{ schedule.date }}: {{ schedule.comment }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="col-sm-6">
+      {{ attendance_form.as_p }}
+    </div>
+
+  </div>
 
 
 
