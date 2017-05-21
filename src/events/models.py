@@ -6,10 +6,7 @@ from .utils import code_generator, create_event_code
 
 class Schedule(models.Model):
     date = models.DateField(null=True, blank=True)
-    # start_time = models.TimeField(null=True, blank=True)
-    # end_time = models.TimeField(null=True, blank=True)
     comment = models.CharField(max_length=120, null=True, blank=True)
-    # is_allday = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __str__(self):

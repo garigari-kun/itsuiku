@@ -14,15 +14,14 @@
   <h1>{{ event.title }}</h1>
   <p>{{ event.description }}</p>
 
-  <!-- {% for schedule in event.schedule_range.all %}
-    <p>{{ schedule.date }}: {{ schedule.comment }}</p>
-  {% endfor %}
+  <hr>
+  <h1>参加者</h1>
+  {% if invitees %}
+    {% for invitee in invitees %}
+      <p>{{ invitee.name }}</p>
+    {% endfor %}
+  {% endif %}
 
-  <h1>AttendanceForm</h1>
-  {{ attendance_form.as_p }} -->
-
-
-  <!-- <form method="POST" action="{% url 'attendance:top' event.event_code %}"> -->
   <form method="POST" action="">
     {% csrf_token %}
 

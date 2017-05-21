@@ -4,6 +4,7 @@ from django.views.generic.base import View
 from django.forms import formset_factory
 
 from events.models import Event
+from invitees.models import Invitee
 from invitees.forms import InviteeModelForm, AttendanceModelForm
 
 class EventTopView(View):
@@ -12,8 +13,12 @@ class EventTopView(View):
         template_name = 'events/event-top.html'
         event = get_object_or_404(Event, event_code=event_code)
         num_of_date = len(event.schedule_range.all())
-        # for s in event.schedule_range.all():
-        #     print(s)
+
+        # Entered invitees
+        invitees = Invitee.objects.filter(event=event)
+
+
+
         # InviteeModelForm
         invitee_form = InviteeModelForm()
         # AttendanceModelFormSet
@@ -22,6 +27,7 @@ class EventTopView(View):
 
         context = {
             'event': event,
+            'invitees': invitees,
             'attendance_form': attendance_form,
             'invitee_form': InviteeModelForm,
         }
@@ -50,14 +56,6 @@ class EventTopView(View):
                 instance_attendance.save()
                 instance_invitee.attendance.add(instance_attendance)
 
-            # for attendance in attendance_form:
-            #     print(attendance)
-            #     instance_attendance = attendance.save(commit=False)
-            #     instance_attendance.save()
-
-                # instance_attendance.event = event
-                # instance_attendance.save()
-                # instance_invitee.attendance.add(instance_attendance)
 
             return redirect('attendance:top', event_code=event_code)
 
