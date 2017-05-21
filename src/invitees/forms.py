@@ -4,6 +4,28 @@ from .models import Attendance, Invitee, ATTENDANCE_CHOICES
 
 
 class InviteeModelForm(forms.ModelForm):
+
+    name = forms.CharField(
+        label='お名前',
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+
+    comment = forms.CharField(
+        label='一言メモ',
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+
+
     class Meta:
         model = Invitee
         fields = [
