@@ -17,11 +17,20 @@ class EmailUserForm(forms.ModelForm):
             'required': 'メールアドレスは必須です',
             'invalid': 'このメールアドレスは不正です',
         },
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
 
     password1 = forms.CharField(
         label='パスワード',
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control'
+            }
+        ),
         error_messages = {
             'required': 'パスワードは必須です',
         },
@@ -29,7 +38,11 @@ class EmailUserForm(forms.ModelForm):
 
     password2 = forms.CharField(
         label='確認パスワード',
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control'
+            }
+        ),
         error_messages = {
             'required': 'パスワードは必須です',
         },

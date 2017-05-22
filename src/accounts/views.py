@@ -73,7 +73,7 @@ class SignUpView(View):
             if login_user is not None:
                 if login_user.is_active:
                     login(request, login_user)
-                    return redirect('user-dashboard')
+                    return redirect('event:create-event')
         else:
             context = {
                 'form': form,
