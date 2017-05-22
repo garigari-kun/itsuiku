@@ -19,10 +19,17 @@
     <h1>参加者</h1>
     {% for invitee in invitees %}
       <p>{{ invitee.name }}</p>
+      {% for d in invitee.attendance.all %}
+        {{ d.schedule.date }}: {{ d.choice }}
+      {% endfor %}
     {% endfor %}
   {% else %}
-    <h1>参加者はいません</h1>
+    <p>参加者はいません</p>
   {% endif %}
+
+
+  <hr>
+  <h1>参加入力フォーム</h1>
 
   <form method="POST" action="">
     {% csrf_token %}

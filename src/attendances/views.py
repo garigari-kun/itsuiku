@@ -48,8 +48,7 @@ class EventTopView(View):
             instance_invitee.save()
 
             for (attendance, schedule) in zip(attendance_form, event.schedule_range.all()):
-                print(attendance)
-                print(schedule)
+                # print(attendance.choice)
                 instance_attendance = attendance.save(commit=False)
                 instance_attendance.schedule = schedule
                 instance_attendance.event = event

@@ -36,11 +36,11 @@ class InviteeModelForm(forms.ModelForm):
 
 class AttendanceModelForm(forms.ModelForm):
 
-    choice = forms.TypedChoiceField(
-        choices=ATTENDANCE_CHOICES,
-        widget=forms.RadioSelect,
-        initial='yes'
-    )
+    # choice = forms.TypedChoiceField(
+    #     choices=ATTENDANCE_CHOICES,
+    #     widget=forms.RadioSelect,
+    #     initial='yes'
+    # )
 
     class Meta:
         model = Attendance
