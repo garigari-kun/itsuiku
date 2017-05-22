@@ -26,7 +26,7 @@ class EmailUserForm(forms.ModelForm):
             'required': 'パスワードは必須です',
         },
     )
-    
+
     password2 = forms.CharField(
         label='確認パスワード',
         widget=forms.PasswordInput,
@@ -97,12 +97,21 @@ class EmailUserLoginForm(forms.Form):
         label='メールアドレス',
         error_messages={
             'required': 'メールアドレスが入力されていません',
-        }
+        },
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
 
     password = forms.CharField(
         label='パスワード',
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control'
+            }
+        ),
         error_messages={
             'required': 'パスワードが入力されていません',
         }

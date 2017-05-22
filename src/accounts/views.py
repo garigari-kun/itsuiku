@@ -15,7 +15,7 @@ class LoginView(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
-            return redirect('user-dashboard')
+            return redirect('event:create-event')
 
         form = self.get_form(request)
         context = {
@@ -35,7 +35,7 @@ class LoginView(View):
             )
             if user is not None:
                 login(request, user)
-                return redirect('user-dashboard')
+                return redirect('event:create-event')
 
         context['login_failed'] = '''ログインに失敗しました。\n
         ログインID、もしくはパスワードが間違っている可能性があります。

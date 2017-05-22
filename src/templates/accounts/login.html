@@ -6,16 +6,26 @@
 {% block content %}
 
 <div class="container">
-  <h1>LoginView</h1>
 
-  {% if login_failed %}
-    <p>{{ login_failed }}</p>
-  {% endif %}
 
-  <form method="POST" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="ログイン">
-  </form>
+  <h1>ユーザーログイン</h1>
+
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      {% if login_failed %}
+        <div class="alert alert-danger" role="alert">{{ login_failed }}</div>
+      {% endif %}
+
+      <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="ログイン" class="btn btn-primary">
+        <a href="{% url 'account:signup' %}">まだユーザー登録していない方はこちら</a>
+      </form>
+    </div>
+  </div>
+
+
 </div>
 {% endblock content %}
