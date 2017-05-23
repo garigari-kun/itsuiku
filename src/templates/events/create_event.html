@@ -5,7 +5,7 @@
 {% block style %}
 <style>
 #empty-form {
-  visibility: hidden;
+  display: none;
 }
 </style>
 {% endblock style %}
@@ -24,19 +24,19 @@
       <div class="col-sm-4">
     {{ event_form.as_p }}
   </div>
-  <div class="col-sm-4">
-    <div id="datepicker"></div>
-
-    {{ schedule_formset.management_form }}
-
-  <!-- <div class="form-row" id="empty-form">
-    {{ schedule_formset.empty_form.as_p }}
-  </div> -->
-</div>
 <div class="col-sm-4">
   <div class="form-row" id="empty-form">
     {{ schedule_formset.empty_form.as_p }}
   </div>
+</div>
+<div class="col-sm-4">
+  <div id="datepicker"></div>
+
+  {{ schedule_formset.management_form }}
+
+<!-- <div class="form-row" id="empty-form">
+  {{ schedule_formset.empty_form.as_p }}
+</div> -->
 </div>
 
   </div>
