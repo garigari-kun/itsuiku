@@ -8,9 +8,12 @@ from invitees.models import Invitee
 from invitees.forms import InviteeModelForm, AttendanceModelForm
 
 class EventTopView(View):
-    # test event code : dcmqrez5b591
+
+    template_name = 'events/event-top.html'
+
+
     def get(self, request, event_code=None, *args, **kwargs):
-        template_name = 'events/event-top.html'
+        # template_name = 'events/event-top.html'
         event = get_object_or_404(Event, event_code=event_code)
         num_of_date = len(event.schedule_range.all())
 
@@ -31,7 +34,7 @@ class EventTopView(View):
             'attendance_form': attendance_form,
             'invitee_form': InviteeModelForm,
         }
-        return render(request, template_name, context)
+        return render(request, self.template_name, context)
 
 
     def post(self, request, event_code=None, *args, **kwargs):
