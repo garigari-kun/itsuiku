@@ -20,13 +20,13 @@ class EventTopView(View):
         # Entered invitees
         invitees = Invitee.objects.filter(event=event)
 
-
-
         # InviteeModelForm
-        invitee_form = InviteeModelForm()
+        # invitee_form = InviteeModelForm()
+        invitee_form = self.get_invitee_form(request)
         # AttendanceModelFormSet
-        AttendanceFormSet = formset_factory(AttendanceModelForm, extra=num_of_date)
-        attendance_form = AttendanceFormSet()
+        # AttendanceFormSet = formset_factory(AttendanceModelForm, extra=num_of_date)
+        # attendance_form = AttendanceFormSet()
+        attendance_form = self.get_attendance_formset(request, extra=num_of_date)
 
         context = {
             'event': event,
@@ -45,22 +45,29 @@ class EventTopView(View):
         AttendanceFormSet = formset_factory(AttendanceModelForm)
         attendance_form = AttendanceFormSet(request.POST)
         if invitee_form.is_valid() and attendance_form.is_valid():
-            print('both valid')
             instance_invitee = invitee_form.save(commit=False)
             instance_invitee.event = event
             instance_invitee.save()
 
             for (attendance, schedule) in zip(attendance_form, event.schedule_range.all()):
-                # print(attendance.choice)
                 instance_attendance = attendance.save(commit=False)
                 instance_attendance.schedule = schedule
                 instance_attendance.event = event
                 instance_attendance.save()
                 instance_invitee.attendance.add(instance_attendance)
 
-
             return redirect('attendance:top', event_code=event_code)
 
         else:
             print('both invalid')
         return HttpResponse('post has been sent')
+
+
+    def get_invitee_form(self, request, *args, **kwargs):
+        form = InviteeModelForm(request.POST or None)
+        return form
+
+    def get_attendance_formset(self, request, extra=0, *args, **kwargs):
+        AttendanceFormSet = formset_factory(AttendanceModelForm, extra=extra)
+        form = AttendanceFormSet(request.POST or None)
+        return form
