@@ -13,20 +13,6 @@ from .models import Event, Schedule
 
 
 
-class EventTopView(View):
-    # test event code : dcmqrez5b591
-    def get(self, request, event_code=None, *args, **kwargs):
-        template_name = 'events/event-top.html'
-        event = get_object_or_404(Event, event_code=event_code)
-        context = {
-            'event': event,
-
-        }
-        print(event_code)
-        return render(request, template_name, context)
-
-
-
 
 class DashboardView(LoginRequiredMixin, View):
 
@@ -52,16 +38,14 @@ class CreateEventView(LoginRequiredMixin, View):
 
     login_url = '/account/login/'
     template_name = 'events/create_event.html'
+    success_template_name = 'events/success.html'
 
 
     def get(self, request, *args, **kwargs):
         # form
-        event_form = EventModelForm()
-
-        # ScheduleFormSet = modelformset_factory(Schedule, form=ScheduleModelForm)
-        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=0)
-        schedule_formset = ScheduleFormSet()
-
+        event_form = self.get_event_form(request)
+        schedule_formset = self.get_schedule_formset(request, extra=0)
+        # context
         context = {
             'event_form': event_form,
             'schedule_formset': schedule_formset
@@ -71,46 +55,38 @@ class CreateEventView(LoginRequiredMixin, View):
 
 
     def post(self, request, *args, **kwargs):
-        event_form = EventModelForm(request.POST or None)
-        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=0)
-        schedule_formset = ScheduleFormSet(request.POST or None)
+        # form
+        event_form = self.get_event_form(request)
+        schedule_formset = self.get_schedule_formset(request, extra=0)
+
         if event_form.is_valid() and schedule_formset.is_valid():
-            print('valid')
             user = request.user
             instance_of_event = event_form.save(commit=False)
             instance_of_event.user = user
             instance_of_event.save()
             for schedule in schedule_formset:
-                # print(schedule)
                 instance_of_schedule = schedule.save()
                 instance_of_event.schedule_range.add(instance_of_schedule)
         else:
-            print('Not valid')
-            print(schedule_formset)
             context = {
                 'event_form': event_form,
                 'schedule_formset': schedule_formset
             }
+
             return render(request, self.template_name, context)
 
-        template_name = 'events/success.html'
         context = {
             'event': instance_of_event
         }
-        return render(request, template_name, context)
+
+        return render(request, self.success_template_name, context)
 
 
-class CreateViewTest(View):
-    template_name = 'events/create_event_test.html'
+    def get_event_form(self, request, *args, **kwargs):
+        form = EventModelForm(request.POST or None)
+        return form
 
-
-    def get(self, request, *args, **kwargs):
-        # form
-        ScheduleFormSet = modelformset_factory(Schedule, form=ScheduleModelForm)
-        schedule_formset = ScheduleFormSet()
-
-        context = {
-            'schedule_formset': schedule_formset
-        }
-
-        return render(request, self.template_name, context)
+    def get_schedule_formset(self, request, extra=0, *args, **kwargs):
+        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=extra)
+        formset = ScheduleFormSet(request.POST or None)
+        return formset
