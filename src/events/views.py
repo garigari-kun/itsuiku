@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView
@@ -71,14 +71,14 @@ class CreateEventView(LoginRequiredMixin, View):
                 'event_form': event_form,
                 'schedule_formset': schedule_formset
             }
-
             return render(request, self.template_name, context)
 
         context = {
             'event': instance_of_event
         }
-
-        return render(request, self.success_template_name, context)
+        # WIP: After save, redirect to success view
+        return redirect('event:event-success', event_code=instance_of_event.event_code)
+        # return render(request, self.success_template_name, context)
 
 
     def get_event_form(self, request, *args, **kwargs):
@@ -89,3 +89,16 @@ class CreateEventView(LoginRequiredMixin, View):
         ScheduleFormSet = formset_factory(ScheduleModelForm, extra=extra)
         formset = ScheduleFormSet(request.POST or None)
         return formset
+
+
+
+class EventCreationSuccessView(View):
+
+    template_name = 'events/success.html'
+
+    def get(self, request, event_code=None, *args, **kwargs):
+        event = get_object_or_404(Event, event_code=event_code)
+        context = {
+            'event': event
+        }
+        return render(request, self.template_name, context)
