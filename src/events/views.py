@@ -19,17 +19,16 @@ class DashboardView(LoginRequiredMixin, View):
     template_name = 'events/dashboard.html'
     login_url = '/account/login/'
 
-
-
     def get(self, request, *args, **kwargs):
         events = Event.objects.filter(user=request.user, active=True)
-
-        print(events)
         context = {
             'events': events,
 
         }
         return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        pass
 
 
 
