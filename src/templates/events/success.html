@@ -1,5 +1,25 @@
-<h1>Success event creation</h1>
+{% extends 'base/app-base.html' %}
 
-<h1>イベントURL</h1>
+{% block home-title %}itsuiku | イベント作成完了{% endblock home-title %}
 
-<a href="http://itsuiku.co:8000/{{ event.event_code }}">自分の予定を入力する</a>
+{% block style %}
+<style>
+
+</style>
+{% endblock style %}
+
+
+{% block content %}
+<div class="container">
+
+  {% include 'includes/app-navbar.html' %}
+
+  <h1>イベント登録が完了しました！</h1>
+  <p>URLを友達や同僚に送り、スケジュールを入力してもらいましょう！</p>
+
+  <input type="text" class="form-control" value="http://itusiku.co:8000{{ event.event_code }}">
+  <br />
+  <a href="http://itsuiku.co:8000/{{ event.event_code }}" class="btn btn-danger">まずは自分の予定を入力する</a>
+
+
+{% endblock content %}

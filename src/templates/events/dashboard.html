@@ -17,12 +17,8 @@
   {% include 'includes/app-navbar.html' %}
 
   {% if request.user.is_authenticated %}
-    <!-- <h1>ようこそ！{{ request.user }}さん</h1>
-    <a href="{% url 'account:logout' %}">ログアウト</a>
-    <a href="{% url 'event:create-event' %}">イベントを作成する</a>
-
-    <br /> -->
     <h2>{{ request.user }}さんの作成したイベント</h2>
+    <hr />
     {% if events %}
     <table class="table table-striped table-hover">
       <thead>
@@ -40,6 +36,9 @@
         {% endfor %}
       </tbody>
     </table>
+    {% else %}
+      <p>現在、登録されているイベントはありません。</p>
+      <a class="btn btn-primary" href="{% url 'event:create-event' %}">早速、イベントを作成する！</a>
     {% endif %}
 
   {% endif %}
