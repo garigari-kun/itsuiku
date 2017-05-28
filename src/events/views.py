@@ -102,3 +102,21 @@ class EventCreationSuccessView(View):
             'event': event
         }
         return render(request, self.template_name, context)
+
+
+
+class UpateEventView(View):
+    def get(self, request, event_code=None, *args, **kwargs):
+        pass
+
+    def post(self, request, event_code=None, *args, **kwargs):
+        pass
+
+
+
+class DeleteEventView(View):
+    def get(self, request, event_code=None, *args, **kwargs):
+        pass
+
+    def post(self, request, event_code=None, *args, **kwargs):
+        pass
