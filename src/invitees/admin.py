@@ -16,6 +16,7 @@ class InviteeModelAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
         'name',
+        'comment',
         'created',
         'updated'
     )

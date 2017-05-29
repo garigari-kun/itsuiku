@@ -19,6 +19,7 @@ class ScheduleModelAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
         'date',
+        'comment',
         # 'start_time',
         # 'end_time',
         'created',
