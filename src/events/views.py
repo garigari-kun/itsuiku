@@ -116,13 +116,24 @@ class UpateEventView(View):
 
 class DeleteEventView(LoginRequiredMixin, View):
     def get(self, request, event_code=None, *args, **kwargs):
+        return self.delete(request, event_code, *args, **kwargs)
+        # event = get_object_or_404(Event, event_code=event_code)
+        # for schedule in event.schedule_range.all():
+        #     schedule.delete()
+        #     print(schedule)
+        # event.delete()
+        # return redirect('user-dashboard')
+
+
+
+
+    def post(self, request, event_code=None, *args, **kwargs):
+        pass
+
+    def delete(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
         for schedule in event.schedule_range.all():
             schedule.delete()
             print(schedule)
         event.delete()
         return redirect('user-dashboard')
-        # return HttpResponse('deletion')
-
-    def post(self, request, event_code=None, *args, **kwargs):
-        pass
