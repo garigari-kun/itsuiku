@@ -3,7 +3,8 @@ from django.conf.urls import url
 from .views import (
     CreateEventView,
     DeleteEventView,
-    EventCreationSuccessView
+    EventCreationSuccessView,
+    UpdateEventView
 )
 
 
@@ -16,7 +17,10 @@ urlpatterns = [
         name='event-success'),
     url(r'^(?P<event_code>[\w-]+)/delete/$',
         DeleteEventView.as_view(),
-        name='delete-event')
+        name='delete-event'),
+    url(r'^(?P<event_code>[\w-]+)/update/$',
+        UpdateEventView.as_view(),
+        name='update-event')
 
 ]
 

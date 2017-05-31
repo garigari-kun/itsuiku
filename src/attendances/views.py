@@ -20,12 +20,7 @@ class EventTopView(View):
         # Entered invitees
         invitees = Invitee.objects.filter(event=event)
 
-        # InviteeModelForm
-        # invitee_form = InviteeModelForm()
         invitee_form = self.get_invitee_form(request)
-        # AttendanceModelFormSet
-        # AttendanceFormSet = formset_factory(AttendanceModelForm, extra=num_of_date)
-        # attendance_form = AttendanceFormSet()
         attendance_form = self.get_attendance_formset(request, extra=num_of_date)
 
         context = {

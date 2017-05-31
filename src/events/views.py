@@ -105,26 +105,56 @@ class EventCreationSuccessView(View):
 
 
 
-class UpateEventView(View):
+class UpdateEventView(View):
+
+    template_name = 'events/create_event.html'
+
     def get(self, request, event_code=None, *args, **kwargs):
-        pass
+        event = get_object_or_404(Event, event_code=event_code)
+        # # form
+        # event_form = self.get_event_form(request)
+        # schedule_formset = self.get_schedule_formset(request, extra=0)
+        # # context
+        # context = {
+        #     'event_form': event_form,
+        #     'schedule_formset': schedule_formset
+        # }
+        #
+        # return render(request, self.template_name, context)
+        event_form = self.get_event_form(request, instance=event)
+        schedule_formset = self.get_schedule_formset(request, extra=0, instance=event)
+
+        context = {
+            'event_form': event_form,
+            # 'schedule_formset': schedule_formset
+        }
+        return render(request, self.template_name, context)
+
+        # return HttpResponse('update view')
 
     def post(self, request, event_code=None, *args, **kwargs):
         pass
+
+    def get_event_form(self, request, instance, *args, **kwargs):
+        form = EventModelForm(request.POST or None, instance=instance)
+        return form
+
+    def get_schedule_formset(self, request, extra=0, instance=None, *args, **kwargs):
+        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=extra)
+        formset = ScheduleFormSet(request.POST or None, instance=instance)
+        return formset
+
+
+    # def get_schedule_formset(self, request, extra=0, instance, *args, **kwargs):
+    #     ScheduleFormSet = formset_factory(ScheduleModelForm, extra=extra)
+    #     formset = ScheduleFormSet(request.POST or None, instance=instance)
+    #     return formset
 
 
 
 class DeleteEventView(LoginRequiredMixin, View):
     def get(self, request, event_code=None, *args, **kwargs):
         return self.delete(request, event_code, *args, **kwargs)
-        # event = get_object_or_404(Event, event_code=event_code)
-        # for schedule in event.schedule_range.all():
-        #     schedule.delete()
-        #     print(schedule)
-        # event.delete()
-        # return redirect('user-dashboard')
-
-
 
 
     def post(self, request, event_code=None, *args, **kwargs):

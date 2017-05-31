@@ -14,7 +14,9 @@
   <h1>{{ event.title }}</h1>
   <p>{{ event.description }}</p>
 
-  <a href="{% url 'event:delete-event' event_code=event.event_code %}" class="btn btn-danger">Delete</a>
+  <a href="{% url 'event:delete-event' event_code=event.event_code %}" class="btn btn-danger">削除</a>
+  <a href="{% url 'event:update-event' event_code=event.event_code %}" class="btn btn-danger">編集</a>
+
 
   <hr>
   {% if invitees %}
