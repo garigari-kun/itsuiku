@@ -28,6 +28,15 @@
     {{ event_form.as_p }}
   </div>
 <div class="col-sm-4">
+  {% if schedule_formset %}
+    <div>
+      {% for schedule in schedule_formset %}
+      <!-- {% if schedule.date.value %} -->
+        {{ schedule.as_p }}
+        <!-- {% endif %} -->
+      {% endfor %}
+    </div>
+  {% endif %}
   <div class="form-row" id="empty-form">
     {{ schedule_formset.empty_form.as_p }}
   </div>

@@ -111,24 +111,18 @@ class UpdateEventView(View):
 
     def get(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
-        # # form
-        # event_form = self.get_event_form(request)
-        # schedule_formset = self.get_schedule_formset(request, extra=0)
-        # # context
-        # context = {
-        #     'event_form': event_form,
-        #     'schedule_formset': schedule_formset
-        # }
-        #
-        # return render(request, self.template_name, context)
         event_form = self.get_event_form(request, instance=event)
         schedule_list = []
         for schedule in event.schedule_range.all():
-            schedule_list.append(schedule)
-        print(schedule_list)
+            # Creating schedule as a dict for schedule_formset instance
+            tmp_dict = {
+                'date': schedule.date,
+                'comment': schedule.comment
+            }
+            schedule_list.append(tmp_dict)
 
-        schedule_formset = self.get_schedule_formset(request, instance=event.schedule_range.all())
-        # schedule_formset = self.get_schedule_formset(request, instance=schedule_list)
+        print(schedule_list)
+        schedule_formset = self.get_schedule_formset(request, instance=schedule_list)
 
         context = {
             'event_form': event_form,
@@ -136,7 +130,6 @@ class UpdateEventView(View):
         }
         return render(request, self.template_name, context)
 
-        # return HttpResponse('update view')
 
     def post(self, request, event_code=None, *args, **kwargs):
         pass
