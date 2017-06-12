@@ -76,9 +76,9 @@ class CreateEventView(LoginRequiredMixin, View):
         context = {
             'event': instance_of_event
         }
-        # WIP: After save, redirect to success view
+
         return redirect('event:event-success', event_code=instance_of_event.event_code)
-        # return render(request, self.success_template_name, context)
+
 
 
     def get_event_form(self, request, *args, **kwargs):
@@ -120,8 +120,6 @@ class UpdateEventView(View):
                 'comment': schedule.comment
             }
             schedule_list.append(tmp_dict)
-
-        print(schedule_list)
         schedule_formset = self.get_schedule_formset(request, instance=schedule_list)
 
         context = {
@@ -132,14 +130,53 @@ class UpdateEventView(View):
 
 
     def post(self, request, event_code=None, *args, **kwargs):
-        pass
+        event = get_object_or_404(Event, event_code=event_code)
+        event_form = self.get_event_form(request, instance=event)
+
+        if event_form.is_valid():
+            instance_of_event = event_form.save()
+            return HttpResponse('success')
+
+        return HttpResponse('post has been sent')
+
+
+
+    # def post(self, request, *args, **kwargs):
+    #     # form
+    #     event_form = self.get_event_form(request)
+    #     schedule_formset = self.get_schedule_formset(request, extra=0)
+    #
+    #     if event_form.is_valid() and schedule_formset.is_valid():
+    #         user = request.user
+    #         instance_of_event = event_form.save(commit=False)
+    #         instance_of_event.user = user
+    #         instance_of_event.save()
+    #         for schedule in schedule_formset:
+    #             instance_of_schedule = schedule.save()
+    #             instance_of_event.schedule_range.add(instance_of_schedule)
+    #     else:
+    #         context = {
+    #             'event_form': event_form,
+    #             'schedule_formset': schedule_formset
+    #         }
+    #         return render(request, self.template_name, context)
+    #
+    #     context = {
+    #         'event': instance_of_event
+    #     }
+    #     # WIP: After save, redirect to success view
+    #     return redirect('event:event-success', event_code=instance_of_event.event_code)
+    #     # return render(request, self.success_template_name, context)
+
+
+
 
     def get_event_form(self, request, instance, *args, **kwargs):
         form = EventModelForm(request.POST or None, instance=instance)
         return form
 
     def get_schedule_formset(self, request, extra=0, instance=None, *args, **kwargs):
-        ScheduleFormSet = formset_factory(ScheduleModelForm)
+        ScheduleFormSet = formset_factory(ScheduleModelForm, extra=extra)
         formset = ScheduleFormSet(request.POST or None, initial=instance)
         # formset = ScheduleFormSet(request.POST or None, queryset=instance)
 
