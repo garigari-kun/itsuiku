@@ -104,10 +104,21 @@ class EventCreationSuccessView(View):
         return render(request, self.template_name, context)
 
 
+'''
 
+UpdateEventViewメモ
+
+スケジュールの部分はajaxで削除させる？
+or
+チェックボックスで選択したものを削除させる？
+
+スケジュール部分は考慮必要あり
+
+'''
 class UpdateEventView(View):
 
-    template_name = 'events/create_event.html'
+    # template_name = 'events/create_event.html'
+    template_name = 'events/update_event.html'
 
     def get(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
@@ -139,34 +150,6 @@ class UpdateEventView(View):
 
         return HttpResponse('post has been sent')
 
-
-
-    # def post(self, request, *args, **kwargs):
-    #     # form
-    #     event_form = self.get_event_form(request)
-    #     schedule_formset = self.get_schedule_formset(request, extra=0)
-    #
-    #     if event_form.is_valid() and schedule_formset.is_valid():
-    #         user = request.user
-    #         instance_of_event = event_form.save(commit=False)
-    #         instance_of_event.user = user
-    #         instance_of_event.save()
-    #         for schedule in schedule_formset:
-    #             instance_of_schedule = schedule.save()
-    #             instance_of_event.schedule_range.add(instance_of_schedule)
-    #     else:
-    #         context = {
-    #             'event_form': event_form,
-    #             'schedule_formset': schedule_formset
-    #         }
-    #         return render(request, self.template_name, context)
-    #
-    #     context = {
-    #         'event': instance_of_event
-    #     }
-    #     # WIP: After save, redirect to success view
-    #     return redirect('event:event-success', event_code=instance_of_event.event_code)
-    #     # return render(request, self.success_template_name, context)
 
 
 
