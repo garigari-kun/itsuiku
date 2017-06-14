@@ -28,6 +28,15 @@
     {{ event_form.as_p }}
   </div>
 <div class="col-sm-4">
+  <div id="datepicker"></div>
+
+  {{ schedule_formset.management_form }}
+
+<!-- <div class="form-row" id="empty-form">
+  {{ schedule_formset.empty_form.as_p }}
+</div> -->
+</div>
+<div class="col-sm-4">
   {% if schedule_formset %}
     <div>
       {% for schedule in schedule_formset %}
@@ -40,15 +49,6 @@
   <div class="form-row" id="empty-form">
     {{ schedule_formset.empty_form.as_p }}
   </div>
-</div>
-<div class="col-sm-4">
-  <div id="datepicker"></div>
-
-  {{ schedule_formset.management_form }}
-
-<!-- <div class="form-row" id="empty-form">
-  {{ schedule_formset.empty_form.as_p }}
-</div> -->
 </div>
 
   </div>
@@ -84,6 +84,8 @@ $(function() {
         emptyRow.find("input, select, textarea").each(function(){
             newFormRow = updateEmptyFormIDs($(this), totalForms, date)
         })
+
+
         // insert new form at the end of the last form row
         $(".form-row:last").after(newFormRow)
         // update total form count (to include new row)
@@ -124,6 +126,7 @@ $(function() {
     // update label id
     var inputLabel = parentDiv.find("label")
     inputLabel.attr("for", "id_" + newName)
+
     // return created row
     return newFormRow
 }

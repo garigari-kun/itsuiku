@@ -13,7 +13,6 @@ class EventTopView(View):
 
 
     def get(self, request, event_code=None, *args, **kwargs):
-        # template_name = 'events/event-top.html'
         event = get_object_or_404(Event, event_code=event_code)
         num_of_date = len(event.schedule_range.all())
 
