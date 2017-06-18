@@ -42,6 +42,11 @@ class AttendanceModelForm(forms.ModelForm):
     #     initial='yes'
     # )
 
+    choice = forms.TypedChoiceField(
+        choices=ATTENDANCE_CHOICES,
+        widget=forms.RadioSelect,
+    )
+
     class Meta:
         model = Attendance
         fields = [
