@@ -1,0 +1,58 @@
+{% extends 'base/app-base.html' %}
+
+{% block home-title %}itsuiku | {{ event.title }}{% endblock home-title %}
+
+{% block style %}
+<style>
+</style>
+{% endblock style %}
+
+
+{% block content %}
+<div class="container">
+
+  <h1>{{ event.title }}</h1>
+  <p>{{ event.description }}</p>
+
+
+
+
+
+  <h1>参加入力フォーム</h1>
+
+  <form method="POST" action="">
+    {% csrf_token %}
+
+  {{ invitee_form }}
+
+
+  <div class="row">
+    <div class="col-sm-6">
+      {% for schedule in event.schedule_range.all %}
+        <p>{{ schedule.date }}: {{ schedule.comment }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="col-sm-6">
+      {{ attendance_form.as_p }}
+    </div>
+
+  </div>
+
+  <input type="submit" value="登録する" class="btn btn-primary">
+
+  </form>
+
+
+
+
+</div>
+{% endblock content %}
+
+
+{% block app-js %}
+<script>
+
+
+</script>
+{% endblock app-js %}
