@@ -31,7 +31,9 @@
       {% for d in invitee.attendance.all %}
         {{ d.schedule.date }}: {{ d.choice }}
       {% endfor %}
-      <button class="btn btn-xs btn-warning">編集</button>
+      <a class="btn btn-xs btn-warning" href="{% url 'attendance:update' invitee_id=invitee.id event_code=event.event_code %}">
+        編集
+      </a>
       <button class="btn btn-xs btn-danger">削除</button>
     {% endfor %}
   {% else %}

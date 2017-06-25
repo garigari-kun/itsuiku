@@ -90,7 +90,7 @@ class CreateEventAttendanceView(View):
             'event': event,
             # 'invitees': invitees,
             'attendance_form': attendance_form,
-            'invitee_form': InviteeModelForm,
+            'invitee_form': invitee_form,
         }
         return render(request, self.template_name, context)
 
@@ -132,10 +132,54 @@ class CreateEventAttendanceView(View):
 
 
 
+class UpdateEventAttendanceView(View):
+
+    template_name = 'events/create-event-attendance.html'
+
+    def get(self, request, event_code=None, invitee_id=None, *args, **kwargs):
+        event = get_object_or_404(Event, event_code=event_code)
+        num_of_date = len(event.schedule_range.all())
+
+        # Entered invitees
+        invitee = get_object_or_404(Invitee, pk=invitee_id)
+
+
+        # here 0627
+
+        invitee_form = self.get_invitee_form(request, instance=invitee)
+        # attendance_form = self.get_attendance_formset(request, extra=num_of_date)
+        #
+        context = {
+            'event': event,
+            # 'invitees': invitees,
+            # 'attendance_form': attendance_form,
+            'invitee_form': invitee_form,
+        }
+        return render(request, self.template_name, context)
+        # return HttpResponse('get request')
+
+
+    def get_invitee_form(self, request, instance,  *args, **kwargs):
+        form = InviteeModelForm(request.POST or None, instance=instance)
+        return form
+
+    def get_attendance_formset(self, request, extra=0, *args, **kwargs):
+        AttendanceFormSet = formset_factory(AttendanceModelForm, extra=extra)
+        form = AttendanceFormSet(request.POST or None)
+        return form
 
 
 
-
+"""
+        for schedule in event.schedule_range.all():
+            # Creating schedule as a dict for schedule_formset instance
+            tmp_dict = {
+                'date': schedule.date,
+                'comment': schedule.comment
+            }
+            schedule_list.append(tmp_dict)
+        schedule_formset = self.get_schedule_formset(request, instance=schedule_list)
+"""
 
 
 
