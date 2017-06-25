@@ -14,8 +14,13 @@
   <h1>{{ event.title }}</h1>
   <p>{{ event.description }}</p>
 
+
+  {% if request.user.is_authenticated %}
   <a href="{% url 'event:delete-event' event_code=event.event_code %}" class="btn btn-danger">削除</a>
   <a href="{% url 'event:update-event' event_code=event.event_code %}" class="btn btn-danger">編集</a>
+  {% endif %}
+
+  <a class="btn btn-primary" href="{% url 'attendance:create' event_code=event.event_code %}">参加予定を入力する</a>
 
 
   <hr>
@@ -26,6 +31,8 @@
       {% for d in invitee.attendance.all %}
         {{ d.schedule.date }}: {{ d.choice }}
       {% endfor %}
+      <button class="btn btn-xs btn-warning">編集</button>
+      <button class="btn btn-xs btn-danger">削除</button>
     {% endfor %}
   {% else %}
     <p>参加者はいません</p>

@@ -65,3 +65,45 @@ class EventTopView(View):
         AttendanceFormSet = formset_factory(AttendanceModelForm, extra=extra)
         form = AttendanceFormSet(request.POST or None)
         return form
+
+
+
+
+
+
+
+class CreateEventAttendanceView(View):
+
+    def get(self, request, event_code=None, *args, **kwargs):
+        return HttpResponse('get request called')
+
+    def post(self, request, event_code=None, *args, **kwargs):
+        pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
