@@ -143,16 +143,21 @@ class UpdateEventAttendanceView(View):
         # Entered invitees
         invitee = get_object_or_404(Invitee, pk=invitee_id)
 
+        attendance_list = []
+        for attendance in invitee.attendance.all():
+            tmp_dict = {
+                'choice': attendance.choice
+            }
+            attendance_list.append(tmp_dict)
 
-        # here 0627
 
         invitee_form = self.get_invitee_form(request, instance=invitee)
-        # attendance_form = self.get_attendance_formset(request, extra=num_of_date)
+        attendance_form = self.get_attendance_formset(request, extra=num_of_date, instance=attendance_list)
         #
         context = {
             'event': event,
             # 'invitees': invitees,
-            # 'attendance_form': attendance_form,
+            'attendance_form': attendance_form,
             'invitee_form': invitee_form,
         }
         return render(request, self.template_name, context)
@@ -163,9 +168,9 @@ class UpdateEventAttendanceView(View):
         form = InviteeModelForm(request.POST or None, instance=instance)
         return form
 
-    def get_attendance_formset(self, request, extra=0, *args, **kwargs):
+    def get_attendance_formset(self, request, extra=0, instance=None, *args, **kwargs):
         AttendanceFormSet = formset_factory(AttendanceModelForm, extra=extra)
-        form = AttendanceFormSet(request.POST or None)
+        form = AttendanceFormSet(request.POST or None, initial=instance)
         return form
 
 
