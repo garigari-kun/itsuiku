@@ -28,6 +28,14 @@
     {{ event_form.as_p }}
   </div>
 <div class="col-sm-4">
+  <div>
+    {% if schedule_list %}
+      {% for schedule in schedule_list %}
+        {{ schedule.date }} {{ schedule.comment }}
+        <br />
+      {% endfor %}
+    {% endif %}
+  </div>
   <div class="form-row" id="empty-form">
     {{ schedule_formset.empty_form.as_p }}
   </div>

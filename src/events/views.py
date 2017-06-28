@@ -135,7 +135,8 @@ class UpdateEventView(View):
 
         context = {
             'event_form': event_form,
-            'schedule_formset': schedule_formset
+            'schedule_formset': schedule_formset,
+            'schedule_list': schedule_list
         }
         return render(request, self.template_name, context)
 
