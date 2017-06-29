@@ -8,8 +8,14 @@ from django.forms import formset_factory, modelformset_factory
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-from .forms import EventModelForm, ScheduleModelForm
+from .forms import (
+    EventModelForm,
+    ScheduleModelForm,
+    ScheduleDeletionCheckModelForm
+)
 from .models import Event, Schedule
+
+from pprint import pprint
 
 
 
@@ -117,37 +123,37 @@ or
 '''
 class UpdateEventView(View):
 
-    # template_name = 'events/create_event.html'
     template_name = 'events/update_event.html'
 
     def get(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
         event_form = self.get_event_form(request, instance=event)
-        schedule_list = []
-        for schedule in event.schedule_range.all():
-            # Creating schedule as a dict for schedule_formset instance
-            tmp_dict = {
-                'date': schedule.date,
-                'comment': schedule.comment
-            }
-            schedule_list.append(tmp_dict)
+        schedule_list = self.get_schedule_list(event)
         schedule_formset = self.get_schedule_formset(request, instance=schedule_list)
+
+        # Deletion form test
+        schedule_deletion_formset = self.get_scheduledeletion_formset(request, instance=schedule_list)
+
 
         context = {
             'event_form': event_form,
             'schedule_formset': schedule_formset,
-            'schedule_list': schedule_list
+            'schedule_list': schedule_list,
+            'schedule_deletion_formset' : schedule_deletion_formset
         }
         return render(request, self.template_name, context)
 
 
     def post(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
+        # event_form = self.get_event_form(request, instance=event)
         event_form = self.get_event_form(request, instance=event)
+
+
 
         if event_form.is_valid():
             instance_of_event = event_form.save()
-            return HttpResponse('success')
+            return redirect('attendance:top', event_code=event.event_code)
 
         return HttpResponse('post has been sent')
 
@@ -155,16 +161,36 @@ class UpdateEventView(View):
 
 
 
-    def get_event_form(self, request, instance, *args, **kwargs):
+    def get_event_form(self, request, instance=None, *args, **kwargs):
         form = EventModelForm(request.POST or None, instance=instance)
         return form
 
     def get_schedule_formset(self, request, extra=0, instance=None, *args, **kwargs):
         ScheduleFormSet = formset_factory(ScheduleModelForm, extra=extra)
         formset = ScheduleFormSet(request.POST or None, initial=instance)
-        # formset = ScheduleFormSet(request.POST or None, queryset=instance)
-
         return formset
+
+
+    def get_scheduledeletion_formset(self, request, extra=0, instance=None, *args, **kwargs):
+        ScheduleDeletionCheckFormSet = formset_factory(ScheduleDeletionCheckModelForm, extra=extra)
+        formset = ScheduleDeletionCheckFormSet(request.POST or None, initial=instance)
+        return formset
+
+
+    def get_schedule_list(self, event, *args, **kwargs):
+        if event:
+            schedule_list = []
+            for schedule in event.schedule_range.all():
+                # Creating schedule as a dict for schedule_formset instance
+                tmp_dict = {
+                    'id': schedule.id,
+                    'date': schedule.date,
+                    'comment': schedule.comment
+                }
+                schedule_list.append(tmp_dict)
+        return schedule_list
+
+
 
 
 

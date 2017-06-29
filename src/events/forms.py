@@ -51,3 +51,20 @@ class ScheduleModelForm(forms.ModelForm):
             'date',
             'comment',
         ]
+
+
+class ScheduleDeletionCheckModelForm(forms.ModelForm):
+
+    id = forms.CharField(
+        widget=forms.HiddenInput()
+    )
+
+    deletion_check = forms.CharField(
+        widget=forms.CheckboxInput()
+    )
+
+    class Meta:
+        model = Schedule
+        fields = [
+            'id',
+        ]
