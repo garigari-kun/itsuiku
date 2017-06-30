@@ -17,7 +17,7 @@ class Attendance(models.Model):
     choice = models.CharField(max_length=4, choices=ATTENDANCE_CHOICES)
 
     def __str__(self):
-        return '{}'.format(self.choice)
+        return '{}: {}'.format(self.id, self.choice)
 
 
 

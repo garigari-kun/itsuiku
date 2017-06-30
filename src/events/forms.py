@@ -64,6 +64,7 @@ class ScheduleDeletionCheckModelForm(forms.ModelForm):
         label=''
     )
 
+
     class Meta:
         model = Schedule
         fields = [

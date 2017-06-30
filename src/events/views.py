@@ -110,17 +110,6 @@ class EventCreationSuccessView(View):
         return render(request, self.template_name, context)
 
 
-'''
-
-UpdateEventViewメモ
-
-スケジュールの部分はajaxで削除させる？
-or
-チェックボックスで選択したものを削除させる？
-
-スケジュール部分は考慮必要あり
-
-'''
 class UpdateEventView(View):
 
     template_name = 'events/update_event.html'
@@ -134,9 +123,6 @@ class UpdateEventView(View):
 
         # Deletion form test
         schedule_deletion_formset = self.get_scheduledeletion_formset(request, instance=schedule_list)
-        # schedule_deletion_formset = self.get_scheduledeletion_formset(request, extra=len(schedule_list))
-
-        # print(schedule_deletion_formset)
 
 
         context = {
@@ -156,8 +142,6 @@ class UpdateEventView(View):
         schedule_list = self.get_schedule_list(event)
         schedule_deletion_formset = self.get_scheduledeletion_formset(request, instance=schedule_list)
 
-        # print(schedule_deletion_formset)
-
 
         if event_form.is_valid() and schedule_formset.is_valid() and schedule_deletion_formset.is_valid():
             instance_of_event = event_form.save()
@@ -171,6 +155,16 @@ class UpdateEventView(View):
 
             for schedule_deletion in schedule_deletion_formset:
                 print(schedule_deletion)
+                '''
+                WIP
+
+                Delete checked schedule function is not working.
+                WHY:
+                I did put request.POST to formset initialization but it does not
+                get any value at all.
+
+                Need to google.
+                '''
 
 
 
@@ -194,16 +188,8 @@ class UpdateEventView(View):
 
 
     def get_scheduledeletion_formset(self, request, extra=0, instance=None, *args, **kwargs):
-        # print(repr(request.POST))
         ScheduleDeletionCheckFormSet = formset_factory(ScheduleDeletionCheckModelForm, extra=extra)
-        # formset = ScheduleDeletionCheckFormSet(request.POST or None, initial=instance)
-        if request.POST:
-            formset = ScheduleDeletionCheckFormSet(request.POST, initial=instance)
-        else:
-            formset = ScheduleDeletionCheckFormSet(request.POST or None, initial=instance)
-
-        for form in formset:
-            print(form)
+        formset = ScheduleDeletionCheckFormSet(data=request.POST or None, initial=instance)
         return formset
 
 

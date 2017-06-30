@@ -143,16 +143,13 @@ class UpdateEventAttendanceView(View):
         # Entered invitees
         invitee = get_object_or_404(Invitee, pk=invitee_id)
 
-        attendance_list = []
-        for attendance in invitee.attendance.all():
-            tmp_dict = {
-                'choice': attendance.choice
-            }
-            attendance_list.append(tmp_dict)
+        attendance_list = self.get_attendance_list(invitee)
 
 
         invitee_form = self.get_invitee_form(request, instance=invitee)
-        attendance_form = self.get_attendance_formset(request, extra=num_of_date, instance=attendance_list)
+        # attendance_form = self.get_attendance_formset(request, extra=num_of_date, instance=attendance_list)
+        attendance_form = self.get_attendance_formset(request, extra=num_of_date - len(attendance_list), instance=attendance_list)
+
         #
         context = {
             'event': event,
@@ -161,7 +158,53 @@ class UpdateEventAttendanceView(View):
             'invitee_form': invitee_form,
         }
         return render(request, self.template_name, context)
-        # return HttpResponse('get request')
+
+
+    def post(self, request, event_code=None, invitee_id=None, *args, **kwargs):
+        event = get_object_or_404(Event, event_code=event_code)
+        invitee = get_object_or_404(Invitee, pk=invitee_id)
+
+        invitee_form = self.get_invitee_form(request, instance=invitee)
+        attendance_list = self.get_attendance_list(invitee)
+        attendance_form = self.get_attendance_formset(request, instance=attendance_list)
+
+        if invitee_form.is_valid() and attendance_form.is_valid():
+            instance_invitee = invitee_form.save(commit=False)
+
+            for (attendance, schedule) in zip(attendance_form, event.schedule_range.all()):
+                # instance_attendance = attendance.save(commit=False)
+                print(repr(attendance))
+                # instance_attendance.schedule = schedule
+                # instance_attendance.event = event
+                # instance_attendance.save()
+                # instance_invitee.attendance.add(instance_attendance)
+
+
+        return HttpResponse('post has been sent')
+
+
+        """
+        # AttendanceModelFormSet
+        AttendanceFormSet = formset_factory(AttendanceModelForm)
+        attendance_form = AttendanceFormSet(request.POST)
+        if invitee_form.is_valid() and attendance_form.is_valid():
+            instance_invitee = invitee_form.save(commit=False)
+            instance_invitee.event = event
+            instance_invitee.save()
+
+            for (attendance, schedule) in zip(attendance_form, event.schedule_range.all()):
+                instance_attendance = attendance.save(commit=False)
+                instance_attendance.schedule = schedule
+                instance_attendance.event = event
+                instance_attendance.save()
+                instance_invitee.attendance.add(instance_attendance)
+
+            return redirect('attendance:top', event_code=event_code)
+
+        else:
+            print('both invalid')
+        return HttpResponse('post has been entered')
+        """
 
 
     def get_invitee_form(self, request, instance,  *args, **kwargs):
@@ -174,17 +217,16 @@ class UpdateEventAttendanceView(View):
         return form
 
 
-
-"""
-        for schedule in event.schedule_range.all():
-            # Creating schedule as a dict for schedule_formset instance
+    def get_attendance_list(self, invitee):
+        attendance_list = []
+        for attendance in invitee.attendance.all():
             tmp_dict = {
-                'date': schedule.date,
-                'comment': schedule.comment
+                'choice': attendance.choice
             }
-            schedule_list.append(tmp_dict)
-        schedule_formset = self.get_schedule_formset(request, instance=schedule_list)
-"""
+            attendance_list.append(tmp_dict)
+        return attendance_list
+
+
 
 
 
