@@ -129,10 +129,14 @@ class UpdateEventView(View):
         event = get_object_or_404(Event, event_code=event_code)
         event_form = self.get_event_form(request, instance=event)
         schedule_list = self.get_schedule_list(event)
-        schedule_formset = self.get_schedule_formset(request, instance=schedule_list)
+        # schedule_formset should be new registration
+        schedule_formset = self.get_schedule_formset(request, extra=0)
 
         # Deletion form test
         schedule_deletion_formset = self.get_scheduledeletion_formset(request, instance=schedule_list)
+        # schedule_deletion_formset = self.get_scheduledeletion_formset(request, extra=len(schedule_list))
+
+        # print(schedule_deletion_formset)
 
 
         context = {
@@ -146,13 +150,30 @@ class UpdateEventView(View):
 
     def post(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
-        # event_form = self.get_event_form(request, instance=event)
         event_form = self.get_event_form(request, instance=event)
+        schedule_formset = self.get_schedule_formset(request, extra=0)
+        # scheudle_deletion_formset
+        schedule_list = self.get_schedule_list(event)
+        schedule_deletion_formset = self.get_scheduledeletion_formset(request, instance=schedule_list)
+
+        # print(schedule_deletion_formset)
 
 
-
-        if event_form.is_valid():
+        if event_form.is_valid() and schedule_formset.is_valid() and schedule_deletion_formset.is_valid():
             instance_of_event = event_form.save()
+
+            # sacing schedule_formset
+            for schedule in schedule_formset:
+                # pprint(repr(schedule))
+                instance_of_schedule = schedule.save()
+                instance_of_event.schedule_range.add(instance_of_schedule)
+
+
+            for schedule_deletion in schedule_deletion_formset:
+                print(schedule_deletion)
+
+
+
             return redirect('attendance:top', event_code=event.event_code)
 
         return HttpResponse('post has been sent')
@@ -171,9 +192,18 @@ class UpdateEventView(View):
         return formset
 
 
+
     def get_scheduledeletion_formset(self, request, extra=0, instance=None, *args, **kwargs):
+        # print(repr(request.POST))
         ScheduleDeletionCheckFormSet = formset_factory(ScheduleDeletionCheckModelForm, extra=extra)
-        formset = ScheduleDeletionCheckFormSet(request.POST or None, initial=instance)
+        # formset = ScheduleDeletionCheckFormSet(request.POST or None, initial=instance)
+        if request.POST:
+            formset = ScheduleDeletionCheckFormSet(request.POST, initial=instance)
+        else:
+            formset = ScheduleDeletionCheckFormSet(request.POST or None, initial=instance)
+
+        for form in formset:
+            print(form)
         return formset
 
 

@@ -60,7 +60,8 @@ class ScheduleDeletionCheckModelForm(forms.ModelForm):
     )
 
     deletion_check = forms.CharField(
-        widget=forms.CheckboxInput()
+        widget=forms.CheckboxInput(),
+        label=''
     )
 
     class Meta:

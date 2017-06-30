@@ -28,20 +28,6 @@
     {{ event_form.as_p }}
   </div>
 <div class="col-sm-4">
-  <!-- <div> -->
-    <!-- {% if schedule_list %}
-      {% for schedule in schedule_list %}
-        {{ schedule.date }} {{ schedule.comment }}
-        <br />
-      {% endfor %}
-    {% endif %} -->
-    <!-- {% if schedule_list and schedule_deletion_formset %}
-    <p>Deletion form</p>
-    {% for schedule_deletion_form in schedule_deletion_formset %}
-      {{ schedule_deletion_form.as_p }}
-    {% endfor %}
-    {% endif %}
-  </div> -->
   {% if schedule_list and schedule_deletion_formset %}
   <div class="row">
     <div class="col-sm-6">
@@ -51,6 +37,7 @@
       {% endfor %}
     </div>
     <div class="col-sm-6">
+      {{ schedule_deletion_formset.management_form }}
       {% for schedule_deletion_form in schedule_deletion_formset %}
         {{ schedule_deletion_form.as_p }}
       {% endfor %}
@@ -66,9 +53,6 @@
 
   {{ schedule_formset.management_form }}
 
-<!-- <div class="form-row" id="empty-form">
-  {{ schedule_formset.empty_form.as_p }}
-</div> -->
 </div>
 
   </div>
