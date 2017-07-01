@@ -26,7 +26,7 @@ class DashboardView(LoginRequiredMixin, View):
     login_url = '/account/login/'
 
     def get(self, request, *args, **kwargs):
-        events = Event.objects.filter(user=request.user, active=True)
+        events = Event.objects.get_activeuser_events(request)
         context = {
             'events': events,
 

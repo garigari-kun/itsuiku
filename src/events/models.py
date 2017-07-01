@@ -13,6 +13,13 @@ class Schedule(models.Model):
         return '{}: {} {}'.format(self.pk, self.date, self.comment)
 
 
+
+class EventManager(models.Manager):
+    def get_activeuser_events(self, request, *args, **kwargs):
+        return super(EventManager, self).filter(user=request.user, active=True)
+
+
+
 class Event(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=120)
@@ -22,6 +29,9 @@ class Event(models.Model):
     schedule_range = models.ManyToManyField(Schedule, blank=True, verbose_name='schedule_range')
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+
+    objects = EventManager()
 
     def save(self, *args, **kwargs):
         if self.event_code is None or self.event_code == '':
