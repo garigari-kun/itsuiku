@@ -2,14 +2,27 @@
 
 {% block home-title %}itsuiku | サインアップ{% endblock home-title %}
 
+{% block style %}
+<style>
+
+.signup-form-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+</style>
+{% endblock style %}
 
 {% block content %}
 
+
+
+
 <div class="container">
-  <h1>サインアップ</h1>
+  <h1 class="text-center">サインアップ</h1>
 
 
-  <div class="panel panel-default">
+  <div class="panel panel-default signup-form-container">
     <div class="panel-body">
       <form method="POST" action="">
         {% csrf_token %}

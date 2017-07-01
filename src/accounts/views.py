@@ -4,7 +4,7 @@ from django.contrib.auth import (
     logout,
 )
 from django.shortcuts import render, redirect
-from django.views.generic.base import TemplateView, View
+from django.views.generic.base import View
 
 from .forms import EmailUserForm, EmailUserLoginForm
 

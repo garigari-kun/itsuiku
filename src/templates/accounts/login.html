@@ -3,16 +3,24 @@
 {% block home-title %}itsuiku | ログイン{% endblock home-title %}
 
 
+{% block style %}
+<style>
+
+.login-form-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+</style>
+{% endblock style %}
+
 {% block content %}
 
 <div class="container">
-
-
-  <h1>ユーザーログイン</h1>
-
-
-  <div class="panel panel-default">
+  <h1 class="text-center">ユーザーログイン</h1>
+  <div class="panel panel-default login-form-container">
     <div class="panel-body">
+
       {% if login_failed %}
         <div class="alert alert-danger" role="alert">{{ login_failed }}</div>
       {% endif %}
@@ -23,9 +31,8 @@
         <input type="submit" value="ログイン" class="btn btn-primary">
         <a href="{% url 'account:signup' %}">まだユーザー登録していない方はこちら</a>
       </form>
+
     </div>
   </div>
-
-
 </div>
 {% endblock content %}
