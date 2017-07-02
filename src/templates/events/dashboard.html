@@ -17,34 +17,30 @@
   {% include 'includes/app-navbar.html' %}
 
   {% if request.user.is_authenticated %}
-    <!-- <h2>{{ request.user }}さんの作成したイベント</h2> -->
     <a class="btn btn-primary" href="{% url 'event:create-event'  %}">イベントを作成する</a>
     <hr />
     {% if events %}
-    <h3>現在、登録されているイベント一覧</h3>
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>タイトル</th>
-          <th>共有URL</th>
-          <th>作成日</th>
-          <!-- <th>更新日</th> -->
-        </tr>
-      </thead>
-      <tbody>
-        {% for event in events %}
+      <h3>現在、登録されているイベント一覧</h3>
+      <table class="table table-striped table-hover">
+        <thead>
           <tr>
-            <td><a href="/{{ event.event_code }}">{{ event.title }}</a></td>
-            <td>http://itsuiku.co/{{ event.event_code }}</td>
-            <td>{{ event.created }}</td>
-            <!-- <td>{{ event.update }}</td> -->
+            <th>タイトル</th>
+            <th>共有URL</th>
+            <th>作成日</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for event in events %}
+            <tr>
+              <td><a href="/{{ event.event_code }}">{{ event.title }}</a></td>
+              <td>http://itsuiku.co/{{ event.event_code }}</td>
+              <td>{{ event.created | date:"Y/m/d"}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     {% else %}
       <p>現在、登録されているイベントはありません。</p>
-      <a class="btn btn-primary" href="{% url 'event:create-event' %}">早速、イベントを作成する！</a>
     {% endif %}
 
   {% endif %}
