@@ -41,18 +41,18 @@ class CreateEventView(LoginRequiredMixin, View):
 
     login_url = '/account/login/'
     template_name = 'events/create_event.html'
-    success_template_name = 'events/success.html'
 
 
     def get(self, request, *args, **kwargs):
-        # form
-        event_form = self.get_event_form(request)
-        schedule_formset = self.get_schedule_formset(request, extra=0)
-        # context
-        context = {
-            'event_form': event_form,
-            'schedule_formset': schedule_formset
-        }
+        # # form
+        # event_form = self.get_event_form(request)
+        # schedule_formset = self.get_schedule_formset(request, extra=0)
+        # # context
+        # context = {
+        #     'event_form': event_form,
+        #     'schedule_formset': schedule_formset
+        # }
+        context = self.get_context_data(request)
 
         return render(request, self.template_name, context)
 
@@ -77,9 +77,9 @@ class CreateEventView(LoginRequiredMixin, View):
             }
             return render(request, self.template_name, context)
 
-        context = {
-            'event': instance_of_event
-        }
+        # context = {
+        #     'event': instance_of_event
+        # }
 
         return redirect('event:event-success', event_code=instance_of_event.event_code)
 
@@ -93,6 +93,15 @@ class CreateEventView(LoginRequiredMixin, View):
         ScheduleFormSet = formset_factory(ScheduleModelForm, extra=extra)
         formset = ScheduleFormSet(request.POST or None)
         return formset
+
+
+    def get_context_data(self, request, *args, **kwargs):
+        context = {}
+        # form
+        context['event_form'] = self.get_event_form(request)
+        context['schedule_formset'] = self.get_schedule_formset(request, extra=0)
+
+        return context
 
 
 
