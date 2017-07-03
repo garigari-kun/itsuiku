@@ -44,14 +44,6 @@ class CreateEventView(LoginRequiredMixin, View):
 
 
     def get(self, request, *args, **kwargs):
-        # # form
-        # event_form = self.get_event_form(request)
-        # schedule_formset = self.get_schedule_formset(request, extra=0)
-        # # context
-        # context = {
-        #     'event_form': event_form,
-        #     'schedule_formset': schedule_formset
-        # }
         context = self.get_context_data(request)
 
         return render(request, self.template_name, context)
@@ -71,15 +63,9 @@ class CreateEventView(LoginRequiredMixin, View):
                 instance_of_schedule = schedule.save()
                 instance_of_event.schedule_range.add(instance_of_schedule)
         else:
-            context = {
-                'event_form': event_form,
-                'schedule_formset': schedule_formset
-            }
+            # form is invalid, rerender
+            context = self.get_context_data(request)
             return render(request, self.template_name, context)
-
-        # context = {
-        #     'event': instance_of_event
-        # }
 
         return redirect('event:event-success', event_code=instance_of_event.event_code)
 
@@ -108,13 +94,16 @@ class CreateEventView(LoginRequiredMixin, View):
 class EventCreationSuccessView(View):
 
     template_name = 'events/success.html'
+    http_method_names = ['get']
 
     def get(self, request, event_code=None, *args, **kwargs):
-        event = get_object_or_404(Event, event_code=event_code)
-        context = {
-            'event': event
-        }
+        context = self.get_context_data(request, event_code=event_code)
         return render(request, self.template_name, context)
+
+    def get_context_data(self, request, event_code=None, *args, **kwargs):
+        context = {}
+        context['event'] = get_object_or_404(Event, event_code=event_code)
+        return context
 
 
 class UpdateEventView(View):

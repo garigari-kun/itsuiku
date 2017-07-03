@@ -16,7 +16,7 @@ class Schedule(models.Model):
 
 class EventManager(models.Manager):
     def get_activeuser_events(self, request, *args, **kwargs):
-        return super(EventManager, self).filter(user=request.user, active=True)
+        return super(EventManager, self).filter(user=request.user, active=True).order_by('-created')
 
 
 
