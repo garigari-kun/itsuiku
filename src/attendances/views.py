@@ -7,6 +7,8 @@ from events.models import Event
 from invitees.models import Invitee
 from invitees.forms import InviteeModelForm, AttendanceModelForm
 
+
+
 class EventTopView(View):
 
     template_name = 'events/event-top.html'
