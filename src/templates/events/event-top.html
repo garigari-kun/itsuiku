@@ -24,6 +24,29 @@
 
 
   <hr>
+
+  {% if event %}
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          {% for schedule in schedule_range %}
+            <th style="text-align: center;">
+              {{ schedule.date | date:'Y-m-d' }}<br />
+              <span style="font-size: 10px;">{{ schedule.comment }}</span>
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+    </table>
+  {% endif %}
+
+
+
+  <hr>
+
+
+
   {% if invitees %}
     <h1>参加者</h1>
     {% for invitee in invitees %}
@@ -44,31 +67,6 @@
   <hr>
 
 
-
-  <!-- <h1>参加入力フォーム</h1>
-
-  <form method="POST" action="">
-    {% csrf_token %}
-
-  {{ invitee_form }}
-
-
-  <div class="row">
-    <div class="col-sm-6">
-      {% for schedule in event.schedule_range.all %}
-        <p>{{ schedule.date }}: {{ schedule.comment }}</p>
-      {% endfor %}
-    </div>
-
-    <div class="col-sm-6">
-      {{ attendance_form.as_p }}
-    </div>
-
-  </div>
-
-  <input type="submit" value="登録する" class="btn btn-primary">
-
-  </form> -->
 
 
 
