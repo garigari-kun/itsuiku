@@ -116,13 +116,11 @@ class UpdateEventView(View):
         event = get_object_or_404(Event, event_code=event_code)
         event_form = self.get_event_form(request, instance=event)
         schedule_list = self.get_schedule_list(event)
-        # schedule_formset should be new registration
         schedule_formset = self.get_schedule_formset(request, extra=0)
-
-        # Deletion form test
-        schedule_deletion_formset = self.get_scheduledeletion_formset(request, instance=schedule_list)
-
-
+        schedule_deletion_formset = self.get_schedule_deletion_formset(
+            request,
+            instance=schedule_list
+        )
         context = {
             'event_form': event_form,
             'schedule_formset': schedule_formset,
@@ -133,6 +131,46 @@ class UpdateEventView(View):
 
 
     def post(self, request, event_code=None, *args, **kwargs):
+        event = get_object_or_404(Event, event_code=event_code)
+        event_form = self.get_event_form(request, instance=event)
+        schedule_formset = self.get_schedule_formset(request, extra=0)
+        schedule_list = self.get_schedule_list(event)
+        schedule_deletion_formset = self.get_schedule_deletion_formset(request)
+
+        print(request.POST)
+
+
+        if event_form.is_valid() and schedule_formset.is_valid() and schedule_deletion_formset.is_valid():
+            # Updating Event model
+            instance_of_event = event_form.save()
+
+            for schedule in schedule_formset:
+                # Inserting new Schedule records
+                instance_of_schedule = schedule.save()
+                instance_of_event.schedule_range.add(instance_of_schedule)
+
+
+            for sd in schedule_deletion_formset:
+                print(sd.cleaned_data['id'])
+                '''
+                WIP
+
+                Delete checked schedule function is not working.
+                WHY:
+                I did put request.POST to formset initialization but it does not
+                get any value at all.
+
+                Need to google.
+                '''
+
+
+
+            return redirect('attendance:top', event_code=event.event_code)
+
+        return HttpResponse('post has been sent')
+
+
+    def post_bkup(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
         event_form = self.get_event_form(request, instance=event)
         schedule_formset = self.get_schedule_formset(request, extra=0)
@@ -184,7 +222,7 @@ class UpdateEventView(View):
         return formset
 
 
-    def get_scheduledeletion_formset(self, request, extra=0, instance=None, *args, **kwargs):
+    def get_schedule_deletion_formset(self, request, extra=0, instance=None, *args, **kwargs):
         ScheduleDeletionCheckFormSet = formset_factory(ScheduleDeletionCheckModelForm, extra=extra)
         formset = ScheduleDeletionCheckFormSet(data=request.POST or None, initial=instance)
         return formset
@@ -201,6 +239,10 @@ class UpdateEventView(View):
                 }
                 schedule_list.append(tmp_dict)
         return schedule_list
+
+
+    def get_context_data(self, request, *args, **kwargs):
+        pass
 
 
 

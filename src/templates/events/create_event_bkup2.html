@@ -7,6 +7,22 @@
 #empty-form {
   display: none;
 }
+
+.register-button-container {
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.datepicker-container {
+  margin: 0 auto;
+}
+
+
+/* datepicker bootstrap style */
+
+
+
 </style>
 {% endblock style %}
 
@@ -17,44 +33,55 @@
   {% include 'includes/app-navbar.html' %}
 
   <h1>イベントを作成</h1>
-  <h1>{{ request.user }}</h1>
   <hr />
 
 
-  <form method="POST" action="">
-    {% csrf_token %}
-    <div class="row">
-      <div class="col-sm-4">
-    {{ event_form.as_p }}
+<form method="POST" action="">
+  {% csrf_token %}
+  <div class="row">
+    <!-- <div class="col-sm-4"> -->
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          {{ event_form.as_p }}
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 datepicker-container">
+
+      <div id="datepicker" class="datepicker-style"></div>
+      {{ schedule_formset.management_form }}
+    </div>
+    <!-- <div class="col-sm-4">
+      {% if schedule_formset %}
+      <div>
+        {% for schedule in schedule_formset %}
+          {{ schedule.as_p }}
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="form-row" id="empty-form">
+        {{ schedule_formset.empty_form.as_p }}
+      </div>
+    </div> -->
   </div>
-<div class="col-sm-4">
-  <div id="datepicker"></div>
-
-  {{ schedule_formset.management_form }}
-
-<!-- <div class="form-row" id="empty-form">
-  {{ schedule_formset.empty_form.as_p }}
-</div> -->
-</div>
-<div class="col-sm-4">
-  {% if schedule_formset %}
+  <div class="">
+    {% if schedule_formset %}
     <div>
       {% for schedule in schedule_formset %}
-      <!-- {% if schedule.date.value %} -->
         {{ schedule.as_p }}
-        <!-- {% endif %} -->
       {% endfor %}
     </div>
-  {% endif %}
-  <div class="form-row" id="empty-form">
-    {{ schedule_formset.empty_form.as_p }}
+    {% endif %}
+    <div class="form-row" id="empty-form">
+      <!-- {{ schedule_formset.empty_form.as_p }} -->
+      {{ schedule_formset.empty_form }}
+    </div>
   </div>
-</div>
 
+  <div class="register-button-container">
+    <input type='submit' value='イベント作成' class="btn btn-primary btn-block btn-lg">
   </div>
-
-  <input type='submit' value='イベント作成' class="btn btn-primary">
-
 </form>
 
 
@@ -98,11 +125,9 @@ $(function() {
  });
 
  function updateEmptyFormIDs(element, totalForms, date){
-   console.log(element);
     var thisInput = element
     // get current form input name
     var currentName = element.attr('name')
-    console.log(currentName);
     // replace "prefix" with actual number
     var newName = currentName.replace(/__prefix__/g, totalForms)
     // console.log(newName)
@@ -110,7 +135,6 @@ $(function() {
     thisInput.attr('name', newName)
     thisInput.attr('id', "id_" + newName)
     if (currentName.indexOf('date') > 0) {
-      console.log('yeah');
       thisInput.attr('value', date);
 
     }
