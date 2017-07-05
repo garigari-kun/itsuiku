@@ -142,7 +142,14 @@ class UpdateEventView(View):
             # Updating Event model
             instance_of_event = event_form.save()
 
+            print(schedule_formset)
+
             for schedule in schedule_formset:
+                """
+                Bug report:
+
+                Even though, I post more than one schedule, it does not save except first one
+                """
                 # Inserting new Schedule records
                 instance_of_schedule = schedule.save()
                 instance_of_event.schedule_range.add(instance_of_schedule)
