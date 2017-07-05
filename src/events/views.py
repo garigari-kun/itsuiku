@@ -142,23 +142,16 @@ class UpdateEventView(View):
             # Updating Event model
             instance_of_event = event_form.save()
 
-            print(schedule_formset)
-
             for schedule in schedule_formset:
-                """
-                Bug report:
-
-                Even though, I post more than one schedule, it does not save except first one
-                """
                 # Inserting new Schedule records
                 instance_of_schedule = schedule.save()
                 instance_of_event.schedule_range.add(instance_of_schedule)
 
             for sd in schedule_deletion_formset:
                 if sd.cleaned_data['deletion_check']:
-                    print(sd.cleaned_data['id'])
                     # Delete schedule by looking up id
-                    result = Schedule.objects.filter(id=sd.cleaned_data['id']).delete()
+                    # result = Schedule.objects.filter(id=sd.cleaned_data['id']).delete()
+                    d_result = Schedule.objects.delete_schedule_by_id(request, id=sd.cleaned_data['id'])
 
             return redirect('attendance:top', event_code=event.event_code)
 
