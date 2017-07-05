@@ -60,9 +60,13 @@ class ScheduleDeletionCheckModelForm(forms.ModelForm):
         widget=forms.HiddenInput()
     )
 
-    deletion_check = forms.CharField(
-        widget=forms.CheckboxInput(),
-        label=''
+    # deletion_check = forms.CharField(
+    #     widget=forms.CheckboxInput(),
+    #     label=''
+    # )
+    deletion_check = forms.BooleanField(
+        label='',
+        required=False,
     )
 
 
