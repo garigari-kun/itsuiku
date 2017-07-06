@@ -36,8 +36,27 @@
               <span style="font-size: 10px;">{{ schedule.comment }}</span>
             </th>
           {% endfor %}
+          <th></th>
         </tr>
       </thead>
+      <tbody>
+        {% if invitees %}
+          {% for invitee in invitees %}
+            <tr>
+              <td>{{ invitee.name }}</td>
+              {% for d in invitee.attendance.all %}
+                <td>{{ d.choice }}</td>
+              {% endfor %}
+              <td>
+                <a class="btn btn-xs btn-warning" href="{% url 'attendance:update' invitee_id=invitee.id event_code=event.event_code %}">
+                  編集
+                </a>
+                <button class="btn btn-xs btn-danger">削除</button>
+              </td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+      </tbody>
     </table>
   {% endif %}
 
