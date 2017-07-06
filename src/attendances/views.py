@@ -101,18 +101,15 @@ class UpdateEventAttendanceView(View):
 
         # Entered invitees
         invitee = get_object_or_404(Invitee, pk=invitee_id)
-
         attendance_list = self.get_attendance_list(invitee)
-
-
         invitee_form = self.get_invitee_form(request, instance=invitee)
+        # print(attendance_list)
         # attendance_form = self.get_attendance_formset(request, extra=num_of_date, instance=attendance_list)
-        attendance_form = self.get_attendance_formset(request, extra=num_of_date - len(attendance_list), instance=attendance_list)
+        # attendance_form = self.get_attendance_formset(request, extra=num_of_date - len(attendance_list), instance=attendance_list)
+        attendance_form = self.get_attendance_formset(request, instance=attendance_list)
 
-        #
         context = {
             'event': event,
-            # 'invitees': invitees,
             'attendance_form': attendance_form,
             'invitee_form': invitee_form,
         }
@@ -125,19 +122,27 @@ class UpdateEventAttendanceView(View):
 
         invitee_form = self.get_invitee_form(request, instance=invitee)
         attendance_list = self.get_attendance_list(invitee)
+        # attendance_form = self.get_attendance_formset(request, instance=attendance_list)
         attendance_form = self.get_attendance_formset(request, instance=attendance_list)
 
+
         if invitee_form.is_valid() and attendance_form.is_valid():
-            instance_invitee = invitee_form.save(commit=False)
+            instance_invitee = invitee_form.save()
 
             for (attendance, schedule) in zip(attendance_form, event.schedule_range.all()):
+                pass
+                # print(attendance.cleaned_data['id'])
                 # instance_attendance = attendance.save(commit=False)
-                print(repr(attendance))
+                # print(repr(attendance))
                 # instance_attendance.schedule = schedule
                 # instance_attendance.event = event
                 # instance_attendance.save()
                 # instance_invitee.attendance.add(instance_attendance)
 
+            return redirect('attendance:top', event_code=event_code)
+
+        else:
+            return HttpResponse('form is invalid')
 
         return HttpResponse('post has been sent')
 

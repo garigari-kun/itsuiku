@@ -1,0 +1,19 @@
+<tr>
+  <th>
+    <label for="id_form-0-choice_0">Choice:</label>
+  </th>
+  <td>
+    <ul id="id_form-0-choice">
+      <li><label for="id_form-0-choice_0">
+      <input id="id_form-0-choice_0" name="form-0-choice" type="radio" value="yes" /> yes</label></li>
+<li><label for="id_form-0-choice_1"><input checked="checked" id="id_form-0-choice_1" name="form-0-choice" type="radio" value="mmm" /> mmm</label></li>
+<li><label for="id_form-0-choice_2"><input id="id_form-0-choice_2" name="form-0-choice" type="radio" value="no" /> no</label></li></ul></td></tr>
+<tr><th><label for="id_form-1-choice_0">Choice:</label></th><td><ul id="id_form-1-choice"><li><label for="id_form-1-choice_0"><input id="id_form-1-choice_0" name="form-1-choice" type="radio" value="yes" /> yes</label></li>
+<li><label for="id_form-1-choice_1"><input checked="checked" id="id_form-1-choice_1" name="form-1-choice" type="radio" value="mmm" /> mmm</label></li>
+<li><label for="id_form-1-choice_2"><input id="id_form-1-choice_2" name="form-1-choice" type="radio" value="no" /> no</label></li></ul></td></tr>
+<tr><th><label for="id_form-2-choice_0">Choice:</label></th><td><ul id="id_form-2-choice"><li><label for="id_form-2-choice_0"><input id="id_form-2-choice_0" name="form-2-choice" type="radio" value="yes" /> yes</label></li>
+<li><label for="id_form-2-choice_1"><input checked="checked" id="id_form-2-choice_1" name="form-2-choice" type="radio" value="mmm" /> mmm</label></li>
+<li><label for="id_form-2-choice_2"><input id="id_form-2-choice_2" name="form-2-choice" type="radio" value="no" /> no</label></li></ul></td></tr>
+<tr><th><label for="id_form-3-choice_0">Choice:</label></th><td><ul id="id_form-3-choice"><li><label for="id_form-3-choice_0"><input id="id_form-3-choice_0" name="form-3-choice" type="radio" value="yes" /> yes</label></li>
+<li><label for="id_form-3-choice_1"><input checked="checked" id="id_form-3-choice_1" name="form-3-choice" type="radio" value="mmm" /> mmm</label></li>
+<li><label for="id_form-3-choice_2"><input id="id_form-3-choice_2" name="form-3-choice" type="radio" value="no" /> no</label></li></ul></td></tr>
