@@ -105,7 +105,13 @@ class UpdateEventAttendanceView(View):
         invitee_form = self.get_invitee_form(request, instance=invitee)
         # print(attendance_list)
         # attendance_form = self.get_attendance_formset(request, extra=num_of_date, instance=attendance_list)
-        # attendance_form = self.get_attendance_formset(request, extra=num_of_date - len(attendance_list), instance=attendance_list)
+        """
+        WIP
+
+        When I post the attendance form as a updated object, it does not detect this is updated one.
+
+        Also, after the user addes schedule record, Need extra and save as a new object.
+        """
         attendance_form = self.get_attendance_formset(request, instance=attendance_list)
 
         context = {
@@ -130,7 +136,8 @@ class UpdateEventAttendanceView(View):
             instance_invitee = invitee_form.save()
 
             for (attendance, schedule) in zip(attendance_form, event.schedule_range.all()):
-                pass
+                # print(repr(attendance.id))
+                # pass
                 # print(attendance.cleaned_data['id'])
                 # instance_attendance = attendance.save(commit=False)
                 # print(repr(attendance))
@@ -139,6 +146,9 @@ class UpdateEventAttendanceView(View):
                 # instance_attendance.save()
                 # instance_invitee.attendance.add(instance_attendance)
 
+
+
+
             return redirect('attendance:top', event_code=event_code)
 
         else:
@@ -146,29 +156,6 @@ class UpdateEventAttendanceView(View):
 
         return HttpResponse('post has been sent')
 
-
-        """
-        # AttendanceModelFormSet
-        AttendanceFormSet = formset_factory(AttendanceModelForm)
-        attendance_form = AttendanceFormSet(request.POST)
-        if invitee_form.is_valid() and attendance_form.is_valid():
-            instance_invitee = invitee_form.save(commit=False)
-            instance_invitee.event = event
-            instance_invitee.save()
-
-            for (attendance, schedule) in zip(attendance_form, event.schedule_range.all()):
-                instance_attendance = attendance.save(commit=False)
-                instance_attendance.schedule = schedule
-                instance_attendance.event = event
-                instance_attendance.save()
-                instance_invitee.attendance.add(instance_attendance)
-
-            return redirect('attendance:top', event_code=event_code)
-
-        else:
-            print('both invalid')
-        return HttpResponse('post has been entered')
-        """
 
 
     def get_invitee_form(self, request, instance,  *args, **kwargs):
@@ -185,7 +172,10 @@ class UpdateEventAttendanceView(View):
         attendance_list = []
         for attendance in invitee.attendance.all():
             tmp_dict = {
-                'choice': attendance.choice
+                'id': attendance.id,
+                'choice': attendance.choice,
+                'event_id': attendance.event_id,
+                'schedule_id': attendance.schedule_id,
             }
             attendance_list.append(tmp_dict)
         return attendance_list
@@ -195,7 +185,9 @@ class UpdateEventAttendanceView(View):
 
 
 
+"""
 
+"""
 
 
 
