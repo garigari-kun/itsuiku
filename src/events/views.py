@@ -14,6 +14,7 @@ from .forms import (
     ScheduleDeletionCheckModelForm
 )
 from .models import Event, Schedule
+from invitees.models import Invitee
 
 from pprint import pprint
 
@@ -206,8 +207,12 @@ class DeleteEventView(LoginRequiredMixin, View):
 
     def delete(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
+        # print(event)
+        invitees = Invitee.objects.filter(event__event_code=event_code)
+        print(invitees)
         for schedule in event.schedule_range.all():
-            schedule.delete()
-            print(schedule)
-        event.delete()
-        return redirect('user-dashboard')
+            # schedule.delete()
+            pass
+        # event.delete()
+        # return redirect('user-dashboard')
+        return HttpResponse('delete trigered')
