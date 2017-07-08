@@ -33,7 +33,7 @@ class DashboardView(LoginRequiredMixin, View):
 
     def get_context_data(self, request, *args, **kwargs):
         context = {}
-        context['events'] = Event.objects.get_activeuser_events(request)
+        context['events'] = Event.objects.get_user_active_events(request)
         return context
 
 
