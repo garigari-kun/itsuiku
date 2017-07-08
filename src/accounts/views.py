@@ -33,7 +33,7 @@ class LoginView(View):
             )
             if user is not None:
                 login(request, user)
-                return redirect('event:create-event')
+                return redirect('user-dashboard')
 
         template_name = self.get_template_name(request)
         context = self.get_context_data(request)
@@ -63,15 +63,13 @@ class SignUpView(View):
 
 
     def get(self, request, *args, **kwargs):
-        form = self.get_form(request)
-        context = {
-            'form': form,
-        }
-        return render(request, self.template_name, context)
+        template_name = self.get_template_name(request)
+        context = self.get_context_data(request)
+        return render(request, template_name, context)
 
 
     def post(self, request, *args, **kwargs):
-        form = self.get_form(request)
+        form = self.get_user_form(request)
         if form.is_valid():
             new_user = form.save(commit=False)
             email = form.cleaned_data['email']
@@ -81,17 +79,24 @@ class SignUpView(View):
             if login_user is not None:
                 if login_user.is_active:
                     login(request, login_user)
-                    return redirect('event:create-event')
+                    return redirect('user-dashboard')
         else:
-            context = {
-                'form': form,
-            }
+            context = self.get_context_data(request)
             return render(request, self.template_name, context)
 
 
-    def get_form(self, request):
+    def get_user_form(self, request):
         form = EmailUserForm(request.POST or None)
         return form
+
+    def get_template_name(self, request, *args, **kwargs):
+        template_name = 'accounts/signup.html'
+        return template_name
+
+    def get_context_data(self, request, *args, **kwargs):
+        context = {}
+        context['form'] = self.get_user_form(request)
+        return context
 
 
 

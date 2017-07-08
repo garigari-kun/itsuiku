@@ -1,17 +1,11 @@
 {% extends 'base/home-base.html' %}
+{% load static %}
 
 {% block home-title %}itsuiku | サインアップ{% endblock home-title %}
 
-{% block style %}
-<style>
-
-.signup-form-container {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-</style>
-{% endblock style %}
+{% block static-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+{% endblock static-container %}
 
 {% block content %}
 

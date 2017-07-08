@@ -46,7 +46,7 @@ class EmailUserForm(forms.ModelForm):
         error_messages = {
             'required': 'パスワードは必須です',
         },
-        # help_text='確認のため、同じパスワードを入力して下さい'
+        help_text='確認のため、同じパスワードを入力して下さい'
     )
 
     class Meta:
