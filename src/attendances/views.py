@@ -178,13 +178,18 @@ class UpdateEventAttendanceView(View):
 
 
 
-"""
-
-"""
 
 
+class DeleteEventAttendanceView(View):
 
-
+    def get(self, request, event_code=None, invitee_id=None, *args, **kwargs):
+        invitee = get_object_or_404(Invitee, pk=invitee_id)
+        # Delete Attendance records
+        for attendance in invitee.attendance.all():
+            attendance.delete()
+        # Delete Invitee record
+        invitee.delete()
+        return redirect('attendance:top', event_code=event_code)
 
 
 
