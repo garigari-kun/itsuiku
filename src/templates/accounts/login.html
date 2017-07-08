@@ -1,18 +1,12 @@
 {% extends 'base/home-base.html' %}
+{% load static %}
 
 {% block home-title %}itsuiku | ログイン{% endblock home-title %}
 
+{% block static-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
+{% endblock static-container %}
 
-{% block style %}
-<style>
-
-.login-form-container {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-</style>
-{% endblock style %}
 
 {% block content %}
 
@@ -20,18 +14,15 @@
   <h1 class="text-center">ユーザーログイン</h1>
   <div class="panel panel-default login-form-container">
     <div class="panel-body">
-
       {% if login_failed %}
         <div class="alert alert-danger" role="alert">{{ login_failed }}</div>
       {% endif %}
-
       <form method="POST" action="">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="ログイン" class="btn btn-primary">
         <a href="{% url 'account:signup' %}">まだユーザー登録していない方はこちら</a>
       </form>
-
     </div>
   </div>
 </div>

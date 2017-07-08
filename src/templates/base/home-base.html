@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+{% load static %}
 <html>
   <head>
     <meta charset="utf-8">
@@ -18,9 +18,15 @@
     crossorigin="anonymous">
 
 
+
     <title>
       {% block home-title %}{% endblock home-title %}
     </title>
+
+    {% block static-container %}
+    <!-- static-container -->
+    {% endblock static-container %}
+
   </head>
   <body>
     {% block style %}
@@ -28,7 +34,7 @@
     {% endblock style %}
 
     {% block content %}
-
+    <!-- content -->
     {% endblock content %}
 
     {% block javascript %}

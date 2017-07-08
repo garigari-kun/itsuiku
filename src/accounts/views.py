@@ -14,7 +14,6 @@ from .forms import (
 
 class LoginView(View):
 
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
             return redirect('event:create-event')
