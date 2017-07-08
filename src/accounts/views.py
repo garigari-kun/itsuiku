@@ -6,26 +6,25 @@ from django.contrib.auth import (
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
 
-from .forms import EmailUserForm, EmailUserLoginForm
+from .forms import (
+    EmailUserForm,
+    EmailUserLoginForm
+)
 
 
 class LoginView(View):
 
-    template_name = 'accounts/login.html'
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
             return redirect('event:create-event')
 
-        form = self.get_form(request)
-        context = {
-            'form': form
-        }
-        return render(request, self.template_name, context)
+        template_name = self.get_template_name(request)
+        context = self.get_context_data(request)
+        return render(request, template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = self.get_form(request)
-        context = {}
+        form = self.get_user_login_form(request)
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
@@ -37,16 +36,26 @@ class LoginView(View):
                 login(request, user)
                 return redirect('event:create-event')
 
+        template_name = self.get_template_name(request)
+        context = self.get_context_data(request)
         context['login_failed'] = '''ログインに失敗しました。\n
         ログインID、もしくはパスワードが間違っている可能性があります。
         '''
-        context['form'] = form
-        return render(request, self.template_name, context)
+        return render(request, template_name, context)
 
-
-    def get_form(self, request):
+    def get_user_login_form(self, request):
         form = EmailUserLoginForm(request.POST or None)
         return form
+
+    def get_context_data(self, request, *args, **kwargs):
+        context = {}
+        context['form'] = self.get_user_login_form(request)
+        return context
+
+    def get_template_name(self, request, *args, **kwargs):
+        template_name = 'accounts/login.html'
+        return template_name
+
 
 
 class SignUpView(View):
