@@ -47,8 +47,10 @@ class AttendanceModelForm(forms.ModelForm):
         widget=forms.RadioSelect,
     )
 
+
     class Meta:
         model = Attendance
         fields = [
-            'choice'
+            'choice',
+
         ]

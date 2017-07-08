@@ -66,23 +66,6 @@
 
 
 
-  {% if invitees %}
-    <h1>参加者</h1>
-    {% for invitee in invitees %}
-      <p>{{ invitee.name }}</p>
-      {% for d in invitee.attendance.all %}
-        {{ d.schedule.date }}: {{ d.choice }}
-      {% endfor %}
-      <a class="btn btn-xs btn-warning" href="{% url 'attendance:update' invitee_id=invitee.id event_code=event.event_code %}">
-        編集
-      </a>
-      <button class="btn btn-xs btn-danger">削除</button>
-    {% endfor %}
-  {% else %}
-    <p>参加者はいません</p>
-  {% endif %}
-
-
   <hr>
 
 

@@ -4,7 +4,7 @@ from django.views.generic.base import View
 from django.forms import formset_factory
 
 from events.models import Event
-from invitees.models import Invitee
+from invitees.models import Invitee, Attendance
 from invitees.forms import InviteeModelForm, AttendanceModelForm
 
 
@@ -103,16 +103,8 @@ class UpdateEventAttendanceView(View):
         invitee = get_object_or_404(Invitee, pk=invitee_id)
         attendance_list = self.get_attendance_list(invitee)
         invitee_form = self.get_invitee_form(request, instance=invitee)
-        # print(attendance_list)
-        # attendance_form = self.get_attendance_formset(request, extra=num_of_date, instance=attendance_list)
-        """
-        WIP
-
-        When I post the attendance form as a updated object, it does not detect this is updated one.
-
-        Also, after the user addes schedule record, Need extra and save as a new object.
-        """
         attendance_form = self.get_attendance_formset(request, instance=attendance_list)
+
 
         context = {
             'event': event,
@@ -122,32 +114,35 @@ class UpdateEventAttendanceView(View):
         return render(request, self.template_name, context)
 
 
+    """
+    WIP:
+
+    I'm implementing that deleting older Attendance record instead of updating, because
+    I could not find a way to do that so I need to research that later.
+
+
+    """
     def post(self, request, event_code=None, invitee_id=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
         invitee = get_object_or_404(Invitee, pk=invitee_id)
 
         invitee_form = self.get_invitee_form(request, instance=invitee)
         attendance_list = self.get_attendance_list(invitee)
-        # attendance_form = self.get_attendance_formset(request, instance=attendance_list)
         attendance_form = self.get_attendance_formset(request, instance=attendance_list)
-
 
         if invitee_form.is_valid() and attendance_form.is_valid():
             instance_invitee = invitee_form.save()
 
             for (attendance, schedule) in zip(attendance_form, event.schedule_range.all()):
-                # print(repr(attendance.id))
-                # pass
-                # print(attendance.cleaned_data['id'])
-                # instance_attendance = attendance.save(commit=False)
-                # print(repr(attendance))
-                # instance_attendance.schedule = schedule
-                # instance_attendance.event = event
-                # instance_attendance.save()
-                # instance_invitee.attendance.add(instance_attendance)
+                instance_attendance = attendance.save(commit=False)
+                instance_attendance.schedule = schedule
+                instance_attendance.event = event
+                instance_attendance.save()
+                instance_invitee.attendance.add(instance_attendance)
 
-
-
+            # Delete older Attendance record
+            for d_attendance in attendance_list:
+                result = Attendance.objects.filter(id=d_attendance['id']).delete()
 
             return redirect('attendance:top', event_code=event_code)
 
@@ -174,8 +169,6 @@ class UpdateEventAttendanceView(View):
             tmp_dict = {
                 'id': attendance.id,
                 'choice': attendance.choice,
-                'event_id': attendance.event_id,
-                'schedule_id': attendance.schedule_id,
             }
             attendance_list.append(tmp_dict)
         return attendance_list
