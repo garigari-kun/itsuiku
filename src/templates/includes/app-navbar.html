@@ -28,7 +28,7 @@ body {
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ユーザー <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">設定</a></li>
+                  <li><a href="{% url 'user-settings:main' %}">設定</a></li>
                   <li><a href="{% url 'account:logout' %}">ログアウト</a></li>
                 </ul>
               </li>

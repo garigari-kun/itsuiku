@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^account/', include('accounts.urls', namespace='account')),
     url(r'^dashboard/$', DashboardView.as_view(), name='user-dashboard'),
     url(r'^event/', include('events.urls', namespace='event')),
+    url(r'^user_settings/', include('user_settings.urls', namespace='user-settings')),
     url(r'^(?P<event_code>[\w-]+)/', include('attendances.urls', namespace='attendance')),
 ]

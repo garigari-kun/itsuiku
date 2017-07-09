@@ -1,0 +1,26 @@
+{% extends 'base/app-base.html' %}
+{% load static %}
+{% block home-title %}itsuiku | 設定{% endblock home-title %}
+
+{% block content %}
+<div class="container">
+  {% include 'includes/app-navbar.html' %}
+
+  <h3>ユーザー設定</h3>
+
+
+  <hr />
+
+  <h3>退会</h3>
+  <div class="alert alert-danger" role="alert" style="margin-bottom: 5px;">
+    ※退会処理を実行すると、今まで作成したイベントのデータは全て削除され復元はできません
+  </div>
+  <a class="btn btn-danger">退会する</a>
+
+
+
+
+
+
+</div>
+{% endblock content %}
