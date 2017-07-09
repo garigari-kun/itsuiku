@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'custom_user',
     # internal
     'events',
-    'invitees'
+    'invitees',
+    'user_settings'
 ]
 
 MIDDLEWARE = [

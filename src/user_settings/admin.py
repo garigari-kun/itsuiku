@@ -1,3 +1,13 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import UserSetting
+
+@admin.register(UserSetting)
+class UserSettingModelAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'user',
+        'user_fullname',
+        'created',
+        'updated'
+    )
