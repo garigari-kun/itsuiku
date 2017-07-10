@@ -1,9 +1,9 @@
 {% extends 'base/app-base.html' %}
 {% load static %}
 
-{% block static-container %}
+{% block css-container %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/event_form.css' %}">
-{% endblock static-container %}
+{% endblock css-container %}
 
 {% block home-title %}itsuiku | イベント登録{% endblock home-title %}
 
@@ -26,12 +26,7 @@
   </div>
 <div class="col-sm-4">
   <div id="datepicker"></div>
-
   {{ schedule_formset.management_form }}
-
-<!-- <div class="form-row" id="empty-form">
-  {{ schedule_formset.empty_form.as_p }}
-</div> -->
 </div>
 <div class="col-sm-4">
   {% if schedule_formset %}
