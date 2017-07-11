@@ -195,8 +195,6 @@ class UpdateEventView(View):
 
 
 
-
-
 class DeleteEventView(LoginRequiredMixin, View):
     def get(self, request, event_code=None, *args, **kwargs):
         return self.delete(request, event_code, *args, **kwargs)
@@ -207,12 +205,17 @@ class DeleteEventView(LoginRequiredMixin, View):
 
     def delete(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
-        # print(event)
-        invitees = Invitee.objects.filter(event__event_code=event_code)
-        print(invitees)
+        invitees = Invitee.objects.filter(event=event)
+
+        for invitee in invitees:
+            for i_attendance in invitee.attendance.all():
+                # Delete attendance attached with Invitee
+                i_attendance.delete()
+            # Delete Invitee
+            invitee.delete()
         for schedule in event.schedule_range.all():
-            # schedule.delete()
-            pass
-        # event.delete()
-        # return redirect('user-dashboard')
-        return HttpResponse('delete trigered')
+            # Delete Schedule attached with Event model
+            schedule.delete()
+        # Delete Event Model
+        event.delete()
+        return redirect('user-dashboard')
