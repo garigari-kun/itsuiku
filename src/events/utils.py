@@ -4,6 +4,8 @@ import string
 from django.conf import settings
 
 
+
+
 EVENT_CODE_LEN = getattr(settings, 'EVENT_CODE_LEN', 12)
 
 

@@ -50,10 +50,16 @@ class Event(models.Model):
         super(Event, self).save(*args, **kwargs)
 
     def delete_event_and_relations(self, *args, **kwargs):
-        # invitees = Invitee.objects.filter(event=self)
-        # print(invitees)
-        pass
-
+        # Backword query
+        invitees = self.i_event.all()
+        for invitee in invitees:
+            for i_attendance in invitee.attendance.all():
+                i_attendance.delete()
+            invitee.delete()
+        for schedule in self.schedule_range.all():
+            schedule.delete()
+        self.delete()
+        return True
 
 
 

@@ -23,7 +23,7 @@ class Attendance(models.Model):
 
 
 class Invitee(models.Model):
-    event = models.ForeignKey(Event)
+    event = models.ForeignKey(Event, related_name='i_event')
     name = models.CharField(max_length=32)
     comment = models.CharField(max_length=120)
     attendance = models.ManyToManyField(Attendance)
