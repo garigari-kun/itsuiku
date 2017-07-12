@@ -1,7 +1,9 @@
 from django.conf import settings
 from django.db import models
 
+# from invitees.models import Invitee
 from .utils import code_generator, create_event_code
+
 
 
 
@@ -46,6 +48,14 @@ class Event(models.Model):
         if self.event_code is None or self.event_code == '':
             self.event_code = create_event_code(self)
         super(Event, self).save(*args, **kwargs)
+
+    def delete_event_and_relations(self, *args, **kwargs):
+        # invitees = Invitee.objects.filter(event=self)
+        # print(invitees)
+        pass
+
+
+
 
     def __str__(self):
         return '{}: {}'.format(self.pk, self.title)

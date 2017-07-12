@@ -18,12 +18,12 @@
   {% if request.user.is_authenticated %}
   <!-- <a href="{% url 'event:delete-event' event_code=event.event_code %}" class="btn btn-danger">削除</a> -->
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletionModal">
     削除
   </button>
 
   <!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal fade" id="deletionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -34,12 +34,12 @@
           イベントを削除すると、全ての参加予定も削除され復元はできません
         </div>
         <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button> -->
           <a href="{% url 'event:delete-event' event_code=event.event_code %}" class="btn btn-danger">削除</a>
         </div>
       </div>
     </div>
   </div>
+  <!-- Model end -->
 
 
 
@@ -80,9 +80,29 @@
                 <a class="btn btn-xs btn-warning" href="{% url 'attendance:update' invitee_id=invitee.id event_code=event.event_code %}">
                   編集
                 </a>
-                <a class="btn btn-xs btn-danger" href="{% url 'attendance:delete' invitee_id=invitee.id event_code=event.event_code %}">
+                <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deletionAttendanceModal{{ invitee.id }}">
                   削除
-                </a>
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="deletionAttendanceModal{{ invitee.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Warning!</h4>
+                      </div>
+                      <div class="modal-body">
+                        {{ invitee.name }}さんのスケジュールを削除します
+                      </div>
+                      <div class="modal-footer">
+                        <a class="btn btn-xs btn-danger" href="{% url 'attendance:delete' invitee_id=invitee.id event_code=event.event_code %}">
+                          削除
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Model end -->
             </td>
             </tr>
           {% endfor %}
@@ -98,6 +118,9 @@
 
 
   <hr>
+
+
+
 
 
 
