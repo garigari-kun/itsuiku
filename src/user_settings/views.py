@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.views.generic.base import View
 
+from django.http import HttpResponse
+
+from events.models import Event
+
 
 
 class UserSettingsView(View):
@@ -20,3 +24,19 @@ class UserSettingsView(View):
     def get_context_data(self, request, *args, **kwargs):
         context = {}
         return context
+
+
+
+
+class DeleteUserAccount(View):
+
+    def get(self, request, *args, **kwargs):
+        print('Called DeleteUserAccount View')
+        print(request.user)
+        events = Event.objects.filter(user=request.user)
+        for event in events:
+            # events.delete_event_and_relations()
+            pass
+        # Delete the user model
+        print(events)
+        return HttpResponse('yeah')

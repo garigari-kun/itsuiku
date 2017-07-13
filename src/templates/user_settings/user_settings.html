@@ -15,7 +15,30 @@
   <div class="alert alert-danger" role="alert" style="margin-bottom: 5px;">
     ※退会処理を実行すると、今まで作成したイベントのデータは全て削除され復元はできません
   </div>
-  <a class="btn btn-danger">退会する</a>
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteUserAccountModal">
+    退会する
+  </button>
+  <!-- Modal -->
+  <div class="modal fade" id="deleteUserAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Warning!</h4>
+        </div>
+        <div class="modal-body">
+          ユーザーアカウントを削除すると今まで作成されたイベントは全て削除され復元はできません。
+          それでも削除をしますか？
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-xs btn-danger" href="{% url 'user-settings:delete'%}">
+            削除
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model end -->
 
 
 
