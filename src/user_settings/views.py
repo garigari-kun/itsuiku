@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.base import View
 
 from django.http import HttpResponse
 
 from events.models import Event
+from django.contrib.auth import get_user_model
 
 
 
@@ -31,12 +32,10 @@ class UserSettingsView(View):
 class DeleteUserAccount(View):
 
     def get(self, request, *args, **kwargs):
-        print('Called DeleteUserAccount View')
-        print(request.user)
         events = Event.objects.filter(user=request.user)
         for event in events:
-            # events.delete_event_and_relations()
-            pass
+            event.delete_event_and_relations()
         # Delete the user model
-        print(events)
-        return HttpResponse('yeah')
+        deleting_user = get_object_or_404(get_user_model(), id=request.user.id)
+        deleting_user.delete()
+        return redirect('home:top')
