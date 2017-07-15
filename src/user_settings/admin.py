@@ -1,13 +1,13 @@
 from django.contrib import admin
 
-from .models import UserSetting
+from .models import UserProfile
 
-@admin.register(UserSetting)
+@admin.register(UserProfile)
 class UserSettingModelAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
         'user',
-        'user_fullname',
+        'username',
         'created',
         'updated'
     )

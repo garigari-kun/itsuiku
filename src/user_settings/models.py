@@ -2,9 +2,9 @@ from django.conf import settings
 from django.db import models
 
 
-class UserSetting(models.Model):
+class UserProfile(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    user_fullname = models.CharField(max_length=120, null=True, blank=True)
+    username = models.CharField(max_length=120, null=True, blank=True)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
