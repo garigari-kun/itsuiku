@@ -8,6 +8,14 @@
 
   <h3>ユーザー設定</h3>
 
+  <hr />
+
+  <h3>パスワード変更</h3>
+  <form method="POST" action="">
+    {% csrf_token %}
+    <input type="submit" value="パスワード変更" name='submit_password_change' class="btn btn-primary">
+  </form>
+
 
   <hr />
 
