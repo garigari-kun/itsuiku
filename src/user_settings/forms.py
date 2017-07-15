@@ -3,10 +3,10 @@ from django import forms
 
 class UserPasswordChangeForm(forms.Form):
 
-
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
-        super().__init__(*args, **kwargs)
+    #
+    # def __init__(self, user, *args, **kwargs):
+    #     self.user = user
+    #     super().__init__(*args, **kwargs)
 
     error_messages = {
         'password_mismatch': '入力されたパスワードが一致しませんでした。'

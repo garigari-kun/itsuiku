@@ -25,12 +25,13 @@ class UserSettingsView(View):
 
     def get_context_data(self, request, *args, **kwargs):
         context = {}
-        context['u_p_c_form'] = self.get_user_password_change_form(request)
+        # context['u_p_c_form'] = self.get_user_password_change_form(request)
+        context['test'] = 'test'
         return context
 
-    def get_user_password_change_form(self, request, *args, **kwargs):
-        form = UserPasswordChangeForm(request.POST or None, request.user)
-        return form
+    # def get_user_password_change_form(self, request, *args, **kwargs):
+    #     form = UserPasswordChangeForm(request.POST or None, request.user)
+    #     return form
 
 
 
