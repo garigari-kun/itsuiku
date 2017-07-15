@@ -1,5 +1,7 @@
 from django import forms
 
+from .models import UserProfile
+
 
 class UserPasswordChangeForm(forms.Form):
 
@@ -63,7 +65,28 @@ class UserPasswordChangeForm(forms.Form):
 
 
 
+class UserProfileModelForm(forms.ModelForm):
 
+    username = forms.CharField(
+        max_length=24,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        ),
+        label='ユーザーネーム',
+        error_messages={
+            'required': '入力が必須です'
+        },
+        help_text='イベント登録時、タイトルに表示される名前です'
+    )
+
+
+    class Meta:
+        model = UserProfile
+        fields = [
+            'username'
+        ]
 
 
 

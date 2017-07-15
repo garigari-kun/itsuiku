@@ -8,6 +8,12 @@
 
   <h3>ユーザー設定</h3>
 
+  <form method="POST" action="">
+    {% csrf_token %}
+      {{ user_profile_form }}
+  </form>
+  <input type="submit" class="btn btn-primary" value="登録">
+
   <hr />
 
   <h3>パスワード変更</h3>

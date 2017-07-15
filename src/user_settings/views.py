@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 from events.models import Event
 from django.contrib.auth import get_user_model
-from .forms import UserPasswordChangeForm
+from .forms import UserPasswordChangeForm, UserProfileModelForm
 
 
 
@@ -26,8 +26,12 @@ class UserSettingsView(View):
     def get_context_data(self, request, *args, **kwargs):
         context = {}
         # context['u_p_c_form'] = self.get_user_password_change_form(request)
-        context['test'] = 'test'
+        context['user_profile_form'] = self.get_user_profile_form(request)
         return context
+
+    def get_user_profile_form(self, request, *args, **kwargs):
+        form = UserProfileModelForm(request.POST or None)
+        return form
 
     # def get_user_password_change_form(self, request, *args, **kwargs):
     #     form = UserPasswordChangeForm(request.POST or None, request.user)
