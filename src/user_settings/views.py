@@ -53,7 +53,6 @@ class UserPasswordChangeView(View):
     def get(self, request, *args, **kwargs):
         template_name = self.get_template_name(request)
         context = self.get_context_data(request)
-        print(request.user)
         return render(request, template_name, context)
 
 
@@ -61,7 +60,7 @@ class UserPasswordChangeView(View):
         u_p_c_form = self.get_user_password_change_form(request)
         if u_p_c_form.is_valid():
             user = u_p_c_form.save()
-            update_session_auth_hash(request, user)  # Important!
+            update_session_auth_hash(request, user)
             return redirect('user-settings:main')
         return HttpResponse('error processing needed')
 

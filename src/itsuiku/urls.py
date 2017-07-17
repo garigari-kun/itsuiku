@@ -16,9 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+
+
 from events.views import DashboardView
 
 urlpatterns = [
+    # url(r'^password_reset/$', auth_views.password_reset, name='password_reset'),
     url(r'^', include('home.urls', namespace='home')),
     url(r'^admin/', admin.site.urls),
     url(r'^account/', include('accounts.urls', namespace='account')),
