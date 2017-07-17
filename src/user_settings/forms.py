@@ -5,10 +5,9 @@ from .models import UserProfile
 
 class UserPasswordChangeForm(forms.Form):
 
-    #
-    # def __init__(self, user, *args, **kwargs):
-    #     self.user = user
-    #     super().__init__(*args, **kwargs)
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
 
     error_messages = {
         'password_mismatch': '入力されたパスワードが一致しませんでした。'
@@ -59,7 +58,11 @@ class UserPasswordChangeForm(forms.Form):
 
     def save(self, commit=True):
         password = self.cleaned_data['password1']
-        print(password)
+        self.user.set_password(password)
+        if commit:
+            self.user.save()
+
+        return self.user
 
 
 

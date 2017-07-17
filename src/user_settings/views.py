@@ -4,7 +4,7 @@ from django.views.generic.base import View
 from django.http import HttpResponse
 
 from events.models import Event
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, update_session_auth_hash
 from .forms import UserPasswordChangeForm, UserProfileModelForm
 from .models import UserProfile
 
@@ -45,10 +45,6 @@ class UserSettingsView(View):
             form = UserProfileModelForm(request.POST or None)
         return form
 
-    # def get_user_password_change_form(self, request, *args, **kwargs):
-    #     form = UserPasswordChangeForm(request.POST or None, request.user)
-    #     return form
-
 
 
 
@@ -57,17 +53,33 @@ class UserPasswordChangeView(View):
     def get(self, request, *args, **kwargs):
         template_name = self.get_template_name(request)
         context = self.get_context_data(request)
+        print(request.user)
         return render(request, template_name, context)
+
+
+    def post(self, request, *args, **kwargs):
+        u_p_c_form = self.get_user_password_change_form(request)
+        if u_p_c_form.is_valid():
+            user = u_p_c_form.save()
+            update_session_auth_hash(request, user)  # Important!
+            return redirect('user-settings:main')
+        return HttpResponse('error processing needed')
 
 
     def get_context_data(self, request, *args, **kwargs):
         context = {}
+        context['u_p_c_form'] = self.get_user_password_change_form(request)
         return context
 
 
     def get_template_name(self, request, *args, **kwargs):
         template_name = 'user_settings/change_password.html'
         return template_name
+
+
+    def get_user_password_change_form(self, request, *args, **kwargs):
+        form = UserPasswordChangeForm(request.user, request.POST or None)
+        return form
 
 
 
