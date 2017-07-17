@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from events.models import Event
 from django.contrib.auth import get_user_model
 from .forms import UserPasswordChangeForm, UserProfileModelForm
+from .models import UserProfile
 
 
 
@@ -17,7 +18,12 @@ class UserSettingsView(View):
         return render(request, template_name, context)
 
     def post(self, request, *args, **kwargs):
-        pass
+        user_profile_form = self.get_user_profile_form(request)
+        if user_profile_form.is_valid():
+            i_user_profile_form = user_profile_form.save(commit=False)
+            i_user_profile_form.user = request.user
+            i_user_profile_form.save()
+            return redirect('user-settings:main')
 
     def get_template_name(self, request, *args, **kwargs):
         template_name = 'user_settings/user_settings.html'
@@ -30,7 +36,13 @@ class UserSettingsView(View):
         return context
 
     def get_user_profile_form(self, request, *args, **kwargs):
-        form = UserProfileModelForm(request.POST or None)
+        user_profile = UserProfile.objects.get(user=request.user)
+        print(user_profile)
+        if user_profile:
+            # Edit view
+            form = UserProfileModelForm(request.POST or None, instance=user_profile)
+        else:
+            form = UserProfileModelForm(request.POST or None)
         return form
 
     # def get_user_password_change_form(self, request, *args, **kwargs):
