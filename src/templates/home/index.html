@@ -9,16 +9,23 @@
 {% include 'includes/home-navbar.html' %}
 
 
+<style>
+.customize-jumbotron {
+  padding-top: 70px;
+  padding-bottom: 60px;
+}
+</style>
 
-<div class="jumbotron">
+
+<div class="jumbotron customize-jumbotron">
       <div class="container">
         <h1>itsuiku</h1>
         <p>
           itsuikuは、友達や同僚とのイベント事のスケジュールを管理するアプリです。<br />
         </p>
         <p>
-          <a class="btn btn-primary btn-lg" href="{% url 'account:login' %}" role="button">
-              さっそくイベントを作成する
+          <a class="btn btn-info btn-lg" href="{% url 'account:signup' %}" role="button">
+              無料登録をし、イベントを作成する
           </a>
         </p>
       </div>
