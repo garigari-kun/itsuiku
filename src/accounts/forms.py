@@ -8,7 +8,8 @@ class EmailUserForm(forms.ModelForm):
     """
     error_messages = {
         'duplicated_email': 'このメールアドレスは既に使用されています。',
-        'password_mismatch': '入力されたパスワードが一致しませんでした。'
+        'password_mismatch': '入力されたパスワードが一致しませんでした。',
+        'password_length': 'パスワードは最低４文字以上を入力してください。'
     }
 
     email = forms.CharField(
@@ -72,6 +73,20 @@ class EmailUserForm(forms.ModelForm):
             code='duplicate_email',
         )
 
+    # def clean_password1(self):
+    #     """
+    #
+    #     """
+    #     password1 = self.cleaned_data['password1']
+    #     if len(password1) < 4:
+    #         raise forms.ValidationError(
+    #             self.error_messages['password_length'],
+    #             code='password_length'
+    #         )
+    #     return password1
+
+
+
     def clean_password2(self):
         """ Check that the two passwords are matched.
 
@@ -81,6 +96,11 @@ class EmailUserForm(forms.ModelForm):
         """
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
+        if len(password1) < 4:
+            raise forms.ValidationError(
+                self.error_messages['password_length'],
+                code='password_length',
+            )
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError(
                 self.error_messages['password_mismatch'],
