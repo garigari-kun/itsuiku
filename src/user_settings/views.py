@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 from events.models import Event
 from django.contrib.auth import get_user_model, update_session_auth_hash
-from .forms import UserPasswordChangeForm, UserProfileModelForm
+from .forms import UserPasswordChangeForm, UserProfileModelForm, PasswordResetRequestForm
 from .models import UserProfile
 
 
@@ -93,3 +93,39 @@ class DeleteUserAccount(View):
         deleting_user = get_object_or_404(get_user_model(), id=request.user.id)
         deleting_user.delete()
         return redirect('home:top')
+
+
+
+class PasswordResetRequestView(View):
+
+    def get(self, request, *args, **kwargs):
+        template_name = self.get_template_name(request)
+        context = self.get_context_data(request)
+        return render(request, template_name, context)
+
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_password_reset_request_form(request)
+        if form.is_valid():
+            print('form valid')
+            return HttpResponse('post valid')
+
+        template_name = self.get_template_name(request)
+        context = self.get_context_data(request)
+        return render(request, template_name, context)
+
+
+    def get_template_name(self, request):
+        template_name = 'user_settings/forgot_password.html'
+        return template_name
+
+
+    def get_context_data(self, request):
+        context = {}
+        context['p_r_form'] = self.get_password_reset_request_form(request)
+        return context
+
+
+    def get_password_reset_request_form(self, request):
+        form = PasswordResetRequestForm(request.POST or None)
+        return form

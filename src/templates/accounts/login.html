@@ -57,7 +57,7 @@
   <p></p>
   <p class="text-center">
     <a href="{% url 'account:signup' %}">まだユーザー登録していない方はこちら</a><br />
-    <a>パスワードを忘れた方はこちら</a>
+    <a href="{% url 'user-settings:reset_password' %}">パスワードを忘れた方はこちら</a>
   </p>
 </div>
 {% endblock content %}

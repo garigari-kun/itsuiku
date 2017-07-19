@@ -1,6 +1,8 @@
 from django import forms
+from django.contrib.auth import get_user_model
 
 from .models import UserProfile
+
 
 
 class UserPasswordChangeForm(forms.Form):
@@ -92,6 +94,33 @@ class UserProfileModelForm(forms.ModelForm):
         ]
 
 
+
+
+
+class PasswordResetRequestForm(forms.Form):
+
+    email = forms.CharField(
+        label='メールアドレス',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        ),
+        error_messages={
+            'required': '入力が必須です'
+        }
+    )
+
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        user = get_user_model().objects.filter(email=email)
+        if user:
+            return email
+        else:
+            raise forms.ValidationError(
+                'ユーザーは存在しません'
+            )
 
 
 
