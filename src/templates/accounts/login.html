@@ -10,7 +10,24 @@
 
 {% block content %}
 
-<div class="container">
+<style>
+.customize-container {
+  margin-top: 70px;
+}
+
+.field-wrapper {
+  padding: 10px;
+}
+
+.errorlist {
+  list-style-type: none;
+}
+</style>
+
+{% include 'includes/home-navbar.html' %}
+
+
+<div class="container customize-container">
   <h1 class="text-center">ユーザーログイン</h1>
   <div class="panel panel-default login-form-container">
     <div class="panel-body">
@@ -19,14 +36,27 @@
       {% endif %}
       <form method="POST" action="">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="ログイン" class="btn btn-primary">
-        <a href="{% url 'account:signup' %}">まだユーザー登録していない方はこちら</a>
+        {% for field in form %}
+          <div class="field-wrapper">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}
+              <p class="help-text">{{ field.help_text|safe }}</p>
+            {% endif %}
+            {% if field.errors %}
+            <div class="alert alert-danger" role="alert">
+              {{ field.errors }}
+            </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <input type="submit" value="ログイン" class="btn btn-info btn-block">
       </form>
     </div>
   </div>
   <p></p>
   <p class="text-center">
+    <a href="{% url 'account:signup' %}">まだユーザー登録していない方はこちら</a><br />
     <a>パスワードを忘れた方はこちら</a>
   </p>
 </div>
