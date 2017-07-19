@@ -147,15 +147,8 @@ class PasswordResetRequestView(View):
                 # )
 
                 """
-
-
-# Email subject *must not* contain newlines
-subject = ''.join(subject.splitlines())
-email = loader.render_to_string(email_template_name, c)
 send_mail(subject, email, DEFAULT_FROM_EMAIL , [user.email], fail_silently=False)
-result = self.form_valid(form)
 messages.success(request, 'An email has been sent to ' + data +". Please check its inbox to continue reseting password.")
-return result
                 """
             return HttpResponse('post valid')
 
@@ -177,4 +170,33 @@ return result
 
     def get_password_reset_request_form(self, request):
         form = PasswordResetRequestForm(request.POST or None)
+        return form
+
+
+
+class PasswordResetConfirmationView(View):
+
+    def get(self, request, *args, **kwargs):
+        template_name = self.get_template_name(request)
+        context = self.get_context_data(request)
+        return render(request, template_name, context)
+
+
+    def post(self, request, *args, **kwargs):
+        pass
+
+
+    def get_template_name(self, request):
+        template_name = 'user_settings/reset_password.html'
+        return template_name
+
+
+    def get_context_data(self, request):
+        context = {}
+        context['p_c_form'] = self.get_password_change_form(request)
+        return context
+
+
+    def get_password_change_form(self, request):
+        form = UserPasswordChangeForm(request.POST or None)
         return form
