@@ -176,14 +176,36 @@ messages.success(request, 'An email has been sent to ' + data +". Please check i
 
 class PasswordResetConfirmationView(View):
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, uidb64=None, token=None, *args, **kwargs):
         template_name = self.get_template_name(request)
         context = self.get_context_data(request)
         return render(request, template_name, context)
 
 
-    def post(self, request, *args, **kwargs):
-        pass
+    def post(self, request, uidb64=None, token=None, *args, **kwargs):
+        form = self.get_password_change_form(request)
+        if form.is_valid():
+            klass = get_user_model()
+            try:
+                uid = urlsafe_base64_decode(uidb64)
+                user = klass._default_manager.get(pk=uid)
+            except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+                user = None
+
+            if user is not None and default_token_generator.check_token(user, token):
+                new_password= form.cleaned_data['password2']
+                user.set_password(new_password)
+                user.save()
+                return redirect('home:top')
+            else:
+                # message
+                return redirect('home:top')
+        else:
+            print('form is not valid')
+            template_name = self.get_template_name(request)
+            context = self.get_context_data(request)
+            return render(request, template_name, context)
+
 
 
     def get_template_name(self, request):
@@ -198,5 +220,5 @@ class PasswordResetConfirmationView(View):
 
 
     def get_password_change_form(self, request):
-        form = UserPasswordChangeForm(request.POST or None)
+        form = UserPasswordChangeForm(request.user, request.POST or None)
         return form
