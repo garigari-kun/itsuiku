@@ -1,0 +1,59 @@
+{% extends 'base/app-base.html' %}
+{% load static %}
+
+{% block css-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/event_form.css' %}">
+{% endblock css-container %}
+
+{% block home-title %}itsuiku | イベント登録{% endblock home-title %}
+
+
+{% block content %}
+<div class="container">
+
+  {% include 'includes/app-navbar.html' %}
+
+  <h1>イベントを作成</h1>
+  <h1>{{ request.user }}</h1>
+  <hr />
+
+
+  <form method="POST" action="">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-4">
+    {{ event_form.as_p }}
+  </div>
+<div class="col-sm-4">
+  <div id="datepicker"></div>
+  {{ schedule_formset.management_form }}
+</div>
+<div class="col-sm-4">
+  {% if schedule_formset %}
+    <div>
+      {% for schedule in schedule_formset %}
+      <!-- {% if schedule.date.value %} -->
+        {{ schedule.as_p }}
+        <!-- {% endif %} -->
+      {% endfor %}
+    </div>
+  {% endif %}
+  <div class="form-row" id="empty-form">
+    {{ schedule_formset.empty_form.as_p }}
+  </div>
+</div>
+
+  </div>
+
+  <input type='submit' value='イベント作成' class="btn btn-primary">
+
+</form>
+
+
+</div>
+{% endblock content %}
+
+{% block js-container %}
+<script src="{% static 'js/datepicker_utils.js' %}"></script>
+
+{% endblock js-container %}

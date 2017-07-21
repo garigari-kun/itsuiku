@@ -15,25 +15,24 @@
 
   <form method="POST" action="">
     {% csrf_token %}
-
-    <hr />
-    <!-- calendar and field -->
     <div class="row">
-      <div class="col-sm-4 col-sm-offset-1">
+      <div class="col-sm-10 col-sm-offset-1">
         <p>Step1. タイトルとメモを入力しましょう</p>
         <hr />
         {{ event_form.as_p }}
       </div>
+    </div>
+
+    <hr />
+    <!-- calendar and field -->
+    <div class="row">
       <div class="col-sm-4 col-sm-offset-1">
         <p>Step2: 日付をカレンダーより選択しましょう</p>
         <hr />
         <div id="datepicker"></div>
         {{ schedule_formset.management_form }}
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-10 col-sm-offset-1">
+      <div class="col-sm-4 col-sm-offset-1">
         <p>Step3: 時間や一言メモを記入しましょう</p>
         <hr />
         {% if schedule_formset %}
@@ -55,8 +54,6 @@
         </div>
       </div>
     </div>
-
-
   <br>
   <div class="row">
     <div class="col-sm-10 col-sm-offset-1">

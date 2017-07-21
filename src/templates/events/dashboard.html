@@ -7,7 +7,7 @@
   {% include 'includes/app-navbar.html' %}
 
   {% if request.user.is_authenticated %}
-    <a class="btn btn-primary" href="{% url 'event:create-event'  %}">イベントを作成する</a>
+    <a class="btn btn-info" href="{% url 'event:create-event'  %}">イベントを作成する</a>
     <hr />
     {% if events %}
       <h3>現在、登録されているイベント一覧</h3>
