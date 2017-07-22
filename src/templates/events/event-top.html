@@ -11,6 +11,10 @@
 {% block content %}
 <div class="container">
 
+  {% if request.user.is_authenticated %}
+    {% include 'includes/app-navbar.html' %}
+  {% endif %}
+
   <h1>{{ event.title }}</h1>
   <p>{{ event.description }}</p>
 
@@ -21,7 +25,6 @@
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletionModal">
     削除
   </button>
-
   <!-- Modal -->
   <div class="modal fade" id="deletionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -40,18 +43,15 @@
     </div>
   </div>
   <!-- Model end -->
-
-
-
   <a href="{% url 'event:update-event' event_code=event.event_code %}" class="btn btn-danger">編集</a>
   {% endif %}
 
-  <a class="btn btn-primary" href="{% url 'attendance:create' event_code=event.event_code %}">参加予定を入力する</a>
-
-
   <hr>
-
-  {% if event %}
+  <a class="btn btn-info" href="{% url 'attendance:create' event_code=event.event_code %}">
+    参加予定を入力する
+  </a>
+  <br><br>
+  {% if event and invitees %}
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
@@ -109,6 +109,8 @@
         {% endif %}
       </tbody>
     </table>
+  {% else %}
+    <p>現在、このイベントへの参加者はいません</p>
   {% endif %}
 
 

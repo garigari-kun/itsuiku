@@ -16,9 +16,7 @@ class EventTopView(View):
 
     def get(self, request, event_code=None, *args, **kwargs):
         context = self.get_context_data(request, event_code=event_code)
-        # num_of_date = len(event.schedule_range.all())
         event = Event.objects.get(event_code=event_code)
-        # print(event.delete_event_and_relations())
         return render(request, self.template_name, context)
 
 
