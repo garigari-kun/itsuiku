@@ -32,8 +32,9 @@ class ScheduleModelForm(forms.ModelForm):
         label='',
         widget=forms.DateInput(attrs={
             'placeholder': '日付',
-            'class': 'form-control',
-            'readonly': 'readonly'
+            'class': 'form-control s-date-input',
+            'readonly': 'readonly',
+            'style': 'max-width: 100px;'
         })
     )
 
@@ -42,7 +43,7 @@ class ScheduleModelForm(forms.ModelForm):
         label='',
         widget=forms.TextInput(attrs={
             'placeholder': '時間、一言メモ',
-            'class': 'form-control'
+            'class': 'form-control s-comment-input'
         })
     )
 
