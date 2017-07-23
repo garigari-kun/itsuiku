@@ -125,6 +125,66 @@ class PasswordResetRequestForm(forms.Form):
 
 
 
+class ChangeUserEmailForm(forms.Form):
+
+
+    error_messages = {
+        'duplicated_email': 'このメールアドレスは既に使用されています。',
+        'username_mismatch': '入力されたメールアドレスが一致しませんでした。',
+    }
+
+
+    username = forms.EmailField(
+        max_length=128,
+        widget=forms.EmailInput(
+            attrs={
+                'class': 'form-control'
+            }
+        ),
+        label='新しいメールアドレス',
+        error_messages={
+            'required': '入力が必須です'
+        }
+    )
+
+    confirmed_username = forms.EmailField(
+        max_length=128,
+        widget=forms.EmailInput(
+            attrs={
+                'class': 'form-control'
+            }
+        ),
+        label='確認用メールアドレス',
+        error_messages={
+            'required': '入力が必須です'
+        }
+    )
+
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        try:
+            get_user_model()._default_manager.get(email=username)
+        except get_user_model().DoesNotExist:
+            return username
+        raise forms.ValidationError(
+            self.error_messages['duplicated_email'],
+            code='duplicated_email',
+        )
+
+
+    def cleam_confirmed_username(self):
+        username = self.cleaned_data['username']
+        username2 = self.cleaned_data['confirmed_username']
+
+        if username and username2 and username != username2:
+            raise forms.ValidationError(
+                self.error_messages['username_mismatch'],
+                code='username_mismatch'
+            )
+
+
+
 
 
 
