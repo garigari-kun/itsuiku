@@ -9,10 +9,16 @@
 
 
 {% block content %}
+
+
+
 <div class="container">
 
-  <h1>イベント詳細</h1>
-  <hr />
+
+  {% if request.user.is_authenticated %}
+    {% include 'includes/app-navbar.html' %}
+  {% endif %}
+
   <h1>{{ event.title }}</h1>
   <p>{{ event.description }}</p>
 
@@ -20,15 +26,46 @@
 
   <hr />
 
-  <h1>参加入力フォーム</h1>
+  <h1>参加入力</h1>
+  <hr />
 
   <form method="POST" action="">
     {% csrf_token %}
+    {{ attendance_form.management_form  }}
 
-  {{ invitee_form }}
+    <div class="row">
+      <div class="col-sm-4">
+        {{ invitee_form }}
+      </div>
+      <div class="col-sm-8">
+        <!-- Attedance form table style -->
+        <table class="table table-bordered" style="max-width: 100%">
+          <tbody>
+            {% if sl_af %}
+              {% for schedule, attendance_field in sl_af %}
+              <tr>
+                <td style="max-width: 40px;">
+                  {{ schedule.date }}: {{ schedule.comment }}
+                </td>
+                <td>
+                  {{ attendance_field.choice.label }}
+                  {% for radio in attendance_field.choice %}
+                      {{ radio.tag }}
+                      <label>{{ radio.choice_label }}</label>
+                  {% endfor %}
+                  <br />          </td>
+              </tr>
+              {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>      </div>
+    </div>
 
 
-  <div class="row">
+  <br><br>
+
+
+  <!-- <div class="row">
     <div class="col-sm-6">
       {% for schedule in event.schedule_range.all %}
         <p>{{ schedule.date }}: {{ schedule.comment }}</p>
@@ -36,10 +73,20 @@
     </div>
 
     <div class="col-sm-6">
-      {{ attendance_form.as_p }}
+      {% for attendance_field in attendance_form %}
+          {{ attendance_field.choice.label }}
+          {% for radio in attendance_field.choice %}
+              {{ radio.tag }}
+              <label>{{ radio.choice_label }}</label>
+          {% endfor %}
+          <br />
+      {% endfor %}
     </div>
 
-  </div>
+  </div> -->
+
+<br><br>
+
 
   <input type="submit" value="登録する" class="btn btn-primary">
 

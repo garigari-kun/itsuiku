@@ -46,11 +46,16 @@ class CreateEventAttendanceView(View):
         # invitees = Invitee.objects.filter(event=event)
         invitee_form = self.get_invitee_form(request)
         attendance_form = self.get_attendance_formset(request, extra=num_of_date)
+        schedule_list = event.schedule_range.all()
+        # Zipped schedule_list and attendance_form
+        sl_af = zip(schedule_list, attendance_form)
+
 
         context = {
             'event': event,
             'attendance_form': attendance_form,
             'invitee_form': invitee_form,
+            'sl_af': sl_af
         }
         return render(request, self.template_name, context)
 
@@ -104,12 +109,16 @@ class UpdateEventAttendanceView(View):
         attendance_list = self.get_attendance_list(invitee)
         invitee_form = self.get_invitee_form(request, instance=invitee)
         attendance_form = self.get_attendance_formset(request, instance=attendance_list)
+        schedule_list = event.schedule_range.all()
+        # Zipped schedule_list and attendance_form
+        sl_af = zip(schedule_list, attendance_form)
 
 
         context = {
             'event': event,
             'attendance_form': attendance_form,
             'invitee_form': invitee_form,
+            'sl_af': sl_af
         }
         return render(request, self.template_name, context)
 

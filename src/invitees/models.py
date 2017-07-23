@@ -6,7 +6,7 @@ from events.models import Event, Schedule
 
 ATTENDANCE_CHOICES = (
     ('yes', 'yes'),
-    ('mmm', 'mmm'),
+    # ('mmm', 'mmm'),
     ('no', 'no')
 )
 

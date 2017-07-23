@@ -45,6 +45,7 @@ class AttendanceModelForm(forms.ModelForm):
     choice = forms.TypedChoiceField(
         choices=ATTENDANCE_CHOICES,
         widget=forms.RadioSelect,
+        label=''
     )
 
 
