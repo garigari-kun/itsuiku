@@ -223,6 +223,7 @@ class ChangeUserEmailView(View):
             new_useremail = form.cleaned_data['username']
             user = get_user_model().objects.get(email=request.user.email)
             user.email = new_useremail
+            user.is_active = False
             user.save()
             if user:
                 result = send_confirmation_email(
@@ -244,8 +245,34 @@ class ChangeUserEmailView(View):
 
 
 
+class ConfirmChangingUserEmailView(View):
+
+    def get(self, request, uidb64=None, token=None, *args, **kwargs):
+        klass = get_user_model()
+        try:
+            uid = urlsafe_base64_decode(uidb64)
+            user = klass._default_manager.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            user.is_active = True
+            user.save()
+            template_name = self.get_template_name(request)
+            context = self.get_context_data(request)
+            return render(request, template_name, context)
+        else:
+            # message
+            return redirect('home:top')
 
 
+    def get_template_name(self, request):
+        template_name = 'user_settings/confirm_changing_useremail.html'
+        return template_name
+
+    def get_context_data(self, request):
+        context = {}
+        return context
 
 
 

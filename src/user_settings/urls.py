@@ -5,7 +5,8 @@ from .views import (
     DeleteUserAccount,
     UserPasswordChangeView,
     PasswordResetRequestView,
-    PasswordResetConfirmationView
+    PasswordResetConfirmationView,
+    ChangeUserEmailView
 )
 
 urlpatterns = [
@@ -28,6 +29,10 @@ urlpatterns = [
     url(r'^account/reset_password_confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
         PasswordResetConfirmationView.as_view(),
         name='reset_password_confirm'
+    ),
+    url(r'^change_user_email$',
+        ChangeUserEmailView.as_view(),
+        name='change_user_email'
     ),
 
 ]

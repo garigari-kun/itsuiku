@@ -19,8 +19,11 @@
   <h3>ユーザー名変更</h3>
   <label>現在登録のメールアドレス</label>
   <p>{{ request.user.email }}</p>
-  {{ change_user_email_form.as_p }}
-  <input class="btn btn-primary" value="メールアドレスを変更">
+  <form method="POST" action="{% url 'user-settings:change_user_email' %}">
+    {% csrf_token %}
+    {{ change_user_email_form.as_p }}
+    <input type="submit" class="btn btn-primary" value="メールアドレスを変更">
+  </form>
 
 
   <hr />
