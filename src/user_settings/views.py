@@ -4,7 +4,7 @@ from django.views.generic.base import View
 from django.http import HttpResponse
 
 from events.models import Event
-from django.contrib.auth import get_user_model, update_session_auth_hash
+from django.contrib.auth import get_user_model, update_session_auth_hash, logout
 from .forms import (
     UserPasswordChangeForm,
     UserProfileModelForm,
@@ -139,30 +139,6 @@ class PasswordResetRequestView(View):
                     content_template='user_settings/password_reset_email.html'
                 )
                 print(result)
-                # s_info = {
-                #     'email': assoc_user.email,
-                #     'domain': request.META['HTTP_HOST'],
-                #     'site_name': 'itsuiku',
-                #     'uid': urlsafe_base64_encode(force_bytes(assoc_user.id)),
-                #     'user': assoc_user,
-                #     'token': default_token_generator.make_token(assoc_user),
-                #     'protocol': 'http'
-                # }
-                # print(repr(s_info))
-                # mail_subject_template_name = 'user_settings/password_reset_subject.txt'
-                # mail_content_template_name = 'user_settings/password_reset_email.html'
-                # subject = loader.render_to_string(mail_subject_template_name, s_info)
-                # content = loader.render_to_string(mail_content_template_name, s_info)
-                # print(subject)
-                # print(content)
-                # subject = ''.join(subject.splitlines())
-                # # send_mail(
-                # #     subject,
-                # #     content,
-                # #     DEFAULT_FROM_EMAIL ,
-                # #     [assoc_user.email],
-                # #     fail_silently=False
-                # # )
             return HttpResponse('post valid')
 
         template_name = self.get_template_name(request)
@@ -235,3 +211,49 @@ class PasswordResetConfirmationView(View):
     def get_password_change_form(self, request):
         form = UserPasswordChangeForm(request.user, request.POST or None)
         return form
+
+
+
+
+class ChangeUserEmailView(View):
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_change_user_email_form(request)
+        if form.is_valid():
+            new_useremail = form.cleaned_data['username']
+            user = get_user_model().objects.get(email=request.user.email)
+            user.email = new_useremail
+            user.save()
+            if user:
+                result = send_confirmation_email(
+                    request,
+                    user=user,
+                    subject_template='accounts/user_activation_subject.txt',
+                    content_template='accounts/user_activation_email.html'
+                )
+                logout(request)
+                return redirect('home:top')
+        else:
+            # message sent
+            return redirect('user-settings:main')
+
+
+    def get_change_user_email_form(self, request):
+        form = ChangeUserEmailForm(request.POST or None)
+        return form
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#

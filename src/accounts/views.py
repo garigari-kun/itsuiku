@@ -24,7 +24,7 @@ class LoginView(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
-            return redirect('event:create-event')
+            return redirect('user-dashboard')
 
         template_name = self.get_template_name(request)
         context = self.get_context_data(request)

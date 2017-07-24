@@ -17,7 +17,13 @@
   <hr />
 
   <h3>ユーザー名変更</h3>
+  <label>現在登録のメールアドレス</label>
+  <p>{{ request.user.email }}</p>
   {{ change_user_email_form.as_p }}
+  <input class="btn btn-primary" value="メールアドレスを変更">
+
+
+  <hr />
 
   <h3>パスワード変更</h3>
   <a class="btn btn-danger" href="{% url 'user-settings:change_password' %}">パスワードを変更する</a>
