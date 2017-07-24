@@ -20,6 +20,8 @@ from django.template import loader
 
 from django.core.mail import send_mail
 
+from itsuiku.utils import confirmation_email_sender
+
 
 
 
@@ -131,36 +133,36 @@ class PasswordResetRequestView(View):
             email = form.cleaned_data['email']
             assoc_user = get_user_model().objects.get(email=email)
             if assoc_user:
-                s_info = {
-                    'email': assoc_user.email,
-                    'domain': request.META['HTTP_HOST'],
-                    'site_name': 'itsuiku',
-                    'uid': urlsafe_base64_encode(force_bytes(assoc_user.id)),
-                    'user': assoc_user,
-                    'token': default_token_generator.make_token(assoc_user),
-                    'protocol': 'http'
-                }
-                print(repr(s_info))
-                mail_subject_template_name = 'user_settings/password_reset_subject.txt'
-                mail_content_template_name = 'user_settings/password_reset_email.html'
-                subject = loader.render_to_string(mail_subject_template_name, s_info)
-                content = loader.render_to_string(mail_content_template_name, s_info)
-                print(subject)
-                print(content)
-                subject = ''.join(subject.splitlines())
-
-                # send_mail(
-                #     subject,
-                #     content,
-                #     DEFAULT_FROM_EMAIL ,
-                #     [assoc_user.email],
-                #     fail_silently=False
-                # )
-
-                """
-send_mail(subject, email, DEFAULT_FROM_EMAIL , [user.email], fail_silently=False)
-messages.success(request, 'An email has been sent to ' + data +". Please check its inbox to continue reseting password.")
-                """
+                result = confirmation_email_sender(request,
+                    user=assoc_user,
+                    subject_template='user_settings/password_reset_subject.txt',
+                    content_template='user_settings/password_reset_email.html'
+                )
+                print(result)
+                # s_info = {
+                #     'email': assoc_user.email,
+                #     'domain': request.META['HTTP_HOST'],
+                #     'site_name': 'itsuiku',
+                #     'uid': urlsafe_base64_encode(force_bytes(assoc_user.id)),
+                #     'user': assoc_user,
+                #     'token': default_token_generator.make_token(assoc_user),
+                #     'protocol': 'http'
+                # }
+                # print(repr(s_info))
+                # mail_subject_template_name = 'user_settings/password_reset_subject.txt'
+                # mail_content_template_name = 'user_settings/password_reset_email.html'
+                # subject = loader.render_to_string(mail_subject_template_name, s_info)
+                # content = loader.render_to_string(mail_content_template_name, s_info)
+                # print(subject)
+                # print(content)
+                # subject = ''.join(subject.splitlines())
+                # # send_mail(
+                # #     subject,
+                # #     content,
+                # #     DEFAULT_FROM_EMAIL ,
+                # #     [assoc_user.email],
+                # #     fail_silently=False
+                # # )
             return HttpResponse('post valid')
 
         template_name = self.get_template_name(request)
