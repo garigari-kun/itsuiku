@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
-from .views import LoginView, SignUpView, LogOutView
+from .views import LoginView, SignUpView, LogOutView, UserActivationView
 
 
 urlpatterns = [
@@ -31,6 +31,10 @@ urlpatterns = [
     url(r'^reset/done/$',
         auth_views.password_reset_complete,
         name='password_reset_complete'
+    ),
+    url(r'^account/user_activation/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+        UserActivationView.as_view(),
+        name='user_activation'
     ),
 
 ]

@@ -1,0 +1,26 @@
+{% extends 'base/home-base.html' %}
+{% load static %}
+
+{% block home-title %}itsuiku | ユーザー認証{% endblock home-title %}
+
+{% block static-container %}
+{% endblock static-container %}
+
+
+{% block content %}
+
+<style>
+.customize-container {
+  margin-top: 70px;
+}
+
+</style>
+
+{% include 'includes/home-navbar.html' %}
+
+
+<div class="container customize-container">
+  <p>ユーザーを有効化しました！</p>
+  <a href="{% url 'account:login' %}">こちら</a>よりログインをして、サービスをお使いください
+</div>
+{% endblock content %}

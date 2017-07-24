@@ -2,6 +2,7 @@ from django.contrib.auth import (
     authenticate,
     login,
     logout,
+    get_user_model
 )
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
@@ -12,6 +13,11 @@ from .forms import (
 )
 
 from itsuiku.utils import send_confirmation_email
+
+
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 
 class LoginView(View):
@@ -90,7 +96,7 @@ class SignUpView(View):
                     subject_template='accounts/user_activation_subject.txt',
                     content_template='accounts/user_activation_email.html'
                 )
-                redirect('home:top')
+                return redirect('home:top')
             # login_user = authenticate(email=email, password=password)
             # if login_user is not None:
             #     if login_user.is_active:
@@ -113,6 +119,38 @@ class SignUpView(View):
         context = {}
         context['form'] = self.get_user_form(request)
         return context
+
+
+
+class UserActivationView(View):
+
+    def get(self, request, uidb64=None, token=None, *args, **kwargs):
+        klass = get_user_model()
+        try:
+            uid = urlsafe_base64_decode(uidb64)
+            user = klass._default_manager.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            user.is_active = True
+            user.save()
+            template_name = self.get_template_name(request)
+            context = self.get_context_data(request)
+            return render(request, template_name, context)
+        else:
+            # message
+            return redirect('home:top')
+
+
+    def get_template_name(self, request):
+        template_name = 'accounts/user_activation_success.html'
+        return template_name
+
+    def get_context_data(self, request):
+        context = {}
+        return context
+
 
 
 

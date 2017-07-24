@@ -5,7 +5,7 @@
 {{ site_name }}です。会員登録ありがとうございます。
 下記のURLへアクセスし、アカウントを有効にしてください
 {% block reset_link %}
-{{ domain }}{% url 'user-settings:reset_password_confirm' uidb64=uid token=token %}
+{{ domain }}{% url 'account:user_activation' uidb64=uid token=token %}
 {% endblock %}
 
 itsuikuをご利用いただきありがとうございます。
