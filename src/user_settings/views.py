@@ -20,7 +20,7 @@ from django.template import loader
 
 from django.core.mail import send_mail
 
-from itsuiku.utils import confirmation_email_sender
+from itsuiku.utils import send_confirmation_email
 
 
 
@@ -133,7 +133,7 @@ class PasswordResetRequestView(View):
             email = form.cleaned_data['email']
             assoc_user = get_user_model().objects.get(email=email)
             if assoc_user:
-                result = confirmation_email_sender(request,
+                result = send_confirmation_email(request,
                     user=assoc_user,
                     subject_template='user_settings/password_reset_subject.txt',
                     content_template='user_settings/password_reset_email.html'

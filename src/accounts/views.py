@@ -11,6 +11,8 @@ from .forms import (
     EmailUserLoginForm
 )
 
+from itsuiku.utils import send_confirmation_email
+
 
 class LoginView(View):
 
@@ -74,12 +76,26 @@ class SignUpView(View):
             new_user = form.save(commit=False)
             email = form.cleaned_data['email']
             password = form.cleaned_data['password1']
+            new_user.is_active=False
+            print(repr(new_user))
             new_user.save()
-            login_user = authenticate(email=email, password=password)
-            if login_user is not None:
-                if login_user.is_active:
-                    login(request, login_user)
-                    return redirect('user-dashboard')
+            """
+            After saving user,
+            Need to send an activation email to the user for activating their user account
+            """
+            if new_user:
+                result = send_confirmation_email(
+                    request,
+                    user=new_user,
+                    subject_template='accounts/user_activation_subject.txt',
+                    content_template='accounts/user_activation_email.html'
+                )
+                redirect('home:top')
+            # login_user = authenticate(email=email, password=password)
+            # if login_user is not None:
+            #     if login_user.is_active:
+            #         login(request, login_user)
+            #         return redirect('user-dashboard')
         else:
             context = self.get_context_data(request)
             return render(request, self.template_name, context)

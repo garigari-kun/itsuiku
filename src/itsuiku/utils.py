@@ -10,7 +10,7 @@ from django.utils.encoding import force_bytes
 
 
 
-def confirmation_email_sender(request, user=None, subject_template=None, content_template=None):
+def send_confirmation_email(request, user=None, subject_template=None, content_template=None):
     """ Utility method for sending confirmation email
     Return True if the email was sent to the user
     Return False if the user is None

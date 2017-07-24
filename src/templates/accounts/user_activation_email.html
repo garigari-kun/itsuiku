@@ -1,0 +1,14 @@
+
+
+
+{% autoescape off %}
+{{ site_name }}です。会員登録ありがとうございます。
+下記のURLへアクセスし、アカウントを有効にしてください
+{% block reset_link %}
+{{ domain }}{% url 'user-settings:reset_password_confirm' uidb64=uid token=token %}
+{% endblock %}
+
+itsuikuをご利用いただきありがとうございます。
+{{ site_name }}開発: 塚本圭亮
+
+{% endautoescape %}
