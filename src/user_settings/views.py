@@ -53,14 +53,20 @@ class UserSettingsView(View):
         return context
 
     def get_user_profile_form(self, request, *args, **kwargs):
-        # user_profile = UserProfile.objects.get(user=request.user)
-        user_profile = UserProfile.objects.filter(user=request.user)
-        print(user_profile)
-        if user_profile:
-            # Edit view
-            form = UserProfileModelForm(request.POST or None, instance=user_profile)
-        else:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except:
             form = UserProfileModelForm(request.POST or None)
+            return form
+
+        form = UserProfileModelForm(request.POST or None, instance=user_profile)
+        return form
+        # if user_profile:
+        #     # Edit view
+        #     form = UserProfileModelForm(request.POST or None, instance=user_profile)
+        # else:
+        #     form = UserProfileModelForm(request.POST or None)
+        form = UserProfileModelForm(request.POST or None)
         return form
 
 
