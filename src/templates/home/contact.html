@@ -1,0 +1,30 @@
+{% extends 'base/home-base.html' %}
+
+{% block home-title %}itsuiku | 問い合わせ{% endblock home-title %}
+
+{% block content %}
+
+
+
+{% include 'includes/home-navbar.html' %}
+
+
+<style>
+.customize-container {
+  margin-top: 70px;
+}
+</style>
+
+
+
+<div class="container customize-container">
+  <h1>お問い合わせ</h1>
+
+  <form method="POST" action="">
+    {{ contact_form.as_p }}
+    <input type="submit" value="送信する" class="btn btn-primary btn-block">
+  </form>
+
+
+</div>
+{% endblock content %}
