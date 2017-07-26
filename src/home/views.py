@@ -21,6 +21,21 @@ class TopView(View):
 
 
 
+class ForumView(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.get_template_name(request), self.get_context_data(request))
+
+    def get_template_name(self, request, *args, **kwargs):
+        template_name = 'home/forum.html'
+        return template_name
+
+    def get_context_data(self, request, *args, **kwargs):
+        context = {}
+        return context
+
+
+
 
 class ContactFormView(View):
 
