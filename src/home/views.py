@@ -25,20 +25,31 @@ class TopView(View):
 class ContactFormView(View):
 
     def get(self, request, *args, **kwargs):
-        template_name = self.get_template_name(request)
+        template_name = self.get_template_name(request, form_valid=False)
         context = self.get_context_data(request)
         return render(request, template_name, context)
 
     def post(self, request, *args, **kwargs):
-        pass
+        contact_form = self.get_contact_form(request)
+        if contact_form.is_valid():
+            email = contact_form.cleaned_data['email']
+            url = contact_form.cleaned_data['url']
+            content = contact_form.cleaned_data['content']
+            category = contact_form.cleaned_data['category']
+            return render(request, self.get_template_name(request, form_valid=True), {})
+        else:
+            return render(request, self.get_template_name(request, form_valid=False), self.get_context_data(request))
 
     def get_context_data(self, request):
         context = {}
         context['contact_form'] = self.get_contact_form(request)
         return context
 
-    def get_template_name(self, request):
-        template_name = 'home/contact.html'
+    def get_template_name(self, request, *args, **kwargs):
+        if kwargs['form_valid'] == True:
+            template_name = 'home/sent_contact.html'
+        else:
+            template_name = 'home/contact.html'
         return template_name
 
     def get_contact_form(self, request):
