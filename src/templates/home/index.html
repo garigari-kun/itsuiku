@@ -1,6 +1,12 @@
 {% extends 'base/home-base.html' %}
+{% load static %}
 
 {% block home-title %}itsuiku | トップページ{% endblock home-title %}
+
+{% block static-container %}
+<!-- static-container -->
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock static-container %}
 
 {% block content %}
 
@@ -9,12 +15,7 @@
 {% include 'includes/home-navbar.html' %}
 
 
-<style>
-.customize-jumbotron {
-  padding-top: 70px;
-  padding-bottom: 60px;
-}
-</style>
+
 
 
 <div class="jumbotron customize-jumbotron">
@@ -24,7 +25,7 @@
           itsuikuは、友達や同僚とのイベント事のスケジュールを管理するアプリです。<br />
         </p>
         <p>
-          <a class="btn btn-info btn-lg" href="{% url 'account:signup' %}" role="button">
+          <a class="btn btn-lg btn-itsuiku" href="{% url 'account:signup' %}" role="button">
               無料登録をし、イベントを作成する
           </a>
         </p>

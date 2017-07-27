@@ -1,0 +1,146 @@
+.customize-jumbotron {
+  padding-top: 100px;
+  padding-bottom: 60px;
+}
+
+
+.btn-itsuiku {
+  color: #ffffff;
+  background-color: #14BDEB;
+  border-color: #14BDEB;
+}
+
+.btn-itsuiku:hover,
+.btn-itsuiku:focus,
+.btn-itsuiku:active,
+.btn-itsuiku.active,
+.open .dropdown-toggle.btn-itsuiku {
+  color: #ffffff;
+  background-color: #09B1E0;
+  border-color: #14BDEB;
+}
+
+.btn-itsuiku:active,
+.btn-itsuiku.active,
+.open .dropdown-toggle.btn-itsuiku {
+  background-image: none;
+}
+
+.btn-itsuiku.disabled,
+.btn-itsuiku[disabled],
+fieldset[disabled] .btn-itsuiku,
+.btn-itsuiku.disabled:hover,
+.btn-itsuiku[disabled]:hover,
+fieldset[disabled] .btn-itsuiku:hover,
+.btn-itsuiku.disabled:focus,
+.btn-itsuiku[disabled]:focus,
+fieldset[disabled] .btn-itsuiku:focus,
+.btn-itsuiku.disabled:active,
+.btn-itsuiku[disabled]:active,
+fieldset[disabled] .btn-itsuiku:active,
+.btn-itsuiku.disabled.active,
+.btn-itsuiku[disabled].active,
+fieldset[disabled] .btn-itsuiku.active {
+  background-color: #14BDEB;
+  border-color: #14BDEB;
+}
+
+.btn-itsuiku .badge {
+  color: #14BDEB;
+  background-color: #ffffff;
+}
+
+.btn-itsuiku-imp {
+  color: #ffffff;
+  background-color: #F21B3F;
+  border-color: #F21B3F;
+}
+
+.btn-itsuiku-imp:hover,
+.btn-itsuiku-imp:focus,
+.btn-itsuiku-imp:active,
+.btn-itsuiku-imp.active,
+.open .dropdown-toggle.btn-itsuiku-imp {
+  color: #ffffff;
+  background-color: #DE1F3F;
+  border-color: #F21B3F;
+}
+
+.btn-itsuiku-imp:active,
+.btn-itsuiku-imp.active,
+.open .dropdown-toggle.btn-itsuiku-imp {
+  background-image: none;
+}
+
+.btn-itsuiku-imp.disabled,
+.btn-itsuiku-imp[disabled],
+fieldset[disabled] .btn-itsuiku-imp,
+.btn-itsuiku-imp.disabled:hover,
+.btn-itsuiku-imp[disabled]:hover,
+fieldset[disabled] .btn-itsuiku-imp:hover,
+.btn-itsuiku-imp.disabled:focus,
+.btn-itsuiku-imp[disabled]:focus,
+fieldset[disabled] .btn-itsuiku-imp:focus,
+.btn-itsuiku-imp.disabled:active,
+.btn-itsuiku-imp[disabled]:active,
+fieldset[disabled] .btn-itsuiku-imp:active,
+.btn-itsuiku-imp.disabled.active,
+.btn-itsuiku-imp[disabled].active,
+fieldset[disabled] .btn-itsuiku-imp.active {
+  background-color: #F21B3F;
+  border-color: #F21B3F;
+}
+
+.btn-itsuiku-imp .badge {
+  color: #F21B3F;
+  background-color: #ffffff;
+}
+
+
+.customize-container {
+  margin-top: 50px;
+}
+
+
+.field-wrapper {
+  padding: 20px 40px;;
+}
+
+.errorlist {
+  list-style-type: none;
+}
+
+
+
+.sys-header {
+  padding: 15px;
+  margin: 10px;
+  color: #000000;
+}
+
+.footer-spacer {
+  margin: 100px;
+}
+
+
+.app-title-link:link {
+    text-decoration: none;
+}
+
+.app-title-link:visited {
+    text-decoration: none;
+}
+
+.app-title-link:hover {
+    text-decoration: none;
+    color: #000000;
+    cursor: pointer;
+}
+
+.app-title-link:active {
+    text-decoration: none;
+}
+
+.app-title-link {
+  color: #000000;
+}

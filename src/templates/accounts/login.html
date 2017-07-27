@@ -4,60 +4,58 @@
 {% block home-title %}itsuiku | ログイン{% endblock home-title %}
 
 {% block static-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
 {% endblock static-container %}
 
-
 {% block content %}
+<!-- {% include 'includes/home-navbar.html' %} -->
 
-<style>
-.customize-container {
-  margin-top: 70px;
-}
-
-.field-wrapper {
-  padding: 10px;
-}
-
-.errorlist {
-  list-style-type: none;
-}
-</style>
-
-{% include 'includes/home-navbar.html' %}
-
-
-<div class="container customize-container">
-  <h1 class="text-center">ユーザーログイン</h1>
-  <div class="panel panel-default login-form-container">
-    <div class="panel-body">
-      {% if login_failed %}
-        <div class="alert alert-danger" role="alert">{{ login_failed }}</div>
-      {% endif %}
-      <form method="POST" action="">
-        {% csrf_token %}
-        {% for field in form %}
-          <div class="field-wrapper">
-            {{ field.label_tag }}
-            {{ field }}
-            {% if field.help_text %}
-              <p class="help-text">{{ field.help_text|safe }}</p>
-            {% endif %}
-            {% if field.errors %}
-            <div class="alert alert-danger" role="alert">
-              {{ field.errors }}
-            </div>
-            {% endif %}
-          </div>
-        {% endfor %}
-        <input type="submit" value="ログイン" class="btn btn-info btn-block">
-      </form>
+<div class="customize-bg">
+  <div class="container customize-container">
+    <div class="sys-header">
+      <a class="app-title-link" href="{% url 'home:top'  %}">
+        <h3 class="text-center">itsuiku</h3>
+      </a>
     </div>
-  </div>
-  <p></p>
-  <p class="text-center">
-    <a href="{% url 'account:signup' %}">まだユーザー登録していない方はこちら</a><br />
-    <a href="{% url 'user-settings:reset_password' %}">パスワードを忘れた方はこちら</a>
-  </p>
-</div>
+    <div class="panel panel-default auth-form-container">
+      <div class="panel-body">
+          <div class="field-wrapper">
+            <p class="text-center">まだユーザー登録していない方</p>
+            <p class="text-center">
+              <a class="btn btn-itsuiku-imp" href="{% url 'account:signup' %}">新規ユーザー登録</a>
+            </p>
+          </div>
+          <hr />
+        {% if login_failed %}
+          <div class="alert alert-danger" role="alert">{{ login_failed }}</div>
+        {% endif %}
+        <form method="POST" action="">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="field-wrapper">
+              {{ field.label_tag }}
+              {{ field }}
+              {% if field.help_text %}
+                <p class="help-text">{{ field.help_text|safe }}</p>
+              {% endif %}
+              {% if field.errors %}
+              <div class="alert alert-danger" role="alert">
+                {{ field.errors }}
+              </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+          <div class="field-wrapper">
+            <input type="submit" value="ログイン" class="btn btn-itsuiku btn-block">
+          </div>
+        </form>
+      </div><!-- end panel-body -->
+    </div><!-- panel end -->
+    <p class="text-center">
+      <a href="{% url 'user-settings:reset_password' %}">パスワードを忘れた方はこちら</a>
+    </p>
+  </div><!-- end container -->
+</div><!-- end customize-bg -->
+<div class="footer-spacer"></div>
 {% endblock content %}

@@ -21,7 +21,9 @@ from django.contrib import admin
 from events.views import DashboardView
 
 urlpatterns = [
-    url(r'^', include('home.urls', namespace='home')),
+    url(r'^',
+        include('home.urls', namespace='home')
+    ),
     url(r'^admin/', admin.site.urls),
     url(r'^account/', include('accounts.urls', namespace='account')),
     url(r'^dashboard/$', DashboardView.as_view(), name='user-dashboard'),
