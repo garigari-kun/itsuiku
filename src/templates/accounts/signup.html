@@ -4,53 +4,51 @@
 {% block home-title %}itsuiku | サインアップ{% endblock home-title %}
 
 {% block static-container %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
+
+
 {% endblock static-container %}
 
 {% block content %}
 
-{% include 'includes/home-navbar.html' %}
-
-<style>
-.customize-container {
-  margin-top: 70px;
-}
-
-.field-wrapper {
-  padding: 10px;
-}
-
-.errorlist {
-  list-style-type: none;
-}
-</style>
-
+<!-- {% include 'includes/home-navbar.html' %} -->
 
 <div class="container customize-container">
-  <h1 class="text-center">サインアップ</h1>
-
-
-  <div class="panel panel-default signup-form-container">
+  <div class="sys-header">
+    <a class="app-title-link" href="{% url 'home:top'  %}">
+      <h3 class="text-center">itsuiku</h3>
+    </a>
+    <p class="text-center">
+      メールアドレスで簡単登録
+    </p>
+  </div>
+  <div class="panel panel-default auth-form-container">
     <div class="panel-body">
       <form method="POST" action="">
         {% csrf_token %}
         {% for field in form %}
+          {% if field.errors %}
+            <div class="alert alert-danger" role="alert">
+              {{ field.errors }}
+            </div>
+          {% endif %}
           <div class="field-wrapper">
             {{ field.label_tag }}
             {{ field }}
             {% if field.help_text %}
               <p class="help-text">{{ field.help_text|safe }}</p>
             {% endif %}
-            {% if field.errors %}
-            <div class="alert alert-danger" role="alert">
-              {{ field.errors }}
-            </div>
-            {% endif %}
           </div>
         {% endfor %}
-        <input type="submit" value="登録する" class="btn btn-info btn-block">
+        <div class="field-wrapper">
+          <input type="submit" value="登録する" class="btn btn-itsuiku-pr btn-block">
+        </div>
       </form>
     </div>
   </div>
 </div>
+<div class="footer-spacer"></div>
+
 {% endblock content %}
