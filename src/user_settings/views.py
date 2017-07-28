@@ -197,7 +197,6 @@ class PasswordResetConfirmationView(View):
                 # message
                 return redirect('home:top')
         else:
-            print('form is not valid')
             template_name = self.get_template_name(request)
             context = self.get_context_data(request)
             return render(request, template_name, context)
