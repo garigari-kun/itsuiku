@@ -7,3 +7,9 @@ body {
   max-width: 600px;
   margin: 0 auto;
 }
+
+
+.panel-body-center-div {
+  margin: 0 auto;
+  text-align: center;
+}

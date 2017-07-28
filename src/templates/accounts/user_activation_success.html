@@ -4,23 +4,33 @@
 {% block home-title %}itsuiku | ユーザー認証{% endblock home-title %}
 
 {% block static-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
 {% endblock static-container %}
 
-
 {% block content %}
+<!-- {% include 'includes/home-navbar.html' %} -->
 
-<style>
-.customize-container {
-  margin-top: 70px;
-}
-
-</style>
-
-{% include 'includes/home-navbar.html' %}
-
-
-<div class="container customize-container">
-  <p>ユーザーを有効化しました！</p>
-  <a href="{% url 'account:login' %}">こちら</a>よりログインをして、サービスをお使いください
-</div>
+<div class="customize-bg">
+  <div class="container customize-container">
+    <div class="sys-header">
+      <a class="app-title-link" href="{% url 'home:top'  %}">
+        <h3 class="text-center">itsuiku</h3>
+      </a>
+    </div>
+    <div class="panel panel-default auth-form-container">
+      <div class="panel-body">
+        <div class="panel-body-center-div">
+          <h3>ユーザーを有効化しました！</h3>
+          <p>
+            itsuikuにご登録ありがとうございます<br />
+            早速、イベントを作成し友達にスケジュールを聞いてみましょう！
+          </p>
+          <a href="{% url 'account:login' %}" class="btn btn-itsuiku">さっそくイベントを作成する</a>
+        </div>
+      </div><!-- end panel-body -->
+    </div><!-- panel end -->
+  </div><!-- end container -->
+</div><!-- end customize-bg -->
+<div class="footer-spacer"></div>
 {% endblock content %}
