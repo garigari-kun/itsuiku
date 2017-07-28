@@ -83,12 +83,7 @@ class SignUpView(View):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password1']
             new_user.is_active=False
-            print(repr(new_user))
             new_user.save()
-            """
-            After saving user,
-            Need to send an activation email to the user for activating their user account
-            """
             if new_user:
                 result = send_confirmation_email(
                     request,
@@ -96,7 +91,7 @@ class SignUpView(View):
                     subject_template='accounts/user_activation_subject.txt',
                     content_template='accounts/user_activation_email.html'
                 )
-                return redirect('home:top')
+                return redirect('account:signup-success')
             # login_user = authenticate(email=email, password=password)
             # if login_user is not None:
             #     if login_user.is_active:
@@ -148,6 +143,23 @@ class UserActivationView(View):
         return template_name
 
     def get_context_data(self, request):
+        context = {}
+        return context
+
+
+
+class SignUpSuccessView(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.get_template_name(request), self.get_context_data(request))
+
+
+    def get_template_name(self, request, *args, **kwargs):
+        template_name = 'accounts/signup_success.html'
+        return template_name
+
+
+    def get_context_data(self, request, *args, **kwargs):
         context = {}
         return context
 
