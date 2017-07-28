@@ -145,15 +145,17 @@ class PasswordResetRequestView(View):
                     content_template='user_settings/password_reset_email.html'
                 )
                 print(result)
-            return HttpResponse('post valid')
+            return render(request, self.get_template_name(request, 'form_valid'), {})
 
         template_name = self.get_template_name(request)
         context = self.get_context_data(request)
         return render(request, template_name, context)
 
 
-    def get_template_name(self, request):
+    def get_template_name(self, request, tmp_switch=None):
         template_name = 'user_settings/forgot_password.html'
+        if tmp_switch == 'form_valid':
+            template_name = 'user_settings/password_reset_notification.html'
         return template_name
 
 
@@ -166,7 +168,6 @@ class PasswordResetRequestView(View):
     def get_password_reset_request_form(self, request):
         form = PasswordResetRequestForm(request.POST or None)
         return form
-
 
 
 class PasswordResetConfirmationView(View):
