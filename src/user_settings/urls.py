@@ -6,6 +6,7 @@ from .views import (
     UserPasswordChangeView,
     PasswordResetRequestView,
     PasswordResetConfirmationView,
+    PasswordResetSuccessView,
     ChangeUserEmailView
 )
 
@@ -25,6 +26,10 @@ urlpatterns = [
     url(r'^reset_password$',
         PasswordResetRequestView.as_view(),
         name='reset_password'
+    ),
+    url(r'^reset_password/success$',
+        PasswordResetSuccessView.as_view(),
+        name='reset_password_success'
     ),
     url(r'^account/reset_password_confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
         PasswordResetConfirmationView.as_view(),
