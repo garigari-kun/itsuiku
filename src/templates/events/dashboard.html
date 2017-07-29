@@ -1,5 +1,11 @@
 {% extends 'base/app-base.html' %}
 {% load static %}
+
+{% block static-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/app-common.css' %}">
+{% endblock static-container %}
+
 {% block home-title %}itsuiku | ダッシュボード{% endblock home-title %}
 
 {% block content %}
@@ -7,31 +13,52 @@
   {% include 'includes/app-navbar.html' %}
 
   {% if request.user.is_authenticated %}
-    <a class="btn btn-info" href="{% url 'event:create-event'  %}">イベントを作成する</a>
-    <hr />
-    {% if events %}
-      <h3>現在、登録されているイベント一覧</h3>
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>タイトル</th>
-            <th>共有URL</th>
-            <th>作成日</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for event in events %}
+
+
+  <div class="panel panel-default main-app-panel">
+    <div class="panel-body">
+      <a class="btn btn-itsuiku" href="{% url 'event:create-event'  %}">イベントを作成する</a>
+      <hr />
+      {% if events %}
+        <h3>イベント</h3>
+        <table class="table table-striped">
+          <!-- <thead>
             <tr>
-              <td><a href="/{{ event.event_code }}">{{ event.title }}</a></td>
-              <td>http://itsuiku.co/{{ event.event_code }}</td>
-              <td>{{ event.created | date:"Y/m/d"}}</td>
+              <th>タイトル</th>
+              <th>共有URL</th>
+              <th>作成日</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>現在、登録されているイベントはありません。</p>
-    {% endif %}
+          </thead> -->
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <!-- <th></th> -->
+            </tr>
+          </thead>
+          <tbody>
+            {% for event in events %}
+              <tr>
+                <td>
+                  <h4><a href="/{{ event.event_code }}">{{ event.title }}</a></h4>
+                  <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                  {{ event.created | date:"Y/m/d"}}
+                </td>
+                <td style="vertical-align: middle;">
+                  <input type="text" readonly value="http://itsuiku.co/{{ event.event_code }}" class="form-control">
+                </td>
+                <!-- <td>{{ event.created | date:"Y/m/d"}}</td> -->
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="lead">
+          現在、登録されているイベントはありません。
+        </p>
+      {% endif %}    </div>
+  </div>
+
 
   {% endif %}
 
