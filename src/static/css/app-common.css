@@ -29,7 +29,15 @@ body {
 }
 
 #datepicker {
-  font-size: 21px;
+  font-size: 16px;
+  /*width: 900px;*/
+  margin: 0 auto;
+}
+
+
+.ui-datepicker {
+  margin: 0 auto;
+  min-width: 450px;
 }
 
 /*.datepicker-container {
@@ -37,3 +45,8 @@ body {
   text-align: center;
   display: inline-block;
 }*/
+
+
+.datepicker-container {
+  /*padding-left: 30px;*/
+}
