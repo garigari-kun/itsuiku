@@ -1,30 +1,39 @@
 {% extends 'base/app-base.html' %}
+{% load static %}
 
-{% block home-title %}itsuiku | イベント作成完了{% endblock home-title %}
+{% block home-title %}itsuiku | イベント作成しました{% endblock home-title %}
 
-{% block style %}
-<style>
-
-</style>
-{% endblock style %}
-
+{% block css-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/app-common.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/event_form.css' %}">
+{% endblock css-container %}
 
 {% block content %}
-<div class="container">
 
+<div class="container">
   {% include 'includes/app-navbar.html' %}
 
-  <h1>イベント登録が完了しました！</h1>
-  <p>URLを友達や同僚に送り、スケジュールを入力してもらいましょう！</p>
+  <div class="panel panel-default panel-middle-container">
+    <div class="panel-body">
+      <h5>イベント登録が完了しました！</h5>
+      <p class="lead">下記のURLを友達や同僚に送り、スケジュールを入力してもらいましょう！</p>
 
-  <input type="text" class="form-control" value="http://itsuiku.co:8000/{{ event.event_code }}" readonly>
-  <br />
-  <a href="http://itsuiku.co:8000/{{ event.event_code }}" class="btn btn-info btn-block">
-    まずは自分の予定を入力する
-  </a>
+      <input type="text" class="form-control" value="http://itsuiku.co:8000/{{ event.event_code }}" readonly>
+      <br />
+      <br />
+      <br />
+      <p class="text-center">
+        <a href="http://itsuiku.co:8000/{{ event.event_code }}" class="btn btn-itsuiku btn-lg">
+          まずは自分の予定を入力する
+        </a>
+      </p>
+    </div>
+  </div>
 
 
 </div>
 
+<div class="footer-spacer"></div>
 
 {% endblock content %}
