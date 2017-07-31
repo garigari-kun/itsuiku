@@ -48,7 +48,7 @@
       <div class="col-sm-12">
         <div class="panel panel-default">
           <div class="panel-body">
-        <p class="event-step-desc">Step3: 時間や一言メモを記入しましょう</p>
+        <p class="event-step-desc">Step3: 選択した日付に、時間やメモを入力しましょう</p>
         <hr />
         {% if schedule_formset %}
           <div>
@@ -86,7 +86,12 @@
 
 
 </div>
+
+<div class="footer-spacer"></div>
+
 {% endblock content %}
+
+
 
 {% block js-container %}
 <script src="{% static 'js/datepicker_utils.js' %}"></script>

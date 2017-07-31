@@ -37,8 +37,10 @@ body {
 
 .ui-datepicker {
   margin: 0 auto;
-  min-width: 450px;
+  vertical-align: middle;
+  min-width: 400px;
 }
+
 
 /*.datepicker-container {
   margin: 0 auto;
