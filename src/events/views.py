@@ -14,7 +14,7 @@ from .forms import (
     ScheduleDeletionCheckModelForm
 )
 from .models import Event, Schedule
-from invitees.models import Invitee
+from invitees.models import Invitee, Attendance
 
 from pprint import pprint
 
@@ -141,6 +141,10 @@ class UpdateEventView(View):
         schedule_list = self.get_schedule_list(event)
         schedule_deletion_formset = self.get_schedule_deletion_formset(request, prefix='schedule_deletion')
 
+        # Get Invitees
+        invitees = Invitee.objects.filter(event=event)
+
+
         if event_form.is_valid() and schedule_formset.is_valid() and schedule_deletion_formset.is_valid():
             # Updating Event model
             instance_of_event = event_form.save()
@@ -149,6 +153,17 @@ class UpdateEventView(View):
                 # Inserting new Schedule records
                 instance_of_schedule = schedule.save()
                 instance_of_event.schedule_range.add(instance_of_schedule)
+                # Creating empty Attendance for the user who already entered their schedule
+                if invitees:
+                    for invitee in invitees:
+                        i_instance = Attendance.objects.create(
+                            event=instance_of_event,
+                            schedule=instance_of_schedule
+                        )
+
+                        invitee.attendance.add(i_instance)
+
+
 
             for sd in schedule_deletion_formset:
                 if sd.cleaned_data['deletion_check']:

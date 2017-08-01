@@ -24,6 +24,7 @@ class EventTopView(View):
         context = {}
         context['event'] = get_object_or_404(Event, event_code=event_code)
         context['invitees'] = Invitee.objects.filter(event=context['event'])
+
         context['schedule_range'] = context['event'].schedule_range.all()
         return context
 

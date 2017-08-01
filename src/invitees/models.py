@@ -14,7 +14,7 @@ ATTENDANCE_CHOICES = (
 class Attendance(models.Model):
     event = models.ForeignKey(Event)
     schedule = models.ForeignKey(Schedule)
-    choice = models.CharField(max_length=4, choices=ATTENDANCE_CHOICES)
+    choice = models.CharField(max_length=4, choices=ATTENDANCE_CHOICES, null=True, blank=True)
 
     def __str__(self):
         return '{}: {}'.format(self.id, self.choice)
