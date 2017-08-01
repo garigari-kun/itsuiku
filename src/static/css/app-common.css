@@ -61,3 +61,22 @@ body {
 .panel-middle-container .btn {
   min-width: 500px;
 }
+
+
+.content-title {
+  font-weight: bold;
+  font-size: 28px;
+  color: #535353;
+  border-left: 5px solid #14BDEB;
+  letter-spacing: 1px;
+  padding-left: 3px;
+  margin-bottom: 15px;
+}
+
+
+.center-notif {
+  text-align: center;
+  padding: 80px;
+  font-size: 18px;
+  color: #535353;
+}

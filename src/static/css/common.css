@@ -191,6 +191,54 @@ fieldset[disabled] .btn-itsuiku-pr.active {
 }
 
 
+.btn-itsuiku-warn {
+  color: #ffffff;
+  background-color: #F7B538;
+  border-color: #F7B538;
+}
+
+.btn-itsuiku-warn:hover,
+.btn-itsuiku-warn:focus,
+.btn-itsuiku-warn:active,
+.btn-itsuiku-warn.active,
+.open .dropdown-toggle.btn-itsuiku-warn {
+  color: #ffffff;
+  background-color: #E39E1D;
+  border-color: #F7B538;
+}
+
+.btn-itsuiku-warn:active,
+.btn-itsuiku-warn.active,
+.open .dropdown-toggle.btn-itsuiku-warn {
+  background-image: none;
+}
+
+.btn-itsuiku-warn.disabled,
+.btn-itsuiku-warn[disabled],
+fieldset[disabled] .btn-itsuiku-warn,
+.btn-itsuiku-warn.disabled:hover,
+.btn-itsuiku-warn[disabled]:hover,
+fieldset[disabled] .btn-itsuiku-warn:hover,
+.btn-itsuiku-warn.disabled:focus,
+.btn-itsuiku-warn[disabled]:focus,
+fieldset[disabled] .btn-itsuiku-warn:focus,
+.btn-itsuiku-warn.disabled:active,
+.btn-itsuiku-warn[disabled]:active,
+fieldset[disabled] .btn-itsuiku-warn:active,
+.btn-itsuiku-warn.disabled.active,
+.btn-itsuiku-warn[disabled].active,
+fieldset[disabled] .btn-itsuiku-warn.active {
+  background-color: #F7B538;
+  border-color: #F7B538;
+}
+
+.btn-itsuiku-warn .badge {
+  color: #F7B538;
+  background-color: #ffffff;
+}
+
+
+
 
 .customize-container {
   margin-top: 50px;
