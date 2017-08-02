@@ -1,8 +1,53 @@
 .event-top-container {
-  max-width: 900px;
+  max-width: 1000px;
 }
 
 
 .event-top-panel {
   min-height: 200px;
+}
+
+.event-top-date {
+  /*width: 100px;*/
+  text-align: center;
+  width: 120px;
+}
+
+.event-top-name-th {
+  /*min-width:120px;*/
+  width: 120px;
+  /*height: 90px;*/
+}
+
+.event-top-name-td {
+  height: 90px;
+}
+
+
+.table-responsive {
+  /*overflow-x: scroll !important;*/
+}
+
+.table-responsive-custom {
+  overflow-x: auto;
+  width: 100%;
+}
+
+
+.choice-td {
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+
+.choice-yes {
+  font-size: 28px;
+}
+
+.choice-no {
+  font-size: 28px;
+}
+
+.choice-ne {
+  font-size: 18px;
 }

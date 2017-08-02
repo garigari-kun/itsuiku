@@ -46,7 +46,6 @@
   </a>
   <br><br>
 
-{{ invitees }}
 
   <h1 class="content-title">参加者のスケジュール</h1>
 
@@ -54,12 +53,12 @@
     <div class="panel-body">
       {% if event and invitees %}
         <div class="table-responsive">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped schedule-table">
           <thead>
             <tr>
-              <th></th>
+              <th class="event-top-name-th"></th>
               {% for schedule in schedule_range %}
-                <th style="text-align: center;">
+                <th class="event-top-date">
                   {{ schedule.date | date:'Y-m-d' }}<br />
                   <span style="font-size: 10px;">{{ schedule.comment }}</span>
                 </th>
@@ -71,20 +70,26 @@
             {% if invitees %}
               {% for invitee in invitees %}
                 <tr>
-                  <td>
+                  <td class="event-top-name-td">
                     {{ invitee.name }}<br />
                     <span style="font-size: 10px;">{{ invitee.comment }}</span>
                   </td>
                   {% for d in invitee.attendance.all %}
-                    <td>{{ d.choice }}</td>
+                    {% if d.choice == 'yes' %}
+                      <td class="choice-td choice-yes alert-success">◯</td>
+                    {% elif d.choice == 'no' %}
+                      <td class="choice-td choice-no alert-danger">×</td>
+                    {% elif d.choice == None %}
+                      <td class="choice-td choice-ne alert-warning">未</td>
+                    {% endif %}
                   {% endfor %}
                   <td>
                     <a class="btn btn-itsuiku-warn btn-xs" href="{% url 'attendance:update' invitee_id=invitee.id event_code=event.event_code %}">
                       編集
                     </a>
-                    <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deletionAttendanceModal{{ invitee.id }}">
+                    <!-- <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deletionAttendanceModal{{ invitee.id }}">
                       削除
-                    </button>
+                    </button> -->
                     <!-- Modal -->
                     <div class="modal fade" id="deletionAttendanceModal{{ invitee.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                       <div class="modal-dialog" role="document">
@@ -117,15 +122,6 @@
       {% endif %}
     </div>
   </div>
-
-
-
-
-  <hr>
-
-
-
-  <hr>
 
 
 
