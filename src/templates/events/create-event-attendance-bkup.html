@@ -57,22 +57,17 @@
             {% if sl_af %}
               {% for schedule, attendance_field in sl_af %}
               <tr>
-                <td class="center-td s-date">
+                <td class="center-td">
                   <span class="s-date-span">{{ schedule.date | date:'Y-m-d' }}</span><br />
                   <span class="s-comment-span">{{ schedule.comment }}</span>
                 </td>
-                <td class="center-td">
-                  <div class="btn-group" data-toggle="buttons">
-                  <!-- {{ attendance_field.choice.label }} -->
+                <td>
+                  {{ attendance_field.choice.label }}
                   {% for radio in attendance_field.choice %}
-                    <!-- <lable class="btn btn-default"> -->
                       {{ radio.tag }}
-                      <!-- <label>{{ radio.choice_label }}</label> -->
-                    <!-- </label> -->
                       <label>{{ radio.choice_label }}</label>
                   {% endfor %}
-                  </div>
-                </td>
+                  <br />          </td>
               </tr>
               {% endfor %}
             {% endif %}
@@ -85,10 +80,6 @@
     </div>
 
 
-    <input type="submit" value="登録する" class="btn btn-itsuiku btn-block">
-
-
-
   </form>
 
 
@@ -97,9 +88,47 @@
 
 
 
+  <form method="POST" action="">
+    {% csrf_token %}
+    {{ attendance_form.management_form  }}
+
+    <div class="row">
+      <div class="col-sm-4">
+        {{ invitee_form }}
+      </div>
+      <div class="col-sm-8">
+        <!-- Attedance form table style -->
+        <table class="table table-bordered" style="max-width: 100%">
+          <tbody>
+            {% if sl_af %}
+              {% for schedule, attendance_field in sl_af %}
+              <tr>
+                <td style="max-width: 40px;">
+                  {{ schedule.date }}: {{ schedule.comment }}
+                </td>
+                <td>
+                  {{ attendance_field.choice.label }}
+                  {% for radio in attendance_field.choice %}
+                      {{ radio.tag }}
+                      <label>{{ radio.choice_label }}</label>
+                  {% endfor %}
+                  <br />          </td>
+              </tr>
+              {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
 
 <br><br>
 
+
+  <input type="submit" value="登録する" class="btn btn-primary">
+
+  </form>
 
 
 
