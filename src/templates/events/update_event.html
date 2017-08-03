@@ -4,6 +4,8 @@
 {% block home-title %}itsuiku | イベント更新{% endblock home-title %}
 
 {% block css-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/app-common.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/event_form.css' %}">
 {% endblock css-container %}
 
@@ -13,7 +15,9 @@
 
   {% include 'includes/app-navbar.html' %}
 
-  <h1>イベントを更新</h1>
+  <div class="content-title">
+    <i class="fa fa-calendar" aria-hidden="true">イベントを更新</i>
+  </div>
   <hr />
 
 
@@ -23,24 +27,31 @@
 
 
     <div class="row">
-      <div class="col-sm-4 col-sm-offset-1">
-        <p>Step1. タイトルとメモを入力しましょう</p>
-        <hr />
-        {{ event_form.as_p }}
+      <div class="col-sm-6">
+          <div class="panel panel-default event-form-panel">
+            <div class="panel-body">
+              <p class="event-step-desc">Step1. タイトルとメモを入力しましょう</p>
+              <hr />
+              {{ event_form.as_p }}
+            </div>
+          </div>
       </div>
-      <div class="col-sm-4 col-sm-offset-1">
-        <p>Step2: 日付をカレンダーより選択しましょう</p>
+      <div class="col-sm-6">
+        <div class="panel panel-default event-form-panel">
+          <div class="panel-body">
+        <p class="event-step-desc">Step2: 日付をカレンダーより選択しましょう</p>
         <hr />
         <div id="datepicker"></div>
         {{ schedule_formset.management_form }}
+      </div></div>
       </div>
     </div>
 
-
-
     <div class="row">
-      <div class="col-sm-10 col-sm-offset-1">
-        <p>Step3: 時間や一言メモを記入しましょう</p>
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+        <p class="event-step-desc">Step3: 選択した日付に、時間やメモを入力しましょう</p>
         <hr />
         {% if schedule_formset %}
           <div>
@@ -53,22 +64,6 @@
         {% endif %}
 
 
-        {% if schedule_list and schedule_deletion_formset %}
-        <div class="row">
-          <div class="col-sm-6">
-            {% for schedule in schedule_list %}
-              {{ schedule.id }} {{ schedule.date }} {{ schedule.comment }}
-              <br />
-            {% endfor %}
-          </div>
-          <div class="col-sm-6">
-            {{ schedule_deletion_formset.management_form }}
-            {% for schedule_deletion_form in schedule_deletion_formset %}
-              {{ schedule_deletion_form.as_p }}
-            {% endfor %}
-          </div>
-        </div>
-        {% endif %}
 
         <div class="form-row" id="empty-form">
           <!-- {{ schedule_formset.empty_form.as_p }} -->
@@ -79,14 +74,48 @@
           <hr />
           <!-- </div> -->
         </div>
+
+        <div class="form-row" id="empty-form">
+
+          {{ schedule_formset.empty_form.as_p }}
+        </div>
       </div>
     </div>
+  </div>
+</div>
 
 
-    <div class="form-row" id="empty-form">
-
-      {{ schedule_formset.empty_form.as_p }}
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+    <p class="event-step-desc">Step4: 設定した日付で削除したい日付があれば、チェックをいれてください</p>
+    <hr />
+    {% if schedule_list and schedule_deletion_formset %}
+    <div class="row">
+      <div class="col-sm-6">
+        {% for schedule in schedule_list %}
+          {{ schedule.date }} {{ schedule.comment }}
+          <br />
+        {% endfor %}
+      </div>
+      <div class="col-sm-6">
+        {{ schedule_deletion_formset.management_form }}
+        {% for schedule_deletion_form in schedule_deletion_formset %}
+          {{ schedule_deletion_form.as_p }}
+        {% endfor %}
+      </div>
     </div>
+    {% endif %}
+  </div>
+</div>
+</div>
+</div>
+
+
+    <!-- fixed part end -->
+
+
 
 
 

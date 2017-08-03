@@ -8,10 +8,10 @@ body {
 }
 
 
-.content-title {
+/*.content-title {
   font-size: 24px;
   font-weight: bold;
-}
+}*/
 
 
 .event-step-desc {
@@ -38,7 +38,7 @@ body {
 .ui-datepicker {
   margin: 0 auto;
   vertical-align: middle;
-  min-width: 400px;
+  width: 400px;
 }
 
 
