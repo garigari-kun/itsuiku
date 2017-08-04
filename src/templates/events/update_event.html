@@ -1,4 +1,5 @@
 {% extends 'base/app-base.html' %}
+{% load zip %}
 {% load static %}
 
 {% block home-title %}itsuiku | イベント更新{% endblock home-title %}
@@ -24,6 +25,36 @@
   <form method="POST" action="">
     {% csrf_token %}
 
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+        <p class="event-step-desc">設定した日付で削除したい日付があれば、チェックをいれてください</p>
+        <hr />
+        {% if schedule_list and schedule_deletion_formset %}
+        {{ schedule_deletion_formset.management_form }}
+        <table class="table">
+          <tbody>
+            {% for schedule, schedule_deletion_form in schedule_list|zip:schedule_deletion_formset %}
+            <!-- {{ schedule }}
+            {{ schedule_deletion_form }} -->
+              <tr>
+                <td style="width: 40%;">
+                  {{ schedule.date | date:'Y-m-d' }} {{ schedule.comment }}
+                </td>
+                <td style="width: 60%;">
+                  {{ schedule_deletion_form.as_p }}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+      </div>
+    </div>
+    </div>
+    </div>
 
 
     <div class="row">
@@ -85,32 +116,6 @@
 </div>
 
 
-<div class="row">
-  <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-    <p class="event-step-desc">Step4: 設定した日付で削除したい日付があれば、チェックをいれてください</p>
-    <hr />
-    {% if schedule_list and schedule_deletion_formset %}
-    <div class="row">
-      <div class="col-sm-6">
-        {% for schedule in schedule_list %}
-          {{ schedule.date }} {{ schedule.comment }}
-          <br />
-        {% endfor %}
-      </div>
-      <div class="col-sm-6">
-        {{ schedule_deletion_formset.management_form }}
-        {% for schedule_deletion_form in schedule_deletion_formset %}
-          {{ schedule_deletion_form.as_p }}
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-  </div>
-</div>
-</div>
-</div>
 
 
     <!-- fixed part end -->
