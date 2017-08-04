@@ -79,7 +79,7 @@ class UserProfileModelForm(forms.ModelForm):
                 'class': 'form-control'
             }
         ),
-        label='ユーザーネーム',
+        label='ユーザー名',
         error_messages={
             'required': '入力が必須です'
         },

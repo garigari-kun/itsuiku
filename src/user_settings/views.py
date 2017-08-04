@@ -61,13 +61,6 @@ class UserSettingsView(View):
 
         form = UserProfileModelForm(request.POST or None, instance=user_profile)
         return form
-        # if user_profile:
-        #     # Edit view
-        #     form = UserProfileModelForm(request.POST or None, instance=user_profile)
-        # else:
-        #     form = UserProfileModelForm(request.POST or None)
-        form = UserProfileModelForm(request.POST or None)
-        return form
 
 
     def get_change_user_email_form(self, request, *args, **kwargs):

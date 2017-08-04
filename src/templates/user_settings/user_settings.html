@@ -2,21 +2,43 @@
 {% load static %}
 {% block home-title %}itsuiku | 設定{% endblock home-title %}
 
+
+{% block static-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/app-common.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/user_settings.css' %}">
+
+{% endblock static-container %}
+
+
 {% block content %}
 <div class="container">
   {% include 'includes/app-navbar.html' %}
 
-  <h3>ユーザー設定</h3>
+  <div class="user-settings-container">
 
+  <div class="content-title">
+    ユーザー設定
+  </div>
+  <hr />
   <form method="POST" action="">
       {% csrf_token %}
-      {{ user_profile_form.as_p }}
-      <input type="submit" class="btn btn-primary" value="登録">
+      <div class="panel panel-default user-settings-panel">
+        <div class="panel-body">
+          {{ user_profile_form.as_p }}
+          <input type="submit" class="btn btn-primary" value="登録">
+        </div>
+      </div>
   </form>
 
   <hr />
 
-  <h3>ユーザー名変更</h3>
+  <div class="content-title">
+    メールアドレス変更
+  </div>
+  <hr />
+  <div class="panel panel-default user-settings-panel">
+    <div class="panel-body">
   <label>現在登録のメールアドレス</label>
   <p>{{ request.user.email }}</p>
   <form method="POST" action="{% url 'user-settings:change_user_email' %}">
@@ -24,23 +46,35 @@
     {{ change_user_email_form.as_p }}
     <input type="submit" class="btn btn-primary" value="メールアドレスを変更">
   </form>
+</div>
+</div>
 
 
-  <hr />
+<div class="content-title">
+  パスワード変更
+</div>
+<hr />
+<div class="panel panel-default user-settings-panel">
+  <div class="panel-body">
+  <a class="btn btn-danger" href="{% url 'user-settings:change_password' %}">
+    パスワードを変更する
+  </a>
+</div></div>
 
-  <h3>パスワード変更</h3>
-  <a class="btn btn-danger" href="{% url 'user-settings:change_password' %}">パスワードを変更する</a>
 
-
-  <hr />
-
-  <h3>退会</h3>
+<div class="content-title">
+  退会処理
+</div>
+<hr />
+<div class="panel panel-default user-settings-panel">
+  <div class="panel-body">
   <div class="alert alert-danger" role="alert" style="margin-bottom: 5px;">
     ※退会処理を実行すると、今まで作成したイベントのデータは全て削除され復元はできません
   </div>
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteUserAccountModal">
     退会する
   </button>
+</div></div>
   <!-- Modal -->
   <div class="modal fade" id="deleteUserAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -65,7 +99,7 @@
 
 
 
-
+</div>
 
 
 </div>
