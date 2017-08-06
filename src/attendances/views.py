@@ -4,6 +4,7 @@ from django.views.generic.base import View
 from django.forms import formset_factory
 
 from events.models import Event
+from user_settings.models import UserProfile
 from invitees.models import Invitee, Attendance
 from invitees.forms import InviteeModelForm, AttendanceModelForm
 
@@ -26,6 +27,8 @@ class EventTopView(View):
         context['invitees'] = Invitee.objects.filter(event=context['event'])
 
         context['schedule_range'] = context['event'].schedule_range.all()
+
+        context['user_profile'] = UserProfile.objects.get_user_profile(request, user=request.user)
         return context
 
 

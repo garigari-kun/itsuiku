@@ -19,7 +19,13 @@
 
 
 
-  <h1 class="content-title">ゲストさんのイベント</h1>
+  <h1 class="content-title">
+    {% if user_profile %}
+      {{ user_profile.username }}さんのイベント
+    {% else %}
+      ゲストさんのイベント
+    {% endif %}
+  </h1>
 
   {% if request.user.is_authenticated %}
   <div style="text-align: right; margin-bottom: 5px;">

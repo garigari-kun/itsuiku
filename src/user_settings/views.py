@@ -54,7 +54,7 @@ class UserSettingsView(View):
         # user_profile = UserProfile.objects.filter(user=request.user)
         # if user_profile:
         #     context['user_profile'] = user_profile[0]
-        context['user_profile'] = UserProfile.objects.get_user_profile(request)
+        context['user_profile'] = UserProfile.objects.get_user_profile(request, user=request.user)
         return context
 
     def get_user_profile_form(self, request, *args, **kwargs):

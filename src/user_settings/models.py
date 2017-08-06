@@ -4,13 +4,11 @@ from django.db import models
 
 
 class UserProfileManager(models.Manager):
-    def get_user_profile(self, request):
-        user_profile = super(UserProfileManager, self).filter(user=request.user)
+    def get_user_profile(self, request, user=None):
+        user_profile = super(UserProfileManager, self).filter(user=user)
         if user_profile:
             return user_profile[0]
 
-    def get_user_profile_by_eventcode(self, request):
-        pass
 
 
 
