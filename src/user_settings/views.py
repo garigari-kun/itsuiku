@@ -4,6 +4,7 @@ from django.views.generic.base import View
 from django.http import HttpResponse
 
 from events.models import Event
+from .models import UserProfile
 from django.contrib.auth import get_user_model, update_session_auth_hash, logout
 from .forms import (
     UserPasswordChangeForm,
@@ -50,6 +51,10 @@ class UserSettingsView(View):
         # context['u_p_c_form'] = self.get_user_password_change_form(request)
         context['user_profile_form'] = self.get_user_profile_form(request)
         context['change_user_email_form'] = self.get_change_user_email_form(request)
+        # user_profile = UserProfile.objects.filter(user=request.user)
+        # if user_profile:
+        #     context['user_profile'] = user_profile[0]
+        context['user_profile'] = UserProfile.objects.get_user_profile(request)
         return context
 
     def get_user_profile_form(self, request, *args, **kwargs):
