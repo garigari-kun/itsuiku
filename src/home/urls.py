@@ -11,6 +11,12 @@ urlpatterns = [
         TopView.as_view(),
         name='top'
     ),
-    url(r'^contact$', ContactFormView.as_view(), name='contact'),
-    url(r'^forum$', ForumView.as_view(), name='forum'),
+    url(r'^contact$',
+        ContactFormView.as_view(),
+        name='contact'
+    ),
+    url(r'^forum$',
+        ForumView.as_view(),
+        name='forum'
+    ),
 ]

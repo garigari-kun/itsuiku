@@ -1,0 +1,11 @@
+html, body {
+  height: 100%;
+}
+
+
+.customize-jumbotron {
+  padding-top: 100px;
+  padding-bottom: 60px;
+  height: 100%;
+  margin-bottom: 0px;
+}

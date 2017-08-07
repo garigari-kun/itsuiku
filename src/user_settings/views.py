@@ -266,6 +266,16 @@ class ChangeUserEmailView(View):
         return form
 
 
+class NotificateChangingUserEmailProceededView(View):
+
+    def get(self, request, *args, **kwargs):
+        pass
+
+
+    def get_template_name(self, request):
+        pass
+
+
 
 class ConfirmChangingUserEmailView(View):
 
