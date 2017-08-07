@@ -91,12 +91,8 @@ class SignUpView(View):
                     subject_template='accounts/user_activation_subject.txt',
                     content_template='accounts/user_activation_email.html'
                 )
-                return redirect('account:signup-success')
-            # login_user = authenticate(email=email, password=password)
-            # if login_user is not None:
-            #     if login_user.is_active:
-            #         login(request, login_user)
-            #         return redirect('user-dashboard')
+                return render(request, self.get_template_name(request, type='post'), {})
+                # return redirect('account:signup-success')
         else:
             context = self.get_context_data(request)
             return render(request, self.template_name, context)
@@ -106,8 +102,11 @@ class SignUpView(View):
         form = EmailUserForm(request.POST or None)
         return form
 
-    def get_template_name(self, request, *args, **kwargs):
-        template_name = 'accounts/signup.html'
+    def get_template_name(self, request, type=None, *args, **kwargs):
+        if type == 'post':
+            template_name = 'accounts/signup_success.html'
+        else:
+            template_name = 'accounts/signup.html'
         return template_name
 
     def get_context_data(self, request, *args, **kwargs):
