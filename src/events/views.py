@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.forms import formset_factory, modelformset_factory
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 
 from .forms import (
@@ -65,6 +66,7 @@ class CreateEventView(LoginRequiredMixin, View):
             for schedule in schedule_formset:
                 instance_of_schedule = schedule.save()
                 instance_of_event.schedule_range.add(instance_of_schedule)
+                messages.success(request, 'イベントを作成しました')
         else:
             # form is invalid, rerender
             context = self.get_context_data(request)
