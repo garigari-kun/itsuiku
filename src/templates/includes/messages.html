@@ -1,0 +1,22 @@
+<style>
+#django-message {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+</style>
+
+<script>
+// $(document).ready(function() {
+//     console.log("test");
+//     setTimeout(function() {
+//         $('#django-message').fadeOut('slow');
+//     }, 5000);
+// });
+</script>
+{% if messages %}
+  <div id="django-message">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+{% endif %}

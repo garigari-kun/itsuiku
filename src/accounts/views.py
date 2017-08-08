@@ -13,7 +13,7 @@ from .forms import (
 )
 
 from itsuiku.utils import send_confirmation_email
-
+from django.contrib import messages
 
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
@@ -41,6 +41,7 @@ class LoginView(View):
             )
             if user is not None:
                 login(request, user)
+                messages.success(request, 'ようこそ！ログインしました')
                 return redirect('user-dashboard')
 
         template_name = self.get_template_name(request)

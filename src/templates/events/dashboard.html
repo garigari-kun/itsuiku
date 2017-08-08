@@ -11,6 +11,7 @@
 {% block content %}
 <div class="container">
   {% include 'includes/app-navbar.html' %}
+  {% include 'includes/messages.html' with message=messages %}
 
   {% if request.user.is_authenticated %}
 
@@ -70,9 +71,7 @@
 {% endblock content %}
 
 
-{% block app-js %}
-<script>
+{% block js-container %}
+<script src="{% static 'js/messages.js' %}"></script>
 
-
-</script>
-{% endblock app-js %}
+{% endblock js-container %}
