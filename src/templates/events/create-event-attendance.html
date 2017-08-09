@@ -64,8 +64,7 @@
                 <td class="center-td">
                   <div class="btn-group" data-toggle="buttons">
                   {% for radio in attendance_field.choice %}
-                      <label class="btn btn-itsuiku-sp btn-lg">
-                        <!-- {{ radio.choice_label }} -->
+                      <label class="btn btn-itsuiku-sp btn-lg {% if radio.choice_value == radio.value %} active {% endif %}">
                         {{ radio.tag }}
                         {% if radio.choice_label == 'yes' %}
                           <span class="yes-label">◯</span>
