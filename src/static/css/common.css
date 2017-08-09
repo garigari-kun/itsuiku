@@ -235,6 +235,53 @@ fieldset[disabled] .btn-itsuiku-warn.active {
 }
 
 
+.btn-itsuiku-sp {
+  color: #FFFFFF;
+  background-color: #94AEB5;
+  border-color: #FFFFFF;
+}
+
+.btn-itsuiku-sp:hover,
+.btn-itsuiku-sp:focus,
+.btn-itsuiku-sp:active,
+.btn-itsuiku-sp.active,
+.open .dropdown-toggle.btn-itsuiku-sp {
+  color: #FFFFFF;
+  background-color: #14BDEB;
+  border-color: #FFFFFF;
+}
+
+.btn-itsuiku-sp:active,
+.btn-itsuiku-sp.active,
+.open .dropdown-toggle.btn-itsuiku-sp {
+  background-image: none;
+}
+
+.btn-itsuiku-sp.disabled,
+.btn-itsuiku-sp[disabled],
+fieldset[disabled] .btn-itsuiku-sp,
+.btn-itsuiku-sp.disabled:hover,
+.btn-itsuiku-sp[disabled]:hover,
+fieldset[disabled] .btn-itsuiku-sp:hover,
+.btn-itsuiku-sp.disabled:focus,
+.btn-itsuiku-sp[disabled]:focus,
+fieldset[disabled] .btn-itsuiku-sp:focus,
+.btn-itsuiku-sp.disabled:active,
+.btn-itsuiku-sp[disabled]:active,
+fieldset[disabled] .btn-itsuiku-sp:active,
+.btn-itsuiku-sp.disabled.active,
+.btn-itsuiku-sp[disabled].active,
+fieldset[disabled] .btn-itsuiku-sp.active {
+  background-color: #94AEB5;
+  border-color: #FFFFFF;
+}
+
+.btn-itsuiku-sp .badge {
+  color: #94AEB5;
+  background-color: #FFFFFF;
+}
+
+
 
 
 .customize-container {

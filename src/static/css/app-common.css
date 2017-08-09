@@ -85,3 +85,12 @@ body {
   text-align: center;
   vertical-align: middle !important;
 }
+
+
+.yes-label {
+  font-weight: bold;
+}
+
+.no-label {
+  font-weight: bold;
+}

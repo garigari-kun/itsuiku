@@ -63,13 +63,16 @@
                 </td>
                 <td class="center-td">
                   <div class="btn-group" data-toggle="buttons">
-                  <!-- {{ attendance_field.choice.label }} -->
                   {% for radio in attendance_field.choice %}
-                    <!-- <lable class="btn btn-default"> -->
-                      {{ radio.tag }}
-                      <!-- <label>{{ radio.choice_label }}</label> -->
-                    <!-- </label> -->
-                      <label>{{ radio.choice_label }}</label>
+                      <label class="btn btn-itsuiku-sp btn-lg">
+                        <!-- {{ radio.choice_label }} -->
+                        {{ radio.tag }}
+                        {% if radio.choice_label == 'yes' %}
+                          <span class="yes-label">◯</span>
+                        {% elif radio.choice_label == 'no' %}
+                          <span class="no-label">×</span>
+                        {% endif %}
+                      </label>
                   {% endfor %}
                   </div>
                 </td>
