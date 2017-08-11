@@ -13,6 +13,11 @@
   width: 120px;
 }
 
+
+.schedule-table td, .schedule-table th {
+    min-width: 100px;
+}
+
 .event-top-name-th {
   /*min-width:120px;*/
   width: 120px;

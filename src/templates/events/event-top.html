@@ -52,6 +52,26 @@
   </a>
   <br><br>
 
+  <h1 class="content-title">参加者のコメント</h1>
+  <div class="panel panel-default event-top-panel">
+    <div class="panel-body">
+      {% if invitees %}
+        {% for invitee in invitees %}
+          <!-- {{ invitee.name }}
+          {{ invitee.comment }} -->
+          <div>
+            <i class="fa fa-user" aria-hidden="true"></i>
+
+          </div>
+        {% endfor %}
+      {% else %}
+      現在、このイベントに参加者はいません
+      {% endif %}
+    </div>
+  </div>
+
+
+
 
   <h1 class="content-title">参加者のスケジュール</h1>
 
@@ -166,9 +186,9 @@
 
 
 <style>
-.table td, .table th {
+/*.table td, .table th {
     min-width: 100px;
-}
+}*/
 </style>
 
 
