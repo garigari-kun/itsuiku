@@ -13,7 +13,7 @@
 {% block content %}
 <div class="container event-top-container">
 
-  {% if request.user.is_authenticated %}
+  {% if is_owner %}
     {% include 'includes/app-navbar.html' %}
   {% endif %}
 
@@ -27,7 +27,7 @@
     {% endif %}
   </h1>
 
-  {% if request.user.is_authenticated %}
+  {% if is_owner %}
   <div style="text-align: right; margin-bottom: 5px;">
     <a href="{% url 'event:update-event' event_code=event.event_code %}" class="btn btn-itsuiku-warn">編集</a>
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletionModal">

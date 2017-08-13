@@ -8,6 +8,8 @@ from user_settings.models import UserProfile
 from invitees.models import Invitee, Attendance
 from invitees.forms import InviteeModelForm, AttendanceModelForm
 
+from itsuiku.utils import check_visitor_is_events_owner
+
 
 
 class EventTopView(View):
@@ -25,10 +27,9 @@ class EventTopView(View):
         context = {}
         context['event'] = get_object_or_404(Event, event_code=event_code)
         context['invitees'] = Invitee.objects.filter(event=context['event'])
-
         context['schedule_range'] = context['event'].schedule_range.all()
-
-        context['user_profile'] = UserProfile.objects.get_user_profile(request, user=request.user)
+        context['user_profile'] = UserProfile.objects.get_user_profile(request, user=context['event'].user)
+        context['is_owner'] = check_visitor_is_events_owner(request, context['event'])
         return context
 
 
