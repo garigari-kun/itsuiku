@@ -5,11 +5,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 
 
-
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
-
 def send_confirmation_email(request, user=None, subject_template=None, content_template=None):
     """ Utility method for sending confirmation email
     Return True if the email was sent to the user
@@ -39,6 +34,14 @@ def send_confirmation_email(request, user=None, subject_template=None, content_t
         #     [user.email],
         #     fail_silently=False
         # )
+        return True
+    else:
+        return False
+
+
+
+def check_visitor_is_events_owner(request, event):
+    if request.user == event.user:
         return True
     else:
         return False
