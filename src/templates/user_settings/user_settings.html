@@ -16,6 +16,7 @@
   {% include 'includes/app-navbar.html' %}
 
   <div class="user-settings-container">
+  {% include 'includes/messages.html' with message=messages %}
 
   <div class="content-title">
     ユーザー設定
@@ -117,3 +118,8 @@
 
 </div>
 {% endblock content %}
+
+{% block js-container %}
+<script src="{% static 'js/messages.js' %}"></script>
+
+{% endblock js-container %}

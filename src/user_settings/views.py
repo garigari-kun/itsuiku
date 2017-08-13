@@ -22,6 +22,7 @@ from django.template import loader
 from django.core.mail import send_mail
 
 from itsuiku.utils import send_confirmation_email
+from django.contrib import messages
 
 
 
@@ -40,6 +41,7 @@ class UserSettingsView(View):
             i_user_profile_form = user_profile_form.save(commit=False)
             i_user_profile_form.user = request.user
             i_user_profile_form.save()
+            messages.success(request, 'ユーザー名を設定しました！')
             return redirect('user-settings:main')
 
     def get_template_name(self, request, *args, **kwargs):
