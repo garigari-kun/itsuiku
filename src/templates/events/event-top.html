@@ -47,7 +47,7 @@
 
   <hr>
 
-  <a class="btn btn-itsuiku" href="{% url 'attendance:create' event_code=event.event_code %}">
+  <a class="btn btn-itsuiku btn-lg" href="{% url 'attendance:create' event_code=event.event_code %}">
     参加予定を入力する
   </a>
   <br><br>
@@ -57,14 +57,14 @@
     <div class="panel-body">
       {% if invitees %}
         {% for invitee in invitees %}
-          <!-- {{ invitee.name }}
-          {{ invitee.comment }} -->
+        {% if invitee.comment %}
           <div>
             <i class="fa fa-user" style="font-size: 28px;" aria-hidden="true"></i>
             <p>
               <span style="font-weight: bold; color: #333">{{ invitee.name }}</span>: {{ invitee.comment }}
             </p>
           </div>
+        {% endif %}
         {% endfor %}
       {% else %}
       現在、このイベントに参加者はいません
