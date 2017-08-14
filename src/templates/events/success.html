@@ -20,12 +20,13 @@
       <h5>イベント登録が完了しました！</h5>
       <p class="lead">下記のURLを友達や同僚に送り、スケジュールを入力してもらいましょう！</p>
 
-      <input type="text" class="form-control" value="http://itsuiku.co:8000/{{ event.event_code }}" readonly>
+      <!-- <input type="text" class="form-control" value="http://itsuiku.co:8000/{{ event.event_code }}" readonly> -->
+      <input type="text" class="form-control" value="{{ request.get_host }}{% url 'attendance:top' event_code=event.event_code %}" readonly>
       <br />
       <br />
       <br />
       <p class="text-center">
-        <a href="http://itsuiku.co:8000/{{ event.event_code }}" class="btn btn-itsuiku btn-lg">
+        <a href="{% url 'attendance:top' event_code=event.event_code %}" class="btn btn-itsuiku btn-lg">
           まずは自分の予定を入力する
         </a>
       </p>
