@@ -7,7 +7,7 @@ class EventModelForm(forms.ModelForm):
 
     title = forms.CharField(
         label="タイトル",
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control'
         })
@@ -15,6 +15,7 @@ class EventModelForm(forms.ModelForm):
 
     description = forms.CharField(
         label="メモ",
+        required=False,
         widget=forms.Textarea(attrs={
             'class': 'form-control'
         })
@@ -23,6 +24,15 @@ class EventModelForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['title', 'description']
+
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if not title:
+            raise forms.ValidationError(
+                'タイトルは必須項目です'
+            )
+        return title
 
 
 

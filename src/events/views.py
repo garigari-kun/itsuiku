@@ -66,7 +66,7 @@ class CreateEventView(LoginRequiredMixin, View):
             for schedule in schedule_formset:
                 instance_of_schedule = schedule.save()
                 instance_of_event.schedule_range.add(instance_of_schedule)
-                messages.success(request, 'イベントを作成しました')
+            messages.success(request, 'イベントを作成しました')
         else:
             # form is invalid, rerender
             context = self.get_context_data(request)
