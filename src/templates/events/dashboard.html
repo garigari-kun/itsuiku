@@ -47,7 +47,8 @@
                   {{ event.created | date:"Y/m/d"}}
                 </td>
                 <td style="vertical-align: middle;">
-                  <input type="text" readonly value="http://itsuiku.co/{{ event.event_code }}" class="form-control">
+                  <!-- <input type="text" readonly value="http://itsuiku.co/{{ event.event_code }}" class="form-control"> -->
+                  <input type="text" readonly value="http://{{ request.get_host }}{% url 'attendance:top' event_code=event.event_code %}" class="form-control">
                 </td>
                 <!-- <td>{{ event.created | date:"Y/m/d"}}</td> -->
               </tr>

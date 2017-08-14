@@ -335,3 +335,7 @@ fieldset[disabled] .btn-itsuiku-sp.active {
 .app-title-link {
   color: #000000;
 }
+
+.app-title {
+  font-family: 'Inconsolata', monospace;
+}

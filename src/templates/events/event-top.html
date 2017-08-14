@@ -11,16 +11,13 @@
 
 
 {% block content %}
+{% if is_owner %}
+<div class="container">
+  {% include 'includes/app-navbar.html' %}
+</div>
+{% endif %}
 <div class="container event-top-container">
-
-  {% if is_owner %}
-    {% include 'includes/app-navbar.html' %}
-  {% endif %}
-
-
   {% include 'includes/messages.html' with message=messages %}
-
-
 
 
   <h1 class="content-title">
