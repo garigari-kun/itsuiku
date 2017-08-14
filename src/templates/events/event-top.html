@@ -18,6 +18,10 @@
   {% endif %}
 
 
+  {% include 'includes/messages.html' with message=messages %}
+
+
+
 
   <h1 class="content-title">
     {% if user_profile %}
@@ -200,9 +204,7 @@
 {% endblock content %}
 
 
-{% block app-js %}
-<script>
+{% block js-container %}
+<script src="{% static 'js/messages.js' %}"></script>
 
-
-</script>
-{% endblock app-js %}
+{% endblock js-container %}

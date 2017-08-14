@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic.base import View
@@ -48,7 +49,6 @@ class CreateEventAttendanceView(View):
         event = get_object_or_404(Event, event_code=event_code)
         num_of_date = len(event.schedule_range.all())
         # Entered invitees
-        # invitees = Invitee.objects.filter(event=event)
         invitee_form = self.get_invitee_form(request)
         attendance_form = self.get_attendance_formset(request, extra=num_of_date)
         schedule_list = event.schedule_range.all()
@@ -83,6 +83,7 @@ class CreateEventAttendanceView(View):
                 instance_attendance.save()
                 instance_invitee.attendance.add(instance_attendance)
 
+            messages.success(request, 'スケジュールを入力しました')
             return redirect('attendance:top', event_code=event_code)
 
         else:
@@ -158,6 +159,8 @@ class UpdateEventAttendanceView(View):
             for d_attendance in attendance_list:
                 result = Attendance.objects.filter(id=d_attendance['id']).delete()
 
+            # success message
+            messages.success(request, 'スケジュールを更新しました')
             return redirect('attendance:top', event_code=event_code)
 
         else:
