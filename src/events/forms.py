@@ -8,6 +8,7 @@ class EventModelForm(forms.ModelForm):
     title = forms.CharField(
         label="タイトル",
         required=False,
+        max_length=24,
         widget=forms.TextInput(attrs={
             'class': 'form-control'
         })
@@ -49,7 +50,7 @@ class ScheduleModelForm(forms.ModelForm):
     )
 
     comment = forms.CharField(
-        max_length=120,
+        max_length=24,
         label='',
         widget=forms.TextInput(attrs={
             'placeholder': '時間、一言メモ',

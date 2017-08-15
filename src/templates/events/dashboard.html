@@ -32,7 +32,7 @@
           <tbody>
             {% for event in events %}
               <tr>
-                <td>
+                <td style="width: 40%">
                   <h4><a href="/{{ event.event_code }}">{{ event.title }}</a></h4>
                   <i class="fa fa-clock-o" aria-hidden="true"></i>
                   {{ event.created | date:"Y/m/d"}}
