@@ -339,3 +339,7 @@ fieldset[disabled] .btn-itsuiku-sp.active {
 .app-title {
   font-family: 'Inconsolata', monospace;
 }
+
+.text-middle {
+  vertical-align: middle;
+}

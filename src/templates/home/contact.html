@@ -1,6 +1,12 @@
 {% extends 'base/home-base.html' %}
-
+{% load static %}
 {% block home-title %}itsuiku | 問い合わせ{% endblock home-title %}
+
+{% block static-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+
+
+{% endblock static-container %}
 
 {% block content %}
 

@@ -23,18 +23,10 @@
       {% if events %}
         <h3>イベント</h3>
         <table class="table table-striped">
-          <!-- <thead>
-            <tr>
-              <th>タイトル</th>
-              <th>共有URL</th>
-              <th>作成日</th>
-            </tr>
-          </thead> -->
           <thead>
             <tr>
               <th></th>
               <th></th>
-              <!-- <th></th> -->
             </tr>
           </thead>
           <tbody>
@@ -42,22 +34,19 @@
               <tr>
                 <td>
                   <h4><a href="/{{ event.event_code }}">{{ event.title }}</a></h4>
-                  <!-- <i class="fa fa-calendar-o" aria-hidden="true"></i> -->
                   <i class="fa fa-clock-o" aria-hidden="true"></i>
                   {{ event.created | date:"Y/m/d"}}
                 </td>
                 <td style="vertical-align: middle;">
-                  <!-- <input type="text" readonly value="http://itsuiku.co/{{ event.event_code }}" class="form-control"> -->
                   <input type="text" readonly value="http://{{ request.get_host }}{% url 'attendance:top' event_code=event.event_code %}" class="form-control">
                 </td>
-                <!-- <td>{{ event.created | date:"Y/m/d"}}</td> -->
               </tr>
             {% endfor %}
           </tbody>
         </table>
       {% else %}
-        <p class="lead">
-          現在、登録されているイベントはありません。
+        <p class="lead center-notif">
+          現在、登録されているイベントはありません。<br />「イベントを作成する」をクリックし、イベントを作成しましょう！
         </p>
       {% endif %}    </div>
   </div>
