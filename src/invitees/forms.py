@@ -8,6 +8,7 @@ class InviteeModelForm(forms.ModelForm):
     name = forms.CharField(
         label='お名前',
         required=True,
+        max_length=12,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control'
@@ -18,6 +19,7 @@ class InviteeModelForm(forms.ModelForm):
     comment = forms.CharField(
         label='一言メモ',
         required=False,
+        max_length=64,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control'

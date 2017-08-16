@@ -95,3 +95,7 @@ body {
 .no-label {
   font-weight: bold;
 }
+
+.middle-td {
+  vertical-align: middle !important;
+}

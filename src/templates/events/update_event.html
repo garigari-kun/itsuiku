@@ -17,7 +17,7 @@
   {% include 'includes/app-navbar.html' %}
 
   <div class="content-title">
-    <i class="fa fa-calendar" aria-hidden="true">イベントを更新</i>
+    イベントを更新
   </div>
   <hr />
 
@@ -37,13 +37,11 @@
         <table class="table">
           <tbody>
             {% for schedule, schedule_deletion_form in schedule_list|zip:schedule_deletion_formset %}
-            <!-- {{ schedule }}
-            {{ schedule_deletion_form }} -->
               <tr>
-                <td style="width: 40%;">
+                <td style="width: 40%;" class='middle-td'>
                   {{ schedule.date | date:'Y-m-d' }} {{ schedule.comment }}
                 </td>
-                <td style="width: 60%;">
+                <td style="width: 60%;" class="middle-td">
                   {{ schedule_deletion_form.as_p }}
                 </td>
               </tr>

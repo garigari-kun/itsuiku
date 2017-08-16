@@ -24,11 +24,18 @@ from django.core.mail import send_mail
 from itsuiku.utils import send_confirmation_email
 from django.contrib import messages
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
 
-class UserSettingsView(View):
+
+
+class UserSettingsView(LoginRequiredMixin, View):
+
+
+    login_url = '/account/login/'
+
 
     def get(self, request, *args, **kwargs):
         template_name = self.get_template_name(request)
@@ -77,7 +84,9 @@ class UserSettingsView(View):
 
 
 
-class UserPasswordChangeView(View):
+class UserPasswordChangeView(LoginRequiredMixin, View):
+
+    login_url = '/account/login/'
 
     def get(self, request, *args, **kwargs):
         template_name = self.get_template_name(request)
@@ -89,9 +98,15 @@ class UserPasswordChangeView(View):
         u_p_c_form = self.get_user_password_change_form(request)
         if u_p_c_form.is_valid():
             user = u_p_c_form.save()
-            update_session_auth_hash(request, user)
-            return redirect('user-settings:main')
-        return HttpResponse('error processing needed')
+            # update_session_auth_hash(request, user)
+            # return redirect('user-settings:main')
+            logout(request)
+            return render(request, self.get_template_name(request, type='post-success'), {})
+        else:
+            template_name = self.get_template_name(request)
+            context = self.get_context_data(request)
+            return render(request, template_name, context)
+
 
 
     def get_context_data(self, request, *args, **kwargs):
@@ -100,7 +115,9 @@ class UserPasswordChangeView(View):
         return context
 
 
-    def get_template_name(self, request, *args, **kwargs):
+    def get_template_name(self, request, type=None, *args, **kwargs):
+        if type == 'post-success':
+            return 'user_settings/password_changed.html'
         template_name = 'user_settings/change_password.html'
         return template_name
 
