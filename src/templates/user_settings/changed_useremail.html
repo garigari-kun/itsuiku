@@ -1,0 +1,36 @@
+{% extends 'base/app-base.html' %}
+{% load static %}
+{% block home-title %}itsuiku | メールアドレス変更{% endblock home-title %}
+
+
+{% block static-container %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/app-common.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/user_settings.css' %}">
+
+{% endblock static-container %}
+
+
+{% block content %}
+<div class="container">
+  {% include 'includes/app-navbar.html' %}
+
+
+  <div class="content-title">
+    メールアドレス変更
+  </div>
+  <form method="POST" action="">
+    {% csrf_token %}
+    <div class="panel panel-default user-settings-panel">
+      <div class="panel-body">
+        <p class="lead">
+          新しいメールアドレスにアカウント認証リンクを送信しました<br />
+          リンクをクリックし、再度ログインしてください
+        </p>
+        <a class="btn btn-itsuiku" href="{% url 'account:login' %}">ログインする</a>
+      </div>
+    </div>
+  </form>
+
+</div>
+{% endblock content %}

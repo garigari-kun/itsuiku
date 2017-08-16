@@ -274,15 +274,22 @@ class ChangeUserEmailView(View):
                     content_template='accounts/user_activation_email.html'
                 )
                 logout(request)
-                return redirect('home:top')
+                # return redirect('home:top')
+                return render(request, self.get_template_name(request, type='post_success'), {})
+
         else:
-            # message sent
+            messages.error(request, '不正なメールアドレスもしくはすでに使われているメールアドレスです')
             return redirect('user-settings:main')
 
 
     def get_change_user_email_form(self, request):
         form = ChangeUserEmailForm(request.POST or None)
         return form
+
+    def get_template_name(self, request, type=None):
+        if type == 'post_success':
+            return 'user_settings/changed_useremail.html'
+        return 'user_settings/changed_useremail.html'
 
 
 class NotificateChangingUserEmailProceededView(View):
