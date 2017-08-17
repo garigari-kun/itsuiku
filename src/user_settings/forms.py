@@ -173,8 +173,11 @@ class ChangeUserEmailForm(forms.Form):
         )
 
 
-    def cleam_confirmed_username(self):
-        username = self.cleaned_data['username']
+
+
+    def clean_confirmed_username(self):
+        # username = self.cleaned_data['username']
+        username = self.data.get('username')
         username2 = self.cleaned_data['confirmed_username']
 
         if username and username2 and username != username2:
@@ -182,6 +185,8 @@ class ChangeUserEmailForm(forms.Form):
                 self.error_messages['username_mismatch'],
                 code='username_mismatch'
             )
+
+        return username2
 
 
 
