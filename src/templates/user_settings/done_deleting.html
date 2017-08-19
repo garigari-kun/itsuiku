@@ -12,24 +12,24 @@
 
 
 {% block content %}
-<div class="container">
+{% include 'includes/home-navbar.html' %}
+
+<div class="container sp-container">
 
   <div class="content-title">
-    itsuikuをお使いいただきありがとうございます
+    ユーザーを削除しました
   </div>
-  <div class="panel panel-default user-settings-panel">
+  <div class="panel panel-default">
     <div class="panel-body">
       <p class="lead">
-        itsuikuは今後もアップデートを続け、ユーザー様に便利だと思ってもらえるサービス作りを
-        目指してまいります。
-        また、ユーザー様よりお使いいただける日を楽しみにしております。
+        itsuikuは今後もアップデートを続け、ユーザー様に便利だと感じていただける
+        サービスを目指していきます<br />
+        またいずれ、ユーザー様よりitsuikuをお使いいただける日を楽しみにしております。<br />
         最後に、itsuikuをお使い頂きありがとうございました。<br />
-        開発者：塚本圭亮
       </p>
+      <p class="lead text-right">itsuiku開発者：塚本圭亮</p>
     </div>
   </div>
-
-
 </div>
 {% endblock content %}
 
