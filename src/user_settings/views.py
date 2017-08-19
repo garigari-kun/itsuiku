@@ -216,7 +216,8 @@ class PasswordResetConfirmationView(View):
                 new_password= form.cleaned_data['password2']
                 user.set_password(new_password)
                 user.save()
-                return redirect('user-settings:reset_password_success')
+                return render(request, self.get_template_name(request, type='post-success'), {})
+                # return redirect('user-settings:reset_password_success')
             else:
                 # message
                 return redirect('home:top')
@@ -227,7 +228,9 @@ class PasswordResetConfirmationView(View):
 
 
 
-    def get_template_name(self, request):
+    def get_template_name(self, request, type=None):
+        if type == "post-success":
+            return 'user_settings/reset_password_success.html'
         template_name = 'user_settings/reset_password.html'
         return template_name
 
