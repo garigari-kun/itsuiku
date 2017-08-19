@@ -129,7 +129,10 @@ class UserPasswordChangeView(LoginRequiredMixin, View):
 
 
 
-class DeleteUserAccount(View):
+class DeleteUserAccount(LoginRequiredMixin, View):
+
+
+    login_url = '/'
 
     def get(self, request, *args, **kwargs):
         events = Event.objects.filter(user=request.user)
@@ -138,7 +141,11 @@ class DeleteUserAccount(View):
         # Delete the user model
         deleting_user = get_object_or_404(get_user_model(), id=request.user.id)
         deleting_user.delete()
-        return redirect('home:top')
+        return render(request, self.get_template_name(request), {})
+
+
+    def get_template_name(self, request):
+        return 'user_settings/done_deleting.html'
 
 
 
