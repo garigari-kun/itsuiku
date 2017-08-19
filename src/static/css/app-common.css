@@ -38,7 +38,8 @@ body {
 .ui-datepicker {
   margin: 0 auto;
   vertical-align: middle;
-  width: 400px;
+  /*width: 400px;*/
+  width: 100%;
 }
 
 
