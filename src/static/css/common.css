@@ -358,3 +358,9 @@ fieldset[disabled] .btn-itsuiku-sp.active {
   padding-left: 3px;
   margin-bottom: 15px;
 }
+
+.contact-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+}

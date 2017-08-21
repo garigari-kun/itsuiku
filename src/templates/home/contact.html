@@ -10,34 +10,18 @@
 
 {% block content %}
 
-
-
 {% include 'includes/home-navbar.html' %}
 
-
-<style>
-.customize-container {
-  margin-top: 70px;
-}
-
-.contact-form-container {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-</style>
-
-
-
-<div class="container customize-container">
-  <h1>お問い合わせ</h1>
-
+<div class="container sp-container">
+  <div class="content-title">
+    お問い合わせ
+  </div>
   <div class="panel panel-default contact-form-container">
     <div class="panel-body">
       <form method="POST" action="">
         {% csrf_token %}
         {{ contact_form.as_p }}
-        <input type="submit" value="送信する" class="btn btn-primary btn-block">
+        <input type="submit" value="送信する" class="btn btn-itsuiku btn-block">
       </form>
     </div>
   </div>
