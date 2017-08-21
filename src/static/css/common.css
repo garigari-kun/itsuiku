@@ -348,3 +348,13 @@ fieldset[disabled] .btn-itsuiku-sp.active {
   padding: 50px;
   margin-top: 50px;
 }
+
+.content-title {
+  font-weight: bold;
+  font-size: 28px;
+  color: #535353;
+  border-left: 5px solid #14BDEB;
+  letter-spacing: 1px;
+  padding-left: 3px;
+  margin-bottom: 15px;
+}
