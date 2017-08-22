@@ -28,10 +28,28 @@ class EventTopView(View):
         context = {}
         context['event'] = get_object_or_404(Event, event_code=event_code)
         context['invitees'] = Invitee.objects.filter(event=context['event'])
+        context['has_comments'] = self.has_comments(context['invitees'])
         context['schedule_range'] = context['event'].schedule_range.all()
         context['user_profile'] = UserProfile.objects.get_user_profile(request, user=context['event'].user)
         context['is_owner'] = check_visitor_is_events_owner(request, context['event'])
         return context
+
+
+    def has_comments(self, invitees=None):
+        """ Check the invitee has comment
+
+        """
+        if not invitees:
+            return False
+
+        for invitee in invitees:
+            if invitee.comment:
+                return True
+
+        return False
+
+
+
 
 
 

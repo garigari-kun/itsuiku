@@ -37,6 +37,12 @@
   </div>
   {% endif %}
 
+  <div style="text-align: left; margin-bottom: 5px;">
+    <i class="fa fa-user" style="font-size: 18px;" aria-hidden="true">
+      現在の入力人数:{{ invitees.count }}人
+    </i>
+  </div>
+
   <div class="panel panel-default event-top-panel">
     <div class="panel-body">
       <h3>{{ event.title }}</h3>
@@ -56,7 +62,7 @@
   <h1 class="content-title">参加者のコメント</h1>
   <div class="panel panel-default event-top-panel">
     <div class="panel-body">
-      {% if invitees %}
+      {% if has_comments %}
         {% for invitee in invitees %}
         {% if invitee.comment %}
           <div>
