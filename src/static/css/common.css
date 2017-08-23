@@ -364,3 +364,8 @@ fieldset[disabled] .btn-itsuiku-sp.active {
   margin: 0 auto;
   padding: 10px;
 }
+
+.icon-toggle {
+  font-size: 20px;
+  cursor: pointer;
+}
