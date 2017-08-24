@@ -115,7 +115,7 @@
                   <span style="font-size: 10px;">{{ schedule.comment }}</span>
                 </th>
               {% endfor %}
-              <th></th>
+              <!-- <th></th> -->
             </tr>
           </thead>
           <tbody>
@@ -123,8 +123,9 @@
               {% for invitee in invitees %}
                 <tr>
                   <td class="event-top-name-td">
-                    {{ invitee.name }}<br />
-                    <!-- <span style="font-size: 10px;">{{ invitee.comment }}</span> -->
+                    <a href="{% url 'attendance:update' invitee_id=invitee.id event_code=event.event_code %}">
+                      {{ invitee.name }}
+                    </a>
                   </td>
                   {% for d in invitee.attendance.all %}
                     {% if d.choice == 'yes' %}
@@ -135,14 +136,13 @@
                       <td class="choice-td choice-ne alert-warning">未</td>
                     {% endif %}
                   {% endfor %}
-                  <td style="width: 10%;">
+                  <!-- <td style="width: 10%;">
                     <a class="btn btn-itsuiku-warn btn-xs" href="{% url 'attendance:update' invitee_id=invitee.id event_code=event.event_code %}">
                       編集
                     </a>
                     <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deletionAttendanceModal{{ invitee.id }}">
                       削除
                     </button>
-                    <!-- Modal -->
                     <div class="modal fade" id="deletionAttendanceModal{{ invitee.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -161,13 +161,13 @@
                         </div>
                       </div>
                     </div>
-                    <!-- Model end -->
-                </td>
+                </td> -->
                 </tr>
               {% endfor %}
             {% endif %}
           </tbody>
         </table>
+        <label class='help-schedule-table'>※お名前をクリックすると、スケジュールを編集できます</label>
         </div>
       {% else %}
         <p class="center-notif">現在、このイベントへの参加者はいません</p>

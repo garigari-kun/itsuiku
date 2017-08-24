@@ -369,3 +369,8 @@ fieldset[disabled] .btn-itsuiku-sp.active {
   font-size: 20px;
   cursor: pointer;
 }
+
+.object-divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

@@ -88,7 +88,31 @@
 
 
     <input type="submit" value="登録する" class="btn btn-itsuiku btn-block btn-lg">
-
+    <!-- <div class="object-divider"></div> -->
+    <hr />
+    {% if invitee %}
+    <button type="button" class="btn btn-lg btn-block btn-itsuiku-imp" data-toggle="modal" data-target="#deletionAttendanceModal{{ invitee.id }}">
+      スケジュールを削除する
+    </button>
+    <div class="modal fade" id="deletionAttendanceModal{{ invitee.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Warning!</h4>
+          </div>
+          <div class="modal-body">
+            {{ invitee.name }}さんのスケジュールを削除します
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-xs btn-danger" href="{% url 'attendance:delete' invitee_id=invitee.id event_code=event.event_code %}">
+              削除
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
 
 
   </form>

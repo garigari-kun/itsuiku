@@ -142,7 +142,8 @@ class UpdateEventAttendanceView(View):
             'event': event,
             'attendance_form': attendance_form,
             'invitee_form': invitee_form,
-            'sl_af': sl_af
+            'sl_af': sl_af,
+            'invitee': invitee,
         }
         return render(request, self.template_name, context)
 
@@ -224,6 +225,7 @@ class DeleteEventAttendanceView(View):
             attendance.delete()
         # Delete Invitee record
         invitee.delete()
+        messages.success(request, 'スケジュールを削除しました')
         return redirect('attendance:top', event_code=event_code)
 
 
