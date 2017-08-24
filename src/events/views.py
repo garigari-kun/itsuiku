@@ -164,15 +164,12 @@ class UpdateEventView(View):
                         )
 
                         invitee.attendance.add(i_instance)
-
-
-
             for sd in schedule_deletion_formset:
                 if sd.cleaned_data['deletion_check']:
                     # Delete schedule by looking up id
-                    # result = Schedule.objects.filter(id=sd.cleaned_data['id']).delete()
                     d_result = Schedule.objects.delete_schedule_by_id(request, id=sd.cleaned_data['id'])
 
+            messages.success(request, 'イベントを更新しました')
             return redirect('attendance:top', event_code=event.event_code)
 
         return HttpResponse('post has been sent')
@@ -237,4 +234,6 @@ class DeleteEventView(LoginRequiredMixin, View):
             schedule.delete()
         # Delete Event Model
         event.delete()
+
+        messages.success(request, 'イベントを削除しました')
         return redirect('user-dashboard')
