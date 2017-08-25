@@ -13,6 +13,21 @@
   width: 120px;
 }
 
+.event-settings-container {
+  float: right;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+
+.event-info-container {
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.help-schedule-table {
+  color: #333;
+}
+
 
 /*.schedule-table td, .schedule-table th {
     min-width: 150px;

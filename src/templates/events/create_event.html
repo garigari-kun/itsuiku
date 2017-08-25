@@ -75,8 +75,6 @@
           </div>
         {% endif %}
         <div class="form-row" id="empty-form">
-          <!-- {{ schedule_formset.empty_form.as_p }} -->
-          <!-- <div class="form-inline"> -->
           {% for e_field in schedule_formset.empty_form %}
             <p>{{ e_field }}</p>
           {% endfor %}
