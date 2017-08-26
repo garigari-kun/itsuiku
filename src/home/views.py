@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.base import View
 
 from .forms import ContactForm
+
+from django.contrib import messages
 
 
 
@@ -53,7 +55,12 @@ class ContactFormView(View):
             url = contact_form.cleaned_data['url']
             content = contact_form.cleaned_data['content']
             category = contact_form.cleaned_data['category']
-            return render(request, self.get_template_name(request, form_valid=True), {})
+            # return render(request, self.get_template_name(request, form_valid=True), {})
+
+            # Mail to me and also the user
+            messages.success(request, 'お問い合わせは送信されました。ありがとうございました')
+            return redirect('home:contact')
+
         else:
             return render(request, self.get_template_name(request, form_valid=False), self.get_context_data(request))
 
@@ -63,10 +70,7 @@ class ContactFormView(View):
         return context
 
     def get_template_name(self, request, *args, **kwargs):
-        if kwargs['form_valid'] == True:
-            template_name = 'home/sent_contact.html'
-        else:
-            template_name = 'home/contact.html'
+        template_name = 'home/contact.html'
         return template_name
 
     def get_contact_form(self, request):

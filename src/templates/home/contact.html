@@ -13,6 +13,9 @@
 {% include 'includes/home-navbar.html' %}
 
 <div class="container sp-container">
+
+  {% include 'includes/messages.html' with message=messages %}
+
   <div class="content-title">
     お問い合わせ
   </div>
@@ -29,3 +32,9 @@
 
 </div>
 {% endblock content %}
+
+
+{% block js-container %}
+<script src="{% static 'js/messages.js' %}"></script>
+
+{% endblock js-container %}
