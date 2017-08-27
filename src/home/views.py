@@ -5,6 +5,8 @@ from .forms import ContactForm
 
 from django.contrib import messages
 
+from itsuiku.utils import send_contact_email
+
 
 
 class TopView(View):
@@ -28,7 +30,9 @@ class TopView(View):
 class ForumView(View):
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.get_template_name(request), self.get_context_data(request))
+        template_name = self.get_template_name(request)
+        context = self.get_context_data(request)
+        return render(request, template_name, context)
 
     def get_template_name(self, request, *args, **kwargs):
         template_name = 'home/forum.html'
@@ -51,13 +55,18 @@ class ContactFormView(View):
     def post(self, request, *args, **kwargs):
         contact_form = self.get_contact_form(request)
         if contact_form.is_valid():
-            email = contact_form.cleaned_data['email']
-            url = contact_form.cleaned_data['url']
-            content = contact_form.cleaned_data['content']
-            category = contact_form.cleaned_data['category']
-            # return render(request, self.get_template_name(request, form_valid=True), {})
+            # email = contact_form.cleaned_data['email']
+            # url = contact_form.cleaned_data['url']
+            # content = contact_form.cleaned_data['content']
+            # category = contact_form.cleaned_data['category']
 
             # Mail to me and also the user
+            result = send_contact_email(
+                request,
+                contact=contact_form,
+                subject_template='home/contact_subject.txt',
+                content_template='home/contact_content.txt'
+            )
             messages.success(request, 'お問い合わせは送信されました。ありがとうございました')
             return redirect('home:contact')
 
