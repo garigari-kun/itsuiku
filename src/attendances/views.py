@@ -29,7 +29,9 @@ class EventTopView(View):
         context['event'] = get_object_or_404(Event, event_code=event_code)
         context['invitees'] = Invitee.objects.filter(event=context['event'])
         context['has_comments'] = self.has_comments(context['invitees'])
-        context['schedule_range'] = context['event'].schedule_range.all()
+        # context['schedule_range'] = context['event'].schedule_range.all()
+        context['schedule_range'] = context['event'].schedule_range.order_by('date')
+
         context['user_profile'] = UserProfile.objects.get_user_profile(request, user=context['event'].user)
         context['is_owner'] = check_visitor_is_events_owner(request, context['event'])
         return context
@@ -69,7 +71,9 @@ class CreateEventAttendanceView(View):
         # Entered invitees
         invitee_form = self.get_invitee_form(request)
         attendance_form = self.get_attendance_formset(request, extra=num_of_date)
-        schedule_list = event.schedule_range.all()
+        # schedule_list = event.schedule_range.all()
+        schedule_list = event.schedule_range.order_by("date")
+#
         # Zipped schedule_list and attendance_form
         sl_af = zip(schedule_list, attendance_form)
 
@@ -133,7 +137,9 @@ class UpdateEventAttendanceView(View):
         attendance_list = self.get_attendance_list(invitee)
         invitee_form = self.get_invitee_form(request, instance=invitee)
         attendance_form = self.get_attendance_formset(request, instance=attendance_list)
-        schedule_list = event.schedule_range.all()
+        # schedule_list = event.schedule_range.all()
+        schedule_list = event.schedule_range.order_by("date")
+
         # Zipped schedule_list and attendance_form
         sl_af = zip(schedule_list, attendance_form)
 
