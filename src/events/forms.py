@@ -54,7 +54,7 @@ class ScheduleModelForm(forms.ModelForm):
         label='',
         widget=forms.TextInput(attrs={
             'placeholder': '時間、一言メモ',
-            'class': 'form-control s-comment-input'
+            'class': 'form-control s-comment-input time-picker'
         })
     )
 
