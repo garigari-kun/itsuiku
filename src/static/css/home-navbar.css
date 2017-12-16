@@ -1,0 +1,28 @@
+.navbar-default .navbar-brand {
+  color: white;
+}
+
+.navbar-default .navbar-brand:hover {
+  /*color: red;*/
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: white;
+}
+
+
+.customize-navbar {
+  padding: 10px;
+  background: #14bdeb;
+}
+
+.customize-navbar-brand {
+  font-weight: bold;
+  letter-spacing: 5px;
+  font-size: 24px;
+}
+
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}

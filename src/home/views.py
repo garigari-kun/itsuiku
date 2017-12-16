@@ -11,19 +11,11 @@ from itsuiku.utils import send_contact_email
 
 class TopView(View):
 
-
     def get(self, request, *args, **kwargs):
-        context = self.get_context(request)
-        template_name = self.get_template_name(request)
+        context = {}
+        template_name = 'home/index.html'
         return render(request, template_name, context)
 
-    def get_context(self, request, *args, **kwargs):
-        context = {}
-        return context
-
-    def get_template_name(self, request, *args, **kwargs):
-        template_name = 'home/index.html'
-        return template_name
 
 
 
