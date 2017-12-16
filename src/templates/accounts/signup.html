@@ -24,8 +24,18 @@
       メールアドレスで簡単登録
     </p>
   </div>
+
+
+
   <div class="panel panel-default auth-form-container">
     <div class="panel-body">
+      <!-- <div class="field-wrapper">
+        <p class="text-center">すでにユーザーアカウントをお持ちの方</p>
+        <p class="text-center">
+          <a class="btn btn-itsuiku-imp" href="{% url 'account:login' %}">ログインする</a>
+        </p>
+      </div>
+      <hr /> -->
       <form method="POST" action="">
         {% csrf_token %}
         {% for field in form %}
@@ -48,7 +58,26 @@
       </form>
     </div>
   </div>
+
+  <br /><br />
+
+
+  <div class="panel panel-default auth-form-container">
+    <div class="panel-body">
+      <div class="field-wrapper">
+        <p class="text-center">すでにユーザーアカウントをお持ちの方</p>
+        <p class="text-center">
+          <a class="btn btn-itsuiku-imp" href="{% url 'account:login' %}">ログインする</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+
+
 </div>
 <div class="footer-spacer"></div>
+
 
 {% endblock content %}
