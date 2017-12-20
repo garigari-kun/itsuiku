@@ -25,8 +25,14 @@ urlpatterns = [
         include('home.urls', namespace='home')
     ),
 
+    # django admin
     url(r'^admin/', admin.site.urls),
-    url(r'^account/', include('accounts.urls', namespace='account')),
+
+    # account related urls
+    url(r'^account/',
+        include('accounts.urls', namespace='account')
+    ),
+
     url(r'^dashboard/$', DashboardView.as_view(), name='user-dashboard'),
     url(r'^event/', include('events.urls', namespace='event')),
     url(r'^user_settings/', include('user_settings.urls', namespace='user-settings')),

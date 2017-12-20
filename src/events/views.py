@@ -16,9 +16,6 @@ from .forms import (
 )
 from .models import Event, Schedule
 from invitees.models import Invitee, Attendance
-
-from pprint import pprint
-
 from .mixins import EventOwnerMixin, SuperuserRequiredMixin
 
 
@@ -42,22 +39,16 @@ class DashboardView(LoginRequiredMixin, View):
 
 class CreateEventView(LoginRequiredMixin, View):
 
-
     login_url = '/account/login/'
     template_name = 'events/create_event.html'
 
-
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(request)
-
         return render(request, self.template_name, context)
 
-
     def post(self, request, *args, **kwargs):
-        # form
         event_form = self.get_event_form(request)
         schedule_formset = self.get_schedule_formset(request, extra=0)
-
         if event_form.is_valid() and schedule_formset.is_valid():
             user = request.user
             instance_of_event = event_form.save(commit=False)
@@ -68,13 +59,9 @@ class CreateEventView(LoginRequiredMixin, View):
                 instance_of_event.schedule_range.add(instance_of_schedule)
             messages.success(request, 'イベントを作成しました')
         else:
-            # form is invalid, rerender
             context = self.get_context_data(request)
             return render(request, self.template_name, context)
-
         return redirect('event:event-success', event_code=instance_of_event.event_code)
-
-
 
     def get_event_form(self, request, *args, **kwargs):
         form = EventModelForm(request.POST or None)
@@ -85,15 +72,12 @@ class CreateEventView(LoginRequiredMixin, View):
         formset = ScheduleFormSet(request.POST or None)
         return formset
 
-
     def get_context_data(self, request, *args, **kwargs):
         context = {}
         # form
         context['event_form'] = self.get_event_form(request)
         context['schedule_formset'] = self.get_schedule_formset(request, extra=0)
-
         return context
-
 
 
 class EventCreationSuccessView(View):
@@ -109,8 +93,6 @@ class EventCreationSuccessView(View):
         context = {}
         context['event'] = get_object_or_404(Event, event_code=event_code)
         return context
-
-
 
 
 class UpdateEventView(View):
@@ -135,22 +117,18 @@ class UpdateEventView(View):
         }
         return render(request, self.template_name, context)
 
-
     def post(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)
         event_form = self.get_event_form(request, instance=event)
         schedule_formset = self.get_schedule_formset(request, extra=0, postfix='schedule')
         schedule_list = self.get_schedule_list(event)
-        schedule_deletion_formset = self.get_schedule_deletion_formset(request, prefix='schedule_deletion')
-
-        # Get Invitees
+        schedule_deletion_formset = self.get_schedule_deletion_formset(request,
+            prefix='schedule_deletion'
+        )
         invitees = Invitee.objects.filter(event=event)
-
-
         if event_form.is_valid() and schedule_formset.is_valid() and schedule_deletion_formset.is_valid():
             # Updating Event model
             instance_of_event = event_form.save()
-
             for schedule in schedule_formset:
                 # Inserting new Schedule records
                 instance_of_schedule = schedule.save()
@@ -162,18 +140,15 @@ class UpdateEventView(View):
                             event=instance_of_event,
                             schedule=instance_of_schedule
                         )
-
                         invitee.attendance.add(i_instance)
             for sd in schedule_deletion_formset:
                 if sd.cleaned_data['deletion_check']:
                     # Delete schedule by looking up id
-                    d_result = Schedule.objects.delete_schedule_by_id(request, id=sd.cleaned_data['id'])
-
+                    d_result = Schedule.objects.delete_schedule_by_id(request,
+                        id=sd.cleaned_data['id']
+                    )
             messages.success(request, 'イベントを更新しました')
             return redirect('attendance:top', event_code=event.event_code)
-
-        return HttpResponse('post has been sent')
-
 
     def get_event_form(self, request, instance=None, *args, **kwargs):
         form = EventModelForm(request.POST or None, instance=instance)
@@ -184,12 +159,10 @@ class UpdateEventView(View):
         formset = ScheduleFormSet(request.POST or None, initial=instance, prefix=prefix)
         return formset
 
-
     def get_schedule_deletion_formset(self, request, extra=0, instance=None, prefix='', *args, **kwargs):
         ScheduleDeletionCheckFormSet = formset_factory(ScheduleDeletionCheckModelForm, extra=extra)
         formset = ScheduleDeletionCheckFormSet(data=request.POST or None, initial=instance, prefix=prefix)
         return formset
-
 
     def get_schedule_list(self, event, *args, **kwargs):
         if event:
@@ -204,20 +177,10 @@ class UpdateEventView(View):
         return schedule_list
 
 
-    def get_context_data(self, request, *args, **kwargs):
-        pass
-
-
-
-
-
 class DeleteEventView(LoginRequiredMixin, View):
+
     def get(self, request, event_code=None, *args, **kwargs):
         return self.delete(request, event_code, *args, **kwargs)
-
-
-    def post(self, request, event_code=None, *args, **kwargs):
-        pass
 
     def delete(self, request, event_code=None, *args, **kwargs):
         event = get_object_or_404(Event, event_code=event_code)

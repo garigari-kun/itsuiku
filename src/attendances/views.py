@@ -17,48 +17,30 @@ class EventTopView(View):
 
     template_name = 'events/event-top.html'
 
-
     def get(self, request, event_code=None, *args, **kwargs):
         context = self.get_context_data(request, event_code=event_code)
         event = Event.objects.get(event_code=event_code)
         return render(request, self.template_name, context)
-
 
     def get_context_data(self, request, event_code=None, *args, **kwargs):
         context = {}
         context['event'] = get_object_or_404(Event, event_code=event_code)
         context['invitees'] = Invitee.objects.filter(event=context['event'])
         context['has_comments'] = self.has_comments(context['invitees'])
-        # context['schedule_range'] = context['event'].schedule_range.all()
         context['schedule_range'] = context['event'].schedule_range.order_by('date')
-
-        context['user_profile'] = UserProfile.objects.get_user_profile(request, user=context['event'].user)
+        context['user_profile'] = UserProfile.objects.get_user_profile(request,
+            user=context['event'].user
+        )
         context['is_owner'] = check_visitor_is_events_owner(request, context['event'])
         return context
 
-
     def has_comments(self, invitees=None):
-        """ Check the invitee has comment
-
-        """
         if not invitees:
             return False
-
         for invitee in invitees:
             if invitee.comment:
                 return True
-
         return False
-
-
-
-
-
-
-
-
-
-
 
 
 class CreateEventAttendanceView(View):
@@ -73,11 +55,8 @@ class CreateEventAttendanceView(View):
         attendance_form = self.get_attendance_formset(request, extra=num_of_date)
         # schedule_list = event.schedule_range.all()
         schedule_list = event.schedule_range.order_by("date")
-#
         # Zipped schedule_list and attendance_form
         sl_af = zip(schedule_list, attendance_form)
-
-
         context = {
             'event': event,
             'attendance_form': attendance_form,

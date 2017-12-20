@@ -9,7 +9,6 @@
 {% endblock static-container %}
 
 {% block content %}
-<!-- {% include 'includes/home-navbar.html' %} -->
 
 <div class="customize-bg">
   <div class="container customize-container">
@@ -30,6 +29,7 @@
         {% if login_failed %}
           <div class="alert alert-danger" role="alert">{{ login_failed }}</div>
         {% endif %}
+
         <form method="POST" action="">
           {% csrf_token %}
           {% for field in form %}
@@ -50,6 +50,7 @@
             <input type="submit" value="ログイン" class="btn btn-itsuiku-pr btn-block">
           </div>
         </form>
+
       </div><!-- end panel-body -->
     </div><!-- panel end -->
     <p class="text-center">
